@@ -48,7 +48,6 @@ public class Airplane implements Runnable {
     }
 
     public void setTarget(Airport targetAirport){
-        world.availableAirplanesArrayList.remove(this);
         if(checkTarget()){//można dojechać od razu
             System.out.println(name + ": New track has been set up: "+ this.airport.name + " -> " + targetAirport.name);
             track.add(new Airport[]{this.airport, targetAirport});
@@ -62,7 +61,6 @@ public class Airplane implements Runnable {
             if(finishNodesMap.isEmpty()){
                 System.out.println(name + ": Can't reach " + targetAirport.name);
                 this.targetAirport = null;
-                world.availableAirplanesArrayList.add(this);
                 try {
                     Thread.sleep(1500);
                 } catch (InterruptedException e) {
@@ -350,7 +348,7 @@ public class Airplane implements Runnable {
         }
     }
 
-    private void land(Airport targetAirport) throws InterruptedException {
+    private void land(Airport targetAirport) {
         airplaneJLabel.setVisible(false);
         currentFuelJLabel.setVisible(false);
         maxfuelJLabel.setVisible(false);
@@ -358,7 +356,6 @@ public class Airplane implements Runnable {
             this.airport = targetAirport;
             this.targetAirport = null;
             this.finishNodesMap.clear();
-            world.availableAirplanesArrayList.add(this);
             System.out.println(name + ": Landed in: " + airport.name);
             try {
                 Thread.sleep(750);
