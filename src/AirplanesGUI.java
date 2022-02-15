@@ -57,8 +57,8 @@ public class AirplanesGUI extends JFrame {
     private void drawAirportNameBackground(int x, int y, String name){
         ImageIcon airportNameBackground = new ImageIcon("src/images/Background.png");
         Image image = airportNameBackground.getImage();
-        Image newimg = image.getScaledInstance(name.length()*7+5, 15,  java.awt.Image.SCALE_SMOOTH);
-        airportNameBackground = new ImageIcon(newimg);
+        Image scaledImage = image.getScaledInstance(name.length()*7+5, 15,  java.awt.Image.SCALE_SMOOTH);
+        airportNameBackground = new ImageIcon(scaledImage);
         JLabel airportNameBackgroundJLabel = new JLabel(airportNameBackground);
         if((airportImageIcon.getIconWidth()/2) - (name.length()*7/2) > 0){
             airportNameBackgroundJLabel.setBounds(x + abs((airportImageIcon.getIconWidth()/2) - (name.length()*7/2)) - 3,
@@ -118,8 +118,8 @@ public class AirplanesGUI extends JFrame {
     }
 
     public void updateFuelStatusAirplane(Airplane airplane) {
-        int width = (int) (35 * airplane.currentfuel / (airplane.fuel));
-        airplane.maxfuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
+        int width = (int) (35 * airplane.currentFuel / (airplane.fuel));
+        airplane.maxFuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
                 airplane.airplaneJLabel.getBounds().y + 25, 35, 3);
         airplane.currentFuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
                 airplane.airplaneJLabel.getBounds().y + 25, width, 3);

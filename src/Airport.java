@@ -1,14 +1,12 @@
 import java.util.ArrayList;
 
 public class Airport {
-    AirplanesGUI airplanesGUI;
-    int x;
-    int y;
-    String name;
-    World world;
+    final int x;
+    final int y;
+    final String name;
+    private final World world;
 
     Airport(int x, int y, String name, AirplanesGUI airplanesGUI, World world){
-        this.airplanesGUI = airplanesGUI;
         this.x = x;
         this.y = y;
         this.name = name;
