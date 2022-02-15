@@ -48,20 +48,5 @@ public class Main {
         int maxFuel = Integer.parseInt(args[2]);
         AirplanesGUI gui = new AirplanesGUI();
         World world = new World(gui, numberOfAirplanes, minFuel, maxFuel);
-
-        //int numberOfAirplanes = Integer.parseInt(args[0]);
-        //float minFuel = Float.parseFloat(args[1]);
-        //float maxFuel = Float.parseFloat(args[2]);
-
-        //Creating airplanes//
-        //Airplane airplane1 = new Airplane(world.airportsArrayList.get(0), "Airplane_1", 200, gui, world);
-        //Airplane airplane2 = new Airplane(world.airportsArrayList.get(1), "Airplane_2", 500, gui, world);
-
-        //world.airplanesArrayList.add(airplane1);
-
-        //Thread airplane1Thread = new Thread(airplane1);
-        //airplane1Thread.start();
-        //Thread airplane2Thread = new Thread(airplane2);
-        //airplane2Thread.start();
     }
 }
