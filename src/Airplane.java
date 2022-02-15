@@ -6,26 +6,18 @@ import static java.lang.Math.abs;
 
 public class Airplane implements Runnable {
     private final AirplanesGUI airplanesGUI;
+    private final World world;
     private double x;
     private double y;
     final String name;
     final double fuel;
     double currentFuel;
-    Airport targetAirport;
-
+    private Airport airport;
+    private Airport targetAirport;
     JLabel airplaneJLabel;
     JLabel maxFuelJLabel;
     JLabel currentFuelJLabel;
-
-    private final World world;
-    private Airport airport;
-
-    ArrayList<Airport[]> nodes = new ArrayList<>();
-
-    //LinkedList<LinkedList<Airport[]>> allPossibleTracks = new LinkedList<>();
-    LinkedList<Airport[]> track = new LinkedList<>();
-
-    private final Random rand = new Random();
+    private LinkedList<Airport[]> track = new LinkedList<>();
 
     public Airplane(Airport airport, String name, double fuel, AirplanesGUI airplanesGUI, World world){
         this.airplanesGUI = airplanesGUI;
@@ -139,10 +131,10 @@ public class Airplane implements Runnable {
             track.get(track.size()-1)[1].getNodes(fuel);
             ArrayList<Airport[]> node1GetNodes = new ArrayList<>(track.get(track.size()-1)[1].getNodes(fuel));
             for(Airport[] nodeNeighbor : node1GetNodes){
-                if(!(nodeNeighbor[0] == this.airport) && !(nodeNeighbor[1] == this.airport) && !(nodeNeighbor[1] == track.get(track.size()-1)[0]) && !isNodeMapContainingNode(nodeNeighbor, track)){
+                if(!(nodeNeighbor[0] == this.airport) && !(nodeNeighbor[1] == this.airport) && !(nodeNeighbor[1] == track.get(track.size()-1)[0]) && trackNotContainNode(nodeNeighbor, track)){
                     if(nodeNeighbor[1].equals(targetAirport)){
                         track.add(nodeNeighbor);
-                        if(!isFinishedNodeMapContainingNodeMap(track, allPossibleTracks)){
+                        if(allPossibleTracksNotContainTrack(track, allPossibleTracks)){
                             //System.out.println("Adding to allPossibleTracks = " + printfNodeMap(track));
                             allPossibleTracks.add(new LinkedList<>(track));
                             nodeFound = true;
@@ -157,11 +149,10 @@ public class Airplane implements Runnable {
             }
             for(Airport[] nodeNeighbor : nodesToSearch){
                 if(track.size()>0){
-                    if(!(nodeNeighbor[0] == this.airport) && !(nodeNeighbor[1] == this.airport) && !(nodeNeighbor[1] == track.get(track.size()-1)[0]) && !isNodeMapContainingNode(nodeNeighbor, track)){
-                        //track.add(nodeNeighbor);
+                    if(!(nodeNeighbor[0] == this.airport) && !(nodeNeighbor[1] == this.airport) && !(nodeNeighbor[1] == track.get(track.size()-1)[0]) && trackNotContainNode(nodeNeighbor, track)){
                         if(nodeNeighbor[1].equals(this.targetAirport)){
                             track.add(nodeNeighbor);
-                            if(!isFinishedNodeMapContainingNodeMap(track, allPossibleTracks)){
+                            if(allPossibleTracksNotContainTrack(track, allPossibleTracks)){
                                 //System.out.println("Adding to allPossibleTracks = " + printfNodleMap(track));
                                 allPossibleTracks.add(new LinkedList<>(track));
                                 nodeFound = true;
@@ -169,12 +160,10 @@ public class Airplane implements Runnable {
                             track.remove(nodeNeighbor);
                             break;
                         }
-                        else if(!nodeFound && !nodeNeighbor[1].equals(this.airport) && !nodeNeighbor[1].equals(track.get(track.size()-1)[1]) && !isNodeMapContainingNode(nodeNeighbor, track)){
-                            //if(track.size()>0 && !track.get(track.size()-1)[1].equals(nodeNeighbor[0])){
+                        else if(!nodeFound && !nodeNeighbor[1].equals(this.airport) && !nodeNeighbor[1].equals(track.get(track.size()-1)[1]) && trackNotContainNode(nodeNeighbor, track)){
                             track.add(nodeNeighbor);
                             allPossibleTracks = recursion(track, allPossibleTracks);
                             track.remove(nodeNeighbor);
-                            //}
                         }
                     }
                 }
@@ -185,44 +174,36 @@ public class Airplane implements Runnable {
         return allPossibleTracks;
     }
 
-    boolean isNodeMapContainingNode(Airport[] node, LinkedList<Airport[]> possibleTrack){
-        for(Airport[] nodeInTrack : possibleTrack){
+    boolean trackNotContainNode(Airport[] node, LinkedList<Airport[]> track){
+        for(Airport[] nodeInTrack : track){
             if(node[0]==nodeInTrack[0] || node[1]==nodeInTrack[1]){
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
-    boolean isFinishedNodeMapContainingNodeMap(LinkedList<Airport[]> possibleTrack, LinkedList<LinkedList<Airport[]>> allPossibleTracks){
-        if(!possibleTrack.get(0)[0].equals(this.airport) && possibleTrack.get(possibleTrack.size()-1)[1].equals(this.targetAirport)){
-            return false;
+    boolean allPossibleTracksNotContainTrack(LinkedList<Airport[]> track, LinkedList<LinkedList<Airport[]>> allPossibleTracks){
+        if(!track.get(0)[0].equals(this.airport) && track.get(track.size()-1)[1].equals(this.targetAirport)){
+            return true;
         }
         int count = 0;
         for(LinkedList<Airport[]> trackFromAllPossibleTracks : allPossibleTracks){
-            if(possibleTrack.size()==trackFromAllPossibleTracks.size()){
+            if(track.size()==trackFromAllPossibleTracks.size()){
                 for(Airport[] nodeFromAllPossibleTracks : trackFromAllPossibleTracks){
-                    for(Airport[] nodeFromPossibleTrack : possibleTrack){
+                    for(Airport[] nodeFromPossibleTrack : track){
                         if(nodeFromAllPossibleTracks[0]==nodeFromPossibleTrack[0] && nodeFromAllPossibleTracks[1]==nodeFromPossibleTrack[1]){
                             count++;
                         }
                     }
-                    if(count==possibleTrack.size()){
-                        return true;
+                    if(count==track.size()){
+                        return false;
                     }
                     count = 0;
                 }
             }
         }
-        return false;
-    }
-
-    String printfTrack(LinkedList<Airport[]> track){
-        StringBuilder trackStr = new StringBuilder();
-        for(Airport[] node : track){
-            trackStr.append("{").append(node[0].name).append(", ").append(node[1].name).append("}");
-        }
-        return trackStr.toString();
+        return true;
     }
 
     private void fly(Airport targetAirport) throws InterruptedException {
@@ -230,11 +211,9 @@ public class Airplane implements Runnable {
         this.airplaneJLabel.setVisible(true);
         currentFuelJLabel.setVisible(true);
         maxFuelJLabel.setVisible(true);
-        final double xx = targetAirport.x - x;
-        final double yy = targetAirport.y - y;
         double distance = Math.sqrt(Math.pow((x - targetAirport.x), 2) + Math.pow((y - targetAirport.y), 2));
-        double xmultiple = ((abs(xx) / abs(Math.sqrt(Math.pow((x - targetAirport.x), 2) + Math.pow((y - targetAirport.y), 2)))));
-        double ymultiple = ((abs(yy) / abs(Math.sqrt(Math.pow((x - targetAirport.x), 2) + Math.pow((y - targetAirport.y), 2)))));
+        double xMultiplier = (abs(targetAirport.x - x) / distance);
+        double yMultiplier = (abs(targetAirport.y - y) / distance);
         currentFuel = fuel;
 
         double angle = Math.toDegrees(Math.atan2((y - targetAirport.y), (x - targetAirport.x))) - 90;
@@ -242,41 +221,41 @@ public class Airplane implements Runnable {
             angle += 360;
         }
 
-        double xBackup = x;
-        double yBackup = y;
+        double xBackup;
+        double yBackup;
         while(true) {
             xBackup = x;
             yBackup = y;
             if ((x < targetAirport.x)){
-                if(targetAirport.x < (x + abs(xmultiple))){
+                if(targetAirport.x < (x + abs(xMultiplier))){
                     x = targetAirport.x;
                 }
                 else {
-                    x = (x + abs(xmultiple));
+                    x = (x + abs(xMultiplier));
                 }
             }
             else if ((x > targetAirport.x)){
-                if(targetAirport.x > (x - abs(xmultiple))){
+                if(targetAirport.x > (x - abs(xMultiplier))){
                     x = targetAirport.x;
                 }
                 else {
-                    x = (x - abs(xmultiple));
+                    x = (x - abs(xMultiplier));
                 }
             }
             if (y < targetAirport.y){
-                if(targetAirport.y < (y + abs(ymultiple))){
+                if(targetAirport.y < (y + abs(yMultiplier))){
                     y = targetAirport.y;
                 }
                 else {
-                    y = (y + abs(ymultiple));
+                    y = (y + abs(yMultiplier));
                 }
             }
             else if (y > targetAirport.y){
-                if(targetAirport.y > (y - abs(ymultiple))){
+                if(targetAirport.y > (y - abs(yMultiplier))){
                     y = targetAirport.y;
                 }
                 else {
-                    y = (y - abs(ymultiple));
+                    y = (y - abs(yMultiplier));
                 }
             }
             currentFuel = currentFuel - Math.sqrt(Math.pow((xBackup - x), 2) + Math.pow((yBackup - y), 2));
@@ -304,7 +283,6 @@ public class Airplane implements Runnable {
         if(targetAirport.equals(this.targetAirport)){
             this.airport = targetAirport;
             this.targetAirport = null;
-            //this.allPossibleTracks.clear();
             System.out.println(name + ": Landed in: " + airport.name);
             try {
                 Thread.sleep(750);
@@ -321,15 +299,16 @@ public class Airplane implements Runnable {
 
     @Override
     public void run() {
+        Random random = new Random();
         while (true){
             if(this.targetAirport==null){
                 do{
-                    targetAirport = world.airportsArrayList.get(rand.nextInt(world.airportsArrayList.size()));
+                    targetAirport = world.airportsArrayList.get(random.nextInt(world.airportsArrayList.size()));
                 }
                 while (targetAirport.x == this.x && targetAirport.y == this.y);
                 System.out.println(name + ": New target: " + targetAirport.name);
                 System.out.println(name + ": Searching flight: " + this.airport.name + " -> "  + targetAirport.name);
-                this.setTarget(targetAirport);//
+                this.setTarget(targetAirport);
             }
         }
     }
