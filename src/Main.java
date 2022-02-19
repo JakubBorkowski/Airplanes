@@ -1,8 +1,10 @@
+import java.util.Locale;
+
 public class Main {
 
     private static void checkArguments(String[] args){
-        if(!(args.length == 3)){
-            System.err.println("Wrong number of arguments!\nPlease provide exactly 3 arguments.");
+        if(!(args.length == 4)){
+            System.err.println("Wrong number of arguments!\nPlease provide exactly 4 arguments.");
             System.exit(1);
         }
         try {
@@ -39,6 +41,14 @@ public class Main {
             System.err.println("The maximum fuel level must be greater than or equal to the minimum fuel level!");
             System.exit(1);
         }
+        if(!args[3].toUpperCase(Locale.ROOT).equals("BFS")){
+            if(!args[3].toUpperCase(Locale.ROOT).equals("DFS")){
+                if(!args[3].toUpperCase(Locale.ROOT).equals("DIJKSTRA")){
+                    System.err.println("The fourth argument should be \"BFS\", \"DFS\" or \"Dijkstra\"!");
+                    System.exit(1);
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -46,7 +56,8 @@ public class Main {
         int numberOfAirplanes = Integer.parseInt(args[0]);
         int minFuel = Integer.parseInt(args[1]);
         int maxFuel = Integer.parseInt(args[2]);
+        String algorithmName = args[3];
         AirplanesGUI gui = new AirplanesGUI();
-        World world = new World(gui, numberOfAirplanes, minFuel, maxFuel);
+        new World(gui, numberOfAirplanes, minFuel, maxFuel, algorithmName);
     }
 }
