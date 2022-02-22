@@ -20,6 +20,15 @@ public class Airplane implements Runnable {
     private LinkedList<Airport[]> track = new LinkedList<>();
     String algorithmName;
 
+    /**
+     * Creates an airplane.
+     * @param airport Airport in which airplane currently is.
+     * @param name Name of airplane.
+     * @param fuel Maximum fuel of airplane.
+     * @param airplanesGUI Application JFrame in which airplane will be displayed.
+     * @param world World object with information about all airports on map.
+     * @param algorithmName Name of algorithm which should be used. Available names: "BFS", "DFS", "DIJKSTRA".
+     */
     public Airplane(Airport airport, String name, double fuel, AirplanesGUI airplanesGUI, World world, String algorithmName){
         this.airplanesGUI = airplanesGUI;
         this.targetAirport = null;
@@ -34,9 +43,14 @@ public class Airplane implements Runnable {
         this.currentFuelJLabel = airplanesGUI.drawCurrentFuelStatus(this);
         this.maxFuelJLabel = airplanesGUI.drawMaxFuelStatus(this);
         this.algorithmName = algorithmName;
-        //printfPossibleAirports();
     }
 
+    /**
+     * Check if it is possible to travel to specified destination airport.
+     * If it is - flies in determined succession to airports, until destination airport is reached.
+     * If it isn't - abandon the task.
+     * @param targetAirport destination airport.
+     */
     public void setTarget(Airport targetAirport){
         PathFinder pathFinder = new PathFinder(this.airport, targetAirport, fuel, world);
         track = pathFinder.findPath(algorithmName);
@@ -62,6 +76,13 @@ public class Airplane implements Runnable {
         }
     }
 
+    /**
+     * Converts track to string ready to display.
+     * @param track LinkedList of arrays containing nodes. Every node should contain exactly 2 airports.
+     *              The second airport in the array should be the same as the first one in the next node.
+     *              [Airport1, Airport2], [Airport2, Airport3]...
+     * @return track converted to string.
+     */
     private String trackDisplay(LinkedList<Airport[]> track){
         StringBuilder trackString = new StringBuilder();
         for (Airport[] airports : track){
@@ -70,6 +91,10 @@ public class Airplane implements Runnable {
         return trackString.toString();
     }
 
+    /**
+     * Displays airplane and updates its position until it reach targetAirport.
+     * @param targetAirport airport to which airplane will fly.
+     */
     private void fly(Airport targetAirport) throws InterruptedException {
         this.airport = null;
         this.airplaneJLabel.setVisible(true);
@@ -140,6 +165,11 @@ public class Airplane implements Runnable {
         }
     }
 
+    /**
+     * Hides airplane image and refuels airplane. If destination airport is reached,
+     * updates current airplane airport and set its targetAirport to null.
+     * @param targetAirport Airport at which airplane will land.
+     */
     private void land(Airport targetAirport) {
         airplaneJLabel.setVisible(false);
         currentFuelJLabel.setVisible(false);
@@ -172,7 +202,7 @@ public class Airplane implements Runnable {
                 while (targetAirport.x == this.x && targetAirport.y == this.y);
                 System.out.println(name + ": New target: " + targetAirport.name);
                 System.out.println(name + ": Searching flight: " + this.airport.name + " -> "  + targetAirport.name);
-                this.setTarget(targetAirport);
+                setTarget(targetAirport);
             }
         }
     }

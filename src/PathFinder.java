@@ -6,6 +6,14 @@ public class PathFinder {
     Airport initialAirport;
     Airport finalAirport;
 
+    /**
+     * Creates a PathFinder. The PathFinder allows you to find the shortest path between two airports
+     * with one of the chosen algorithms.
+     * @param initialAirport Airport from which path will be searched.
+     * @param finalAirport Airport to which path will be searched.
+     * @param fuel Fuel of the airplane for which the path will be searched for.
+     * @param world World object with information about all airports on the map.
+     */
     PathFinder(Airport initialAirport, Airport finalAirport, Double fuel, World world){
         this.world = world;
         this.fuel = fuel;
@@ -13,6 +21,11 @@ public class PathFinder {
         this.finalAirport = finalAirport;
     }
 
+    /**
+     * Starts the process of finding a path from initialAirport to finalAirport with one of the chosen algorithms.
+     * @param algorithmName Name of algorithm which should be used. Available names: "BFS", "DFS", "DIJKSTRA".
+     * @return Path from initialAirport to finalAirport, if there is one.
+     */
     public LinkedList<Airport[]> findPath(String algorithmName){
         LinkedList<Airport[]> track = new LinkedList<>();
         switch (algorithmName.toUpperCase(Locale.ROOT)) {
@@ -20,13 +33,7 @@ public class PathFinder {
                 track = startBFS();
                 break;
             case "DFS":
-                LinkedList<LinkedList<Airport[]>> allPossibleTracks = new LinkedList<>();
-                startRecursion(allPossibleTracks);
-                if(allPossibleTracks.isEmpty()){
-                    track = null;
-                    break;
-                }
-                track = sortAllPossibleTracks(allPossibleTracks);
+                track = startDFS();
                 break;
             case "DIJKSTRA":
                 track = startDijkstra();
@@ -35,6 +42,14 @@ public class PathFinder {
         return track;
     }
 
+    /**
+     * Checks if the specified path does not contain the specified node.
+     * @param node Array of 2 airports, from which you can fly to each other [from Airport1 -> to Airport2]
+     * @param track LinkedList of arrays containing nodes. Every node should contain exactly 2 airports.
+     *              The second airport in the array should be the same as the first one in the next node.
+     *              [Airport1, Airport2], [Airport2, Airport3]...
+     * @return true if specified track not contain specified node.
+     */
     private boolean trackNotContainNode(Airport[] node, LinkedList<Airport[]> track){
         for(Airport[] nodeInTrack : track){
             if(node[0]==nodeInTrack[0] || node[1]==nodeInTrack[1]){
@@ -44,6 +59,14 @@ public class PathFinder {
         return true;
     }
 
+    /**
+     * Checks if the specified path does not contain the specified node.
+     * @param track LinkedList of arrays containing nodes. Every node should contain exactly 2 airports.
+     *              The second airport in the array should be the same as the first one in the next node.
+     *              [Airport1, Airport2], [Airport2, Airport3]...
+     * @param allPossibleTracks LinkedList of multiple tracks.
+     * @return true if allPossibleTracks not contains track.
+     */
     private boolean allPossibleTracksNotContainTrack(LinkedList<Airport[]> track, LinkedList<LinkedList<Airport[]>> allPossibleTracks){
         if(!track.get(0)[0].equals(initialAirport) && track.get(track.size()-1)[1].equals(finalAirport)){
             return true;
@@ -67,44 +90,40 @@ public class PathFinder {
         return true;
     }
 
-    private LinkedList<Airport[]> sortAllPossibleTracks(LinkedList<LinkedList<Airport[]>> allPossibleTracks){
-
-        Comparator<LinkedList<Airport[]>> compareByDistance = new Comparator<LinkedList<Airport[]>>() {
-            @Override
-            public int compare(LinkedList<Airport[]> track1, LinkedList<Airport[]> track2) {
-                double distance1 = 0;
-                for(Airport[] node : track1){
-                    distance1 += world.checkDistance(node[0], node[1]);
-                }
-                double distance2 = 0;
-                for(Airport[] node : track2){
-                    distance2 += world.checkDistance(node[0], node[1]);
-                }
-                return Double.compare(distance1, distance2);
+    /**
+     * Allows for comparing tracks by overall distance that must be travel.
+     */
+    private final Comparator<LinkedList<Airport[]>> compareByDistanceTrack = new Comparator<LinkedList<Airport[]>>() {
+        @Override
+        public int compare(LinkedList<Airport[]> track1, LinkedList<Airport[]> track2) {
+            double distance1 = 0;
+            for(Airport[] node : track1){
+                distance1 += world.checkDistance(node[0], node[1]);
             }
-        };
-        allPossibleTracks.sort(compareByDistance);
-
-        /*System.out.println("\nallPossibleTracks for " + initialAirport.name + " -> " + finalAirport.name + ":");
-        for(ArrayList<Airport[]> track : allPossibleTracks){
-            System.out.println(printfNodeMap(track));
+            double distance2 = 0;
+            for(Airport[] node : track2){
+                distance2 += world.checkDistance(node[0], node[1]);
+            }
+            return Double.compare(distance1, distance2);
         }
-        System.out.println();*/
+    };
 
-        return allPossibleTracks.get(0);
-    }
+    //
+    //Depth-first search
+    //
 
-    //Depth-first search//
-
-    private LinkedList<LinkedList<Airport[]>> startRecursion(LinkedList<LinkedList<Airport[]>> allPossibleTracks){
+    /**
+     * Starts Depth-first search algorithm.
+     * @return track to finalAirport.
+     */
+    private LinkedList<Airport[]> startDFS(){
         LinkedList<Airport[]> track = new LinkedList<>();
-
+        ///If it is possible to travel directly to destination - return appropriate track//
         if(initialAirport.getNearAirports(fuel).contains(finalAirport)){
             track.add(new Airport[]{initialAirport, finalAirport});
-            allPossibleTracks.add(track);
-            return allPossibleTracks;
+            return track;
         }
-
+        LinkedList<LinkedList<Airport[]>> allPossibleTracks = new LinkedList<>();
         ArrayList<Airport[]> thisAirportNodes = new ArrayList<>(initialAirport.getNodes(fuel));
         for(Airport[] node : thisAirportNodes){
             if(node[1].equals(finalAirport)){
@@ -117,9 +136,17 @@ public class PathFinder {
             }
             track.clear();
         }
-        return allPossibleTracks;
+        allPossibleTracks.sort(compareByDistanceTrack);
+        track = allPossibleTracks.getFirst();
+        return track;
     }
 
+    /**
+     * Continue Depth-first search with specified unfinished track.
+     * @param track currently processed track.
+     * @param allPossibleTracks all found track leading to finalAirport.
+     * @return updated allPossibleTracks.
+     */
     private LinkedList<LinkedList<Airport[]>> recursion(LinkedList<Airport[]> track, LinkedList<LinkedList<Airport[]>> allPossibleTracks){
         boolean nodeFound = false;
         LinkedList<Airport[]> nodesToSearch = new LinkedList<>();//backup
@@ -170,8 +197,14 @@ public class PathFinder {
         return allPossibleTracks;
     }
 
-    //Breadth-first search//
+    //
+    //Breadth-first search
+    //
 
+    /**
+     * Starts Breadth-first search.
+     * @return track to finalAirport.
+     */
     private LinkedList<Airport[]> startBFS(){
         LinkedList<LinkedList<Airport[]>> foundTracks = new LinkedList<>();
         LinkedList<LinkedList<Airport[]>> queue3 = new LinkedList<>();
@@ -200,27 +233,25 @@ public class PathFinder {
                 }
             }
             if (!foundTracks.isEmpty()){
-                return sortAllPossibleTracks(foundTracks);
+                foundTracks.sort(compareByDistanceTrack);
+                track = foundTracks.getFirst();
+                return track;
             }
         }
         return null;
     }
 
-    //Dijkstra's algorithm//
+    //
+    // Dijkstra's algorithm
+    //
 
+    /**
+     * Starts Dijkstra's shortest path algorithm.
+     * @return track to finalAirport.
+     */
     private LinkedList<Airport[]> startDijkstra(){
-
-        Comparator<DijkstraTable> compareByDistance = new Comparator<DijkstraTable>() {
-            @Override
-            public int compare(DijkstraTable dijkstraTable1 , DijkstraTable dijkstraTable2) {
-                return Double.compare(dijkstraTable1.distance, dijkstraTable2.distance);
-            }
-        };
-
-        ArrayList<DijkstraTable> dijkstraTableArrayList = new ArrayList<>();
-        ArrayList<Airport> visitedAirports = new ArrayList<>();
         ArrayList<Airport> unvisitedAirports = new ArrayList<>(world.airportsArrayList);
-
+        ArrayList<DijkstraTable> dijkstraTableArrayList = new ArrayList<>();
         for(Airport airport : world.airportsArrayList){
             if(airport.equals(initialAirport)){
                 dijkstraTableArrayList.add(new DijkstraTable(airport, (double) 0, null));
@@ -229,34 +260,33 @@ public class PathFinder {
                 dijkstraTableArrayList.add(new DijkstraTable(airport, Double.POSITIVE_INFINITY, null));
             }
         }
-        dijkstraTableArrayList.sort(compareByDistance);
+        dijkstraTableArrayList.sort(compareByDistanceDijkstraTable);
         while (unvisitedAirports.size() > 0){
-            dijkstraTableArrayList.sort(compareByDistance);
+            dijkstraTableArrayList.sort(compareByDistanceDijkstraTable);
             for(DijkstraTable dijkstraTable : dijkstraTableArrayList){
                 if(unvisitedAirports.contains(dijkstraTable.airport)){
                     for(Airport airport : dijkstraTable.airport.getNearAirports(fuel)){
                         if(unvisitedAirports.contains(airport)){
-                            if(dijkstraTable.distance + world.checkDistance(dijkstraTable.airport, airport) < findDijkstra(airport, dijkstraTableArrayList).distance){
-                                dijkstraTableArrayList.get(dijkstraTableArrayList.indexOf(findDijkstra(airport, dijkstraTableArrayList))).distance = dijkstraTable.distance + world.checkDistance(dijkstraTable.airport, airport);
-                                dijkstraTableArrayList.get(dijkstraTableArrayList.indexOf(findDijkstra(airport, dijkstraTableArrayList))).previousAirport = dijkstraTable.airport;
+                            if(dijkstraTable.distance + world.checkDistance(dijkstraTable.airport, airport) < findAirportInDijkstraTable(airport, dijkstraTableArrayList).distance){
+                                dijkstraTableArrayList.get(dijkstraTableArrayList.indexOf(findAirportInDijkstraTable(airport, dijkstraTableArrayList))).distance = dijkstraTable.distance + world.checkDistance(dijkstraTable.airport, airport);
+                                dijkstraTableArrayList.get(dijkstraTableArrayList.indexOf(findAirportInDijkstraTable(airport, dijkstraTableArrayList))).previousAirport = dijkstraTable.airport;
                             }
                         }
                     }
-                    visitedAirports.add(dijkstraTable.airport);
                     unvisitedAirports.remove(dijkstraTable.airport);
                     break;
                 }
             }
         }
-        if(dijkstraTableArrayList.get(dijkstraTableArrayList.indexOf(findDijkstra(finalAirport, dijkstraTableArrayList))).previousAirport == null){
+        if(dijkstraTableArrayList.get(dijkstraTableArrayList.indexOf(findAirportInDijkstraTable(finalAirport, dijkstraTableArrayList))).previousAirport == null){
             return null;
         }
         LinkedList<Airport> path = new LinkedList<>();
         path.add(finalAirport);
-        Airport airport = dijkstraTableArrayList.get(dijkstraTableArrayList.indexOf(findDijkstra(finalAirport, dijkstraTableArrayList))).previousAirport;
+        Airport airport = dijkstraTableArrayList.get(dijkstraTableArrayList.indexOf(findAirportInDijkstraTable(finalAirport, dijkstraTableArrayList))).previousAirport;
         path.add(airport);
         while (!airport.equals(initialAirport)){
-            airport = dijkstraTableArrayList.get(dijkstraTableArrayList.indexOf(findDijkstra(airport, dijkstraTableArrayList))).previousAirport;
+            airport = dijkstraTableArrayList.get(dijkstraTableArrayList.indexOf(findAirportInDijkstraTable(airport, dijkstraTableArrayList))).previousAirport;
             path.add(airport);
         }
         Collections.reverse(path);
@@ -269,7 +299,23 @@ public class PathFinder {
         return nodePath;
     }
 
-    private DijkstraTable findDijkstra(Airport airport, ArrayList<DijkstraTable> dijkstraTableArrayList){
+    /**
+     * Compares distance in DijkstraTables.
+     */
+    private final Comparator<DijkstraTable> compareByDistanceDijkstraTable = new Comparator<DijkstraTable>() {
+        @Override
+        public int compare(DijkstraTable dijkstraTable1 , DijkstraTable dijkstraTable2) {
+            return Double.compare(dijkstraTable1.distance, dijkstraTable2.distance);
+        }
+    };
+
+    /**
+     * Finds DijkstraTable with specified airport in dijkstraTableArrayList.
+     * @param airport that wanted DijkstraTable should contain.
+     * @param dijkstraTableArrayList ArrayList with all DijkstraTable objects.
+     * @return DijkstraTable with specified airport or null if DijkstraTable was not found.
+     */
+    private DijkstraTable findAirportInDijkstraTable(Airport airport, ArrayList<DijkstraTable> dijkstraTableArrayList){
         for (DijkstraTable dijkstraTable : dijkstraTableArrayList){
             if (dijkstraTable.airport.equals(airport)){
                 return(dijkstraTable);
@@ -284,6 +330,14 @@ class DijkstraTable {
     Double distance;
     Airport previousAirport;
 
+    /**
+     * Row of table used to calculate the shortest path with Dijkstra's algorithm.
+     * @param airport Airport for which the shortest distance is sought.
+     * @param distance Shortest known overall distance from initialAirport to Airport.
+     *                 If not yet calculated, it should have a value of infinity.
+     * @param previousAirport Airport from which airplane can arrive to airport specified
+     *                        in the same DijkstraTable row with the shortest known overall distance.
+     */
     DijkstraTable(Airport airport, Double distance, Airport previousAirport){
         this.airport = airport;
         this.distance = distance;

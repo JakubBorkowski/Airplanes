@@ -12,6 +12,9 @@ public class AirplanesGUI extends JFrame {
     private final ImageIcon airplaneImageIcon = new ImageIcon("src/images/Airplane.png");
     private final ImageIcon worldImageIcon = new ImageIcon("src/images/World.png");
 
+    /**
+     * Main JFrame of an app.
+     */
     public AirplanesGUI(){
         setTitle("Airplanes");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -30,8 +33,14 @@ public class AirplanesGUI extends JFrame {
         setLocation(screenSize.width/2 - this.getSize().width/2, screenSize.height/2 - this.getSize().height/2);
     }
 
+    /**
+     * Draws airport in specified position.
+     * @param x X-axis position of the airport.
+     * @param y Y-axis position of the airport.
+     * @param name Name of airport.
+     */
     public void drawAirport(int x, int y, String name){
-        //Centering position//
+        //Centering position of airport image//
         x = x - (airportImageIcon.getIconWidth() / 2);
         y = y - (airportImageIcon.getIconHeight() / 2);
         //Drawing airport image//
@@ -54,6 +63,12 @@ public class AirplanesGUI extends JFrame {
         drawAirportNameBackground(x, y, name);
     }
 
+    /**
+     * Draws dark background behind airport name.
+     * @param x X-axis position of the airport.
+     * @param y Y-axis position of the airport.
+     * @param name Name of airport.
+     */
     private void drawAirportNameBackground(int x, int y, String name){
         ImageIcon airportNameBackground = new ImageIcon("src/images/Background.png");
         Image image = airportNameBackground.getImage();
@@ -70,6 +85,12 @@ public class AirplanesGUI extends JFrame {
         jLayeredPane.add(airportNameBackgroundJLabel, JLayeredPane.PALETTE_LAYER);
     }
 
+    /**
+     * Creates airplane JLabel in specified position.
+     * @param x X-axis position of airplane.
+     * @param y Y-axis position of airplane.
+     * @return created JLabel of airplane.
+     */
     public JLabel drawAirplane(int x, int y) {
         JLabel airplaneJLabel = new JLabel(airplaneImageIcon);
         airplaneJLabel.setBounds(x - airplaneImageIcon.getIconWidth()/2, y - airplaneImageIcon.getIconHeight()/2,
@@ -78,6 +99,13 @@ public class AirplanesGUI extends JFrame {
         return airplaneJLabel;
     }
 
+    /**
+     * Updates position of specified airplane JLabel.
+     * @param airplaneJLabel JLabel of airplane to update.
+     * @param x X-axis position in which airplane should be.
+     * @param y Y-axis position in which airplane should be.
+     * @param angle Angel at which airplane should be rotated.
+     */
     public void updateAirplane(JLabel airplaneJLabel, int x, int y, double angle) {
         RotatedIcon airplaneRotatedIcon = new RotatedIcon(airplaneImageIcon, angle);
         airplaneJLabel.setIcon(airplaneRotatedIcon);
@@ -89,6 +117,11 @@ public class AirplanesGUI extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Creates JLabel indicated maximum fuel of specified airplane.
+     * @param airplane Airplane for which maxFuel JLabel will be created.
+     * @return created maxFuel JLabel for airplane.
+     */
     public JLabel drawMaxFuelStatus(Airplane airplane) {
         JLabel fuelJLabel = new JLabel();
         fuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
@@ -103,6 +136,11 @@ public class AirplanesGUI extends JFrame {
         return fuelJLabel;
     }
 
+    /**
+     * Creates JLabel indicated current fuel of specified airplane.
+     * @param airplane Airplane for which currentFuel JLabel will be created.
+     * @return created currentFuel JLabel for airplane.
+     */
     public JLabel drawCurrentFuelStatus(Airplane airplane) {
         JLabel fuelJLabel = new JLabel();
         fuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
@@ -117,6 +155,10 @@ public class AirplanesGUI extends JFrame {
         return fuelJLabel;
     }
 
+    /**
+     * Updates position and width of maximum and current fuel JLabels of specified airplane.
+     * @param airplane Airplane for which fuel JLabels will be updated.
+     */
     public void updateFuelStatusAirplane(Airplane airplane) {
         int width = (int) (35 * airplane.currentFuel / (airplane.fuel));
         airplane.maxFuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,

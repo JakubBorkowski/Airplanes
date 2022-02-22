@@ -2,6 +2,10 @@ import java.util.Locale;
 
 public class Main {
 
+    /**
+     * Check if provided arguments can be applied.
+     * @param args String array of provided by user arguments.
+     */
     private static void checkArguments(String[] args){
         if(!(args.length == 4)){
             System.err.println("Wrong number of arguments!\nPlease provide exactly 4 arguments.");
