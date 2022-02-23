@@ -29,7 +29,8 @@ public class Airplane implements Runnable {
      * @param world World object with information about all airports on map.
      * @param algorithmName Name of algorithm which should be used. Available names: "BFS", "DFS", "DIJKSTRA".
      */
-    public Airplane(Airport airport, String name, double fuel, AirplanesGUI airplanesGUI, World world, String algorithmName){
+    public Airplane(Airport airport, String name, double fuel, String algorithmName,
+                    AirplanesGUI airplanesGUI, World world){
         this.airplanesGUI = airplanesGUI;
         this.targetAirport = null;
         this.airport = airport;
@@ -63,8 +64,7 @@ public class Airplane implements Runnable {
                 e.printStackTrace();
             }
         } else {
-            System.out.println(name + ": New track has been set up: " + this.airport.name + trackDisplay(track)
-                    + " For a fly: " + this.airport.name + " -> " + this.targetAirport.name);
+            System.out.println(name + ": New track has been set up: " + this.airport.name + trackDisplay(track));
             for (Airport[] airports : track){
                 try {
                     fly(airports[1]);
@@ -100,16 +100,14 @@ public class Airplane implements Runnable {
         this.airplaneJLabel.setVisible(true);
         currentFuelJLabel.setVisible(true);
         maxFuelJLabel.setVisible(true);
-        double distance = Math.sqrt(Math.pow((x - targetAirport.x), 2) + Math.pow((y - targetAirport.y), 2));
-        double xMultiplier = (abs(targetAirport.x - x) / distance);
-        double yMultiplier = (abs(targetAirport.y - y) / distance);
         currentFuel = fuel;
-
         double angle = Math.toDegrees(Math.atan2((y - targetAirport.y), (x - targetAirport.x))) - 90;
         if(angle < 0){
             angle += 360;
         }
-
+        double distance = Math.sqrt(Math.pow((x - targetAirport.x), 2) + Math.pow((y - targetAirport.y), 2));
+        double xMultiplier = (abs(targetAirport.x - x) / distance);
+        double yMultiplier = (abs(targetAirport.y - y) / distance);
         double xBackup;
         double yBackup;
         while(true) {
@@ -147,9 +145,9 @@ public class Airplane implements Runnable {
                     y = (y - abs(yMultiplier));
                 }
             }
-            currentFuel = currentFuel - Math.sqrt(Math.pow((xBackup - x), 2) + Math.pow((yBackup - y), 2));
+            currentFuel -= Math.sqrt(Math.pow((xBackup - x), 2) + Math.pow((yBackup - y), 2));
             Airplane thisAirplane = this;
-            double finalAngle = angle;
+            final double finalAngle = angle;
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -194,7 +192,7 @@ public class Airplane implements Runnable {
     @Override
     public void run() {
         Random random = new Random();
-        while (true){
+        while(true){
             if(this.targetAirport==null){
                 do{
                     targetAirport = world.airportsArrayList.get(random.nextInt(world.airportsArrayList.size()));

@@ -76,11 +76,15 @@ public class AirplanesGUI extends JFrame {
         airportNameBackground = new ImageIcon(scaledImage);
         JLabel airportNameBackgroundJLabel = new JLabel(airportNameBackground);
         if((airportImageIcon.getIconWidth()/2) - (name.length()*7/2) > 0){
-            airportNameBackgroundJLabel.setBounds(x + abs((airportImageIcon.getIconWidth()/2) - (name.length()*7/2)) - 3,
-                    y + airportImageIcon.getIconHeight() + 2, airportNameBackground.getIconWidth(), airportNameBackground.getIconHeight());
+            airportNameBackgroundJLabel.setBounds(
+                    x + abs((airportImageIcon.getIconWidth()/2) - (name.length()*7/2)) - 3,
+                    y + airportImageIcon.getIconHeight() + 2,
+                    airportNameBackground.getIconWidth(), airportNameBackground.getIconHeight());
         } else {
-            airportNameBackgroundJLabel.setBounds(x - abs((airportImageIcon.getIconWidth()/2) - (name.length()*7/2)) - 3,
-                    y + airportImageIcon.getIconHeight() + 2, airportNameBackground.getIconWidth(), airportNameBackground.getIconHeight());
+            airportNameBackgroundJLabel.setBounds(
+                    x - abs((airportImageIcon.getIconWidth()/2) - (name.length()*7/2)) - 3,
+                    y + airportImageIcon.getIconHeight() + 2,
+                    airportNameBackground.getIconWidth(), airportNameBackground.getIconHeight());
         }
         jLayeredPane.add(airportNameBackgroundJLabel, JLayeredPane.PALETTE_LAYER);
     }
@@ -96,6 +100,7 @@ public class AirplanesGUI extends JFrame {
         airplaneJLabel.setBounds(x - airplaneImageIcon.getIconWidth()/2, y - airplaneImageIcon.getIconHeight()/2,
                 airplaneImageIcon.getIconWidth(), airplaneImageIcon.getIconHeight());
         jLayeredPane.add(airplaneJLabel, JLayeredPane.MODAL_LAYER);
+        airplaneJLabel.setVisible(false);
         return airplaneJLabel;
     }
 
@@ -127,7 +132,6 @@ public class AirplanesGUI extends JFrame {
         fuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
                 airplane.airplaneJLabel.getBounds().y + 25, 35, 3);
         fuelJLabel.setBackground(Color.RED);
-        fuelJLabel.setOpaque(true);
         jLayeredPane.add(fuelJLabel, JLayeredPane.MODAL_LAYER);
         revalidate();
         validate();
@@ -146,7 +150,6 @@ public class AirplanesGUI extends JFrame {
         fuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
                 airplane.airplaneJLabel.getBounds().y + 25, 35, 3);
         fuelJLabel.setBackground(Color.GREEN);
-        fuelJLabel.setOpaque(true);
         jLayeredPane.add(fuelJLabel, JLayeredPane.MODAL_LAYER);
         revalidate();
         validate();
@@ -163,8 +166,10 @@ public class AirplanesGUI extends JFrame {
         int width = (int) (35 * airplane.currentFuel / (airplane.fuel));
         airplane.maxFuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
                 airplane.airplaneJLabel.getBounds().y + 25, 35, 3);
+        airplane.maxFuelJLabel.setOpaque(true);
         airplane.currentFuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
                 airplane.airplaneJLabel.getBounds().y + 25, width, 3);
+        airplane.currentFuelJLabel.setOpaque(true);
         revalidate();
         validate();
         repaint();
