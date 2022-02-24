@@ -2,15 +2,19 @@ import thirdparty.RotatedIcon;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 import static java.lang.Math.abs;
 
 public class AirplanesGUI extends JFrame {
 
     private final JLayeredPane jLayeredPane = new JLayeredPane();//Main Layer
-    private final ImageIcon airportImageIcon = new ImageIcon("src/images/Airport.png");
-    private final ImageIcon airplaneImageIcon = new ImageIcon("src/images/Airplane.png");
-    private final ImageIcon worldImageIcon = new ImageIcon("src/images/World.png");
+    private final ImageIcon airportImageIcon = new ImageIcon(Objects.requireNonNull(
+            AirplanesGUI.class.getResource("/images/Airport.png")));
+    private final ImageIcon airplaneImageIcon = new ImageIcon(Objects.requireNonNull(
+            AirplanesGUI.class.getResource("/images/Airplane.png")));
+    private final ImageIcon worldImageIcon = new ImageIcon(Objects.requireNonNull(
+            AirplanesGUI.class.getResource("/images/World.png")));
 
     /**
      * Main JFrame of an app.
@@ -70,7 +74,8 @@ public class AirplanesGUI extends JFrame {
      * @param name Name of airport.
      */
     private void drawAirportNameBackground(int x, int y, String name){
-        ImageIcon airportNameBackground = new ImageIcon("src/images/Background.png");
+        ImageIcon airportNameBackground = new ImageIcon(Objects.requireNonNull(
+                AirplanesGUI.class.getResource("/images/Background.png")));
         Image image = airportNameBackground.getImage();
         Image scaledImage = image.getScaledInstance(name.length()*7+5, 15,  java.awt.Image.SCALE_SMOOTH);
         airportNameBackground = new ImageIcon(scaledImage);

@@ -32,7 +32,7 @@ public class World {
                                  AirplanesGUI airplanesGUI){
         Random rand = new Random();
         for(int i = 0, j=0; i<numberOfAirplanes; i++, j++){
-            if(airportsArrayList.get(j)==null){
+            if(j==airportsArrayList.size()){
                 j=0;
             }
             if(minFuel==maxFuel){

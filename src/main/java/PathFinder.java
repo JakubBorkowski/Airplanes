@@ -138,9 +138,14 @@ public class PathFinder {
             }
             track.clear();
         }
-        allPossibleTracks.sort(compareByDistanceTrack);
-        track = allPossibleTracks.getFirst();
-        return track;
+        if(allPossibleTracks.isEmpty()){
+            return null;
+        }
+        else {
+            allPossibleTracks.sort(compareByDistanceTrack);
+            track = allPossibleTracks.getFirst();
+            return track;
+        }
     }
 
     /**

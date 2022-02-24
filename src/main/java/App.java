@@ -1,6 +1,6 @@
 import java.util.Locale;
 
-public class Main {
+public class App {
 
     /**
      * Check if provided arguments can be applied.
