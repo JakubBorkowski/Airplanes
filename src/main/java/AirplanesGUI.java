@@ -7,7 +7,6 @@ import java.util.Objects;
 import static java.lang.Math.abs;
 
 public class AirplanesGUI extends JFrame {
-
     private final JLayeredPane jLayeredPane = new JLayeredPane();//Main Layer
     private final ImageIcon airportImageIcon = new ImageIcon(Objects.requireNonNull(
             AirplanesGUI.class.getResource("/images/Airport.png")));
@@ -134,8 +133,8 @@ public class AirplanesGUI extends JFrame {
      */
     public JLabel drawMaxFuelStatus(Airplane airplane) {
         JLabel fuelJLabel = new JLabel();
-        fuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
-                airplane.airplaneJLabel.getBounds().y + 25, 35, 3);
+        fuelJLabel.setBounds(airplane.getAirplaneJLabel().getBounds().x - 5,
+                airplane.getAirplaneJLabel().getBounds().y + 25, 35, 3);
         fuelJLabel.setBackground(Color.RED);
         jLayeredPane.add(fuelJLabel, JLayeredPane.MODAL_LAYER);
         revalidate();
@@ -152,8 +151,8 @@ public class AirplanesGUI extends JFrame {
      */
     public JLabel drawCurrentFuelStatus(Airplane airplane) {
         JLabel fuelJLabel = new JLabel();
-        fuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
-                airplane.airplaneJLabel.getBounds().y + 25, 35, 3);
+        fuelJLabel.setBounds(airplane.getAirplaneJLabel().getBounds().x - 5,
+                airplane.getAirplaneJLabel().getBounds().y + 25, 35, 3);
         fuelJLabel.setBackground(Color.GREEN);
         jLayeredPane.add(fuelJLabel, JLayeredPane.MODAL_LAYER);
         revalidate();
@@ -168,13 +167,13 @@ public class AirplanesGUI extends JFrame {
      * @param airplane Airplane for which fuel JLabels will be updated.
      */
     public void updateFuelStatusAirplane(Airplane airplane) {
-        int width = (int) (35 * airplane.currentFuel / (airplane.fuel));
-        airplane.maxFuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
-                airplane.airplaneJLabel.getBounds().y + 25, 35, 3);
-        airplane.maxFuelJLabel.setOpaque(true);
-        airplane.currentFuelJLabel.setBounds(airplane.airplaneJLabel.getBounds().x - 5,
-                airplane.airplaneJLabel.getBounds().y + 25, width, 3);
-        airplane.currentFuelJLabel.setOpaque(true);
+        int width = (int) (35 * airplane.getCurrentFuel() / (airplane.getFuel()));
+        airplane.getMaxFuelJLabel().setBounds(airplane.getAirplaneJLabel().getBounds().x - 5,
+                airplane.getAirplaneJLabel().getBounds().y + 25, 35, 3);
+        airplane.getMaxFuelJLabel().setOpaque(true);
+        airplane.getCurrentFuelJLabel().setBounds(airplane.getAirplaneJLabel().getBounds().x - 5,
+                airplane.getAirplaneJLabel().getBounds().y + 25, width, 3);
+        airplane.getCurrentFuelJLabel().setOpaque(true);
         revalidate();
         validate();
         repaint();

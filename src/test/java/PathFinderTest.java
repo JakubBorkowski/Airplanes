@@ -81,8 +81,8 @@ class PathFinderTest {
         if(track.size()==foundTrack.size()){
             equal = true;
             for(int i=0;i<track.size();i++){
-                if (!(track.get(i)[0].name.equals(foundTrack.get(i)[0].name)) &&
-                        !(track.get(i)[1].name.equals(foundTrack.get(i)[1].name))) {
+                if (!(track.get(i)[0].getName().equals(foundTrack.get(i)[0].getName())) &&
+                        !(track.get(i)[1].getName().equals(foundTrack.get(i)[1].getName()))) {
                     equal = false;
                     break;
                 }
@@ -105,8 +105,8 @@ class PathFinderTest {
         if(track.size()==foundTrack.size()){
             equal = true;
             for(int i=0;i<track.size();i++){
-                if (!(track.get(i)[0].name.equals(foundTrack.get(i)[0].name)) &&
-                        !(track.get(i)[1].name.equals(foundTrack.get(i)[1].name))) {
+                if (!(track.get(i)[0].getName().equals(foundTrack.get(i)[0].getName())) &&
+                        !(track.get(i)[1].getName().equals(foundTrack.get(i)[1].getName()))) {
                     equal = false;
                     break;
                 }
@@ -129,8 +129,8 @@ class PathFinderTest {
         if(track.size()==foundTrack.size()){
             equal = true;
             for(int i=0;i<track.size();i++){
-                if (!(track.get(i)[0].name.equals(foundTrack.get(i)[0].name)) &&
-                        !(track.get(i)[1].name.equals(foundTrack.get(i)[1].name))) {
+                if (!(track.get(i)[0].getName().equals(foundTrack.get(i)[0].getName())) &&
+                        !(track.get(i)[1].getName().equals(foundTrack.get(i)[1].getName()))) {
                     equal = false;
                     break;
                 }
@@ -150,7 +150,7 @@ class PathFinderTest {
         LinkedList<Double> distanceBetweenAirports = new LinkedList<>();
         for(Airport airport1 : world.airportsArrayList){
             for(Airport airport2 : world.airportsArrayList){
-                if(!(airport1.name.equals(airport2.name))){
+                if(!(airport1.getName().equals(airport2.getName()))){
                     distanceBetweenAirports.add(world.checkDistance(airport1, airport2));
                 }
             }
@@ -185,7 +185,7 @@ class PathFinderTest {
         boolean notFound = false;
         for(Airport airport1 : world.airportsArrayList){
             for(Airport airport2 : world.airportsArrayList){
-                if(!airport1.name.equals(airport2.name)){
+                if(!airport1.getName().equals(airport2.getName())){
                     PathFinder pathFinder = new PathFinder(airport1, airport2, minFuel, world);
                     if(pathFinder.findPath("DFS")==null){
                         notFound=true;
@@ -208,7 +208,7 @@ class PathFinderTest {
         boolean notFound = false;
         for(Airport airport1 : world.airportsArrayList){
             for(Airport airport2 : world.airportsArrayList){
-                if(!airport1.name.equals(airport2.name)){
+                if(!airport1.getName().equals(airport2.getName())){
                     PathFinder pathFinder = new PathFinder(airport1, airport2, minFuel, world);
                     if(pathFinder.findPath("BFS")==null){
                         notFound=true;
@@ -231,7 +231,7 @@ class PathFinderTest {
         boolean notFound = false;
         for(Airport airport1 : world.airportsArrayList){
             for(Airport airport2 : world.airportsArrayList){
-                if(!airport1.name.equals(airport2.name)){
+                if(!airport1.getName().equals(airport2.getName())){
                     PathFinder pathFinder = new PathFinder(airport1, airport2, minFuel, world);
                     if(pathFinder.findPath("DIJKSTRA")==null){
                         notFound=true;

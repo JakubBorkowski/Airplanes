@@ -80,7 +80,7 @@ public class World {
      * @return distance between initialAirport and finalAirport.
      */
     double checkDistance(Airport initialAirport, Airport finalAirport){
-        return Math.sqrt(Math.pow((initialAirport.x - finalAirport.x), 2) +
-                Math.pow((initialAirport.y - finalAirport.y), 2));
+        return Math.sqrt(Math.pow((initialAirport.getX() - finalAirport.getX()), 2) +
+                Math.pow((initialAirport.getY() - finalAirport.getY()), 2));
     }
 }

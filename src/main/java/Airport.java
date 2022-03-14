@@ -1,10 +1,12 @@
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Airport {
-    final int x;
-    final int y;
-    final String name;
+    @Getter private final int x;
+    @Getter private final int y;
+    @Getter private final String name;
     private final World world;
 
     /**

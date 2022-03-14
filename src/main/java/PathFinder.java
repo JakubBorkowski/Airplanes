@@ -1,10 +1,14 @@
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.*;
 
 public class PathFinder {
-    World world;
-    Double fuel;
-    Airport initialAirport;
-    Airport finalAirport;
+    private final World world;
+    private final Double fuel;
+    private final Airport initialAirport;
+    private final Airport finalAirport;
 
     /**
      * Creates a PathFinder. The PathFinder allows you to find the shortest path between two airports
@@ -265,23 +269,24 @@ public class PathFinder {
         while (unvisitedAirports.size() > 0){
             dijkstraTableArrayList.sort(compareByDistanceDijkstraTable);
             for(DijkstraTable dijkstraTable : dijkstraTableArrayList){
-                if(unvisitedAirports.contains(dijkstraTable.airport)){
-                    for(Airport airport : dijkstraTable.airport.getNearAirports(fuel)){
+                if(unvisitedAirports.contains(dijkstraTable.getAirport())){
+                    for(Airport airport : dijkstraTable.getAirport().getNearAirports(fuel)){
                         if(unvisitedAirports.contains(airport)){
                             DijkstraTable dijkstraTable2 = findAirportInDijkstraTable(airport, dijkstraTableArrayList);
                             if(!(dijkstraTable2 == null)){
-                                double distanceBetweenAirports = world.checkDistance(dijkstraTable.airport, airport);
-                                if(dijkstraTable.distance + distanceBetweenAirports < dijkstraTable2.distance){
-                                    int dijkstraTable2Index =  dijkstraTableArrayList.indexOf(dijkstraTable2);
-                                    dijkstraTableArrayList.get(dijkstraTable2Index).distance
-                                            = dijkstraTable.distance + distanceBetweenAirports;
-                                    dijkstraTableArrayList.get(dijkstraTable2Index).previousAirport
-                                            = dijkstraTable.airport;
+                                double distanceBetweenAirports = world.checkDistance(dijkstraTable.getAirport(),
+                                        airport);
+                                if(dijkstraTable.getDistance()+distanceBetweenAirports < dijkstraTable2.getDistance()){
+                                    int dijkstraTable2Index = dijkstraTableArrayList.indexOf(dijkstraTable2);
+                                    dijkstraTableArrayList.get(dijkstraTable2Index).setDistance(
+                                            dijkstraTable.getDistance() + distanceBetweenAirports);
+                                    dijkstraTableArrayList.get(dijkstraTable2Index).setPreviousAirport(
+                                            dijkstraTable.getAirport());
                                 }
                             }
                         }
                     }
-                    unvisitedAirports.remove(dijkstraTable.airport);
+                    unvisitedAirports.remove(dijkstraTable.getAirport());
                     break;
                 }
             }
@@ -290,19 +295,19 @@ public class PathFinder {
         int finalAirportIndex = dijkstraTableArrayList.indexOf(
                 findAirportInDijkstraTable(finalAirport, dijkstraTableArrayList)
         );
-        if(dijkstraTableArrayList.get(finalAirportIndex).previousAirport == null){
+        if(dijkstraTableArrayList.get(finalAirportIndex).getPreviousAirport() == null){
             return null;//Airplane can't reach finalAirport
         }
         //Creating path of airports from dijkstraTableArrayList//
         LinkedList<Airport> path = new LinkedList<>();
         path.add(finalAirport);
-        Airport airport = dijkstraTableArrayList.get(finalAirportIndex).previousAirport;
+        Airport airport = dijkstraTableArrayList.get(finalAirportIndex).getPreviousAirport();
         path.add(airport);
         while (!airport.equals(initialAirport)){
             int airportIndex = dijkstraTableArrayList.indexOf(
                     findAirportInDijkstraTable(airport, dijkstraTableArrayList)
             );
-            airport = dijkstraTableArrayList.get(airportIndex).previousAirport;
+            airport = dijkstraTableArrayList.get(airportIndex).getPreviousAirport();
             path.add(airport);
         }
         Collections.reverse(path);
@@ -322,7 +327,7 @@ public class PathFinder {
     private final Comparator<DijkstraTable> compareByDistanceDijkstraTable = new Comparator<DijkstraTable>() {
         @Override
         public int compare(DijkstraTable dijkstraTable1 , DijkstraTable dijkstraTable2) {
-            return Double.compare(dijkstraTable1.distance, dijkstraTable2.distance);
+            return Double.compare(dijkstraTable1.getDistance(), dijkstraTable2.getDistance());
         }
     };
 
@@ -334,7 +339,7 @@ public class PathFinder {
      */
     private DijkstraTable findAirportInDijkstraTable(Airport airport, ArrayList<DijkstraTable> dijkstraTableArrayList){
         for (DijkstraTable dijkstraTable : dijkstraTableArrayList){
-            if (dijkstraTable.airport.equals(airport)){
+            if (dijkstraTable.getAirport().equals(airport)){
                 return(dijkstraTable);
             }
         }
@@ -342,22 +347,23 @@ public class PathFinder {
     }
 }
 
+/**
+ * Row of table used to calculate the shortest path with Dijkstra's algorithm.
+ */
+@AllArgsConstructor
 class DijkstraTable {
-    Airport airport;
-    Double distance;
-    Airport previousAirport;
-
     /**
-     * Row of table used to calculate the shortest path with Dijkstra's algorithm.
-     * @param airport Airport for which the shortest distance is sought.
-     * @param distance Shortest known overall distance from initialAirport to Airport.
-     *                 If not yet calculated, it should have a value of infinity.
-     * @param previousAirport Airport from which airplane can arrive to airport specified
-     *                        in the same DijkstraTable row with the shortest known overall distance.
+     * Airport for which the shortest distance is sought.
      */
-    DijkstraTable(Airport airport, Double distance, Airport previousAirport){
-        this.airport = airport;
-        this.distance = distance;
-        this.previousAirport = previousAirport;
-    }
+    @Getter private final Airport airport;
+    /**
+     * Shortest known overall distance from initialAirport to Airport.
+     * If not yet calculated, it should have a value of infinity.
+     */
+    @Getter @Setter private Double distance;
+    /**
+     * Airport from which airplane can arrive to airport specified in
+     * the same DijkstraTable row with the shortest known overall distance.
+     */
+    @Getter @Setter private Airport previousAirport;
 }

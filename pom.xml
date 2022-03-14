@@ -9,6 +9,13 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>Airplanes</name>
+    <description>
+        App creates airplanes which will fly through airports.
+        Every airplane can have different range.
+        If airplane can't reach airport immediately,
+        it will search for the shortest path to this airport.
+    </description>
+    <url>https://github.com/JakubBorkowski/Airplanes</url>
 
     <build>
         <plugins>
@@ -42,6 +49,12 @@
             <artifactId>junit-jupiter</artifactId>
             <version>5.8.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     
