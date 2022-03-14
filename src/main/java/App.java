@@ -61,6 +61,12 @@ public class App {
         int minFuel = Integer.parseInt(args[1]);
         int maxFuel = Integer.parseInt(args[2]);
         String algorithmName = args[3];
+        System.out.println();
+        System.out.println("Number of airplanes: " + numberOfAirplanes);
+        System.out.println("Minimum fuel       : " + minFuel);
+        System.out.println("Maximum fuel       : " + maxFuel);
+        System.out.println("Name of algorithm  : " + algorithmName);
+        System.out.println();
         AirplanesGUI gui = new AirplanesGUI();
         new World(gui, numberOfAirplanes, minFuel, maxFuel, algorithmName);
     }
