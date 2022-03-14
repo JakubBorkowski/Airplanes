@@ -14,7 +14,7 @@ public class App {
         try {
             Integer.parseInt(args[0]);
         } catch (NumberFormatException nfe) {
-            System.err.println("Firs argument is not a number!");
+            System.err.println("First argument is not a number!");
             System.exit(1);
         }
         try {
@@ -30,7 +30,7 @@ public class App {
             System.exit(1);
         }
         if(Integer.parseInt(args[0]) < 0){
-            System.err.println("Firs argument can not be a negative number!");
+            System.err.println("First argument can not be a negative number!");
             System.exit(1);
         }
         if(Integer.parseInt(args[1]) < 0){

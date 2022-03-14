@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PathFinderTest {
 
+    //One fuel tests
+
     @Test
     void oneFuelDFS(){
         AirplanesGUI airplanesGUI = new AirplanesGUI();
@@ -34,6 +36,8 @@ class PathFinderTest {
         assertNull(pathFinder.findPath("DIJKSTRA"));
     }
 
+    //No fuel tests
+
     @Test
     void noFuelDFS(){
         AirplanesGUI airplanesGUI = new AirplanesGUI();
@@ -60,6 +64,8 @@ class PathFinderTest {
                 world.airportsArrayList.get(0), world.airportsArrayList.get(1),0.0, world);
         assertNull(pathFinder.findPath("DIJKSTRA"));
     }
+
+    //Infinite fuel tests
 
     @Test
     void infiniteFuelDFS(){
@@ -133,12 +139,14 @@ class PathFinderTest {
         assertTrue(equal);
     }
 
-    @Test
-    void minRequiredFuelDFS(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0,
-                (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "DFS");
-        //Finding minimal fuel which will allow for flying to every airport//
+    //Minimal required fuel tests
+
+    /**
+     * Finds minimal fuel which will allow for flying to every airport in provided world.
+     * @param world World for which minimal required fuel will be calculated.
+     * @return Minimal fuel required for travel to every airport in provided world.
+     */
+    double calculateMinFuel(World world){
         LinkedList<Double> distanceBetweenAirports = new LinkedList<>();
         for(Airport airport1 : world.airportsArrayList){
             for(Airport airport2 : world.airportsArrayList){
@@ -163,6 +171,16 @@ class PathFinderTest {
                 }
             }
         } while (numberOfAirplanesWithNeighbor != world.airportsArrayList.size());
+        return minFuel;
+    }
+
+    @Test
+    void minRequiredFuelDFS(){
+        AirplanesGUI airplanesGUI = new AirplanesGUI();
+        World world = new World(airplanesGUI, 0,
+                (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "DFS");
+        //Finding minimal fuel which will allow for flying to every airport//
+        double minFuel = calculateMinFuel(world);
         //Checks if path was found to every airport//
         boolean notFound = false;
         for(Airport airport1 : world.airportsArrayList){
@@ -185,30 +203,7 @@ class PathFinderTest {
         World world = new World(airplanesGUI, 0,
                 (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "BFS");
         //Finding minimal fuel which will allow for flying to every airport//
-        LinkedList<Double> distanceBetweenAirports = new LinkedList<>();
-        for(Airport airport1 : world.airportsArrayList){
-            for(Airport airport2 : world.airportsArrayList){
-                if(!(airport1.name.equals(airport2.name))){
-                    distanceBetweenAirports.add(world.checkDistance(airport1, airport2));
-                }
-            }
-        }
-        Collections.sort(distanceBetweenAirports);
-        double minFuel;
-        int i=0;
-        int numberOfAirplanesWithNeighbor;
-        do {
-            numberOfAirplanesWithNeighbor = 0;
-            minFuel = distanceBetweenAirports.get(i);
-            for (Airport airport : world.airportsArrayList) {
-                if (airport.getNearAirports(minFuel).isEmpty()) {
-                    i++;
-                    break;
-                } else {
-                    numberOfAirplanesWithNeighbor++;
-                }
-            }
-        } while (numberOfAirplanesWithNeighbor != world.airportsArrayList.size());
+        double minFuel = calculateMinFuel(world);
         //Checks if path was found to every airport//
         boolean notFound = false;
         for(Airport airport1 : world.airportsArrayList){
@@ -231,30 +226,7 @@ class PathFinderTest {
         World world = new World(airplanesGUI, 0,
                 (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "DIJKSTRA");
         //Finding minimal fuel which will allow for flying to every airport//
-        LinkedList<Double> distanceBetweenAirports = new LinkedList<>();
-        for(Airport airport1 : world.airportsArrayList){
-            for(Airport airport2 : world.airportsArrayList){
-                if(!(airport1.name.equals(airport2.name))){
-                    distanceBetweenAirports.add(world.checkDistance(airport1, airport2));
-                }
-            }
-        }
-        Collections.sort(distanceBetweenAirports);
-        double minFuel;
-        int i=0;
-        int numberOfAirplanesWithNeighbor;
-        do {
-            numberOfAirplanesWithNeighbor = 0;
-            minFuel = distanceBetweenAirports.get(i);
-            for (Airport airport : world.airportsArrayList) {
-                if (airport.getNearAirports(minFuel).isEmpty()) {
-                    i++;
-                    break;
-                } else {
-                    numberOfAirplanesWithNeighbor++;
-                }
-            }
-        } while (numberOfAirplanesWithNeighbor != world.airportsArrayList.size());
+        double minFuel = calculateMinFuel(world);
         //Checks if path was found to every airport//
         boolean notFound = false;
         for(Airport airport1 : world.airportsArrayList){
