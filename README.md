@@ -4,6 +4,10 @@ of fuel between minimum and maximum provided by user. If airplane can not reach 
 shortest path to this airport. Current there are three path finding algorithm available in the app.
 User can select which one should be used.
 
+<p align="center">
+<img align="center" src="https://dl.dropbox.com/s/wiydt6p6yrexm0k/screenshot621.gif" height="450" width="450">
+</p>
+
 ## Available algorithms
 
 ### Depth-first search algorithm
