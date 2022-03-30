@@ -324,12 +324,8 @@ public class PathFinder {
     /**
      * Compares distance in DijkstraTables.
      */
-    private final Comparator<DijkstraTable> compareByDistanceDijkstraTable = new Comparator<DijkstraTable>() {
-        @Override
-        public int compare(DijkstraTable dijkstraTable1 , DijkstraTable dijkstraTable2) {
-            return Double.compare(dijkstraTable1.getDistance(), dijkstraTable2.getDistance());
-        }
-    };
+    private final Comparator<DijkstraTable> compareByDistanceDijkstraTable =
+            Comparator.comparingDouble(DijkstraTable::getDistance);
 
     /**
      * Finds DijkstraTable with specified airport in dijkstraTableArrayList.

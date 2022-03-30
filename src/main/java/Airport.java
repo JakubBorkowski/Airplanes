@@ -65,13 +65,10 @@ public class Airport {
      */
     public ArrayList<Airport[]> getSortedNodes(double fuel){
         ArrayList<Airport[]> nodesToSort = getNodes(fuel);
-        Comparator<Airport[]> compareByDistance = new Comparator<Airport[]>() {
-            @Override
-            public int compare(Airport[] node1, Airport[] node2) {
-                double distance1 = world.checkDistance(node1[0], node1[1]);
-                double distance2 = world.checkDistance(node2[0], node2[1]);
-                return Double.compare(distance1, distance2);
-            }
+        Comparator<Airport[]> compareByDistance = (node1, node2) -> {
+            double distance1 = world.checkDistance(node1[0], node1[1]);
+            double distance2 = world.checkDistance(node2[0], node2[1]);
+            return Double.compare(distance1, distance2);
         };
         nodesToSort.sort(compareByDistance);
         return nodesToSort;

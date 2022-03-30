@@ -150,12 +150,9 @@ public class Airplane implements Runnable {
             currentFuel -= Math.sqrt(Math.pow((xBackup - x), 2) + Math.pow((yBackup - y), 2));
             Airplane thisAirplane = this;
             final double finalAngle = angle;
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    airplanesGUI.updateAirplane(airplaneJLabel, (int) x, (int) y, finalAngle);
-                    airplanesGUI.updateFuelStatusAirplane(thisAirplane);
-                }
+            SwingUtilities.invokeLater(() -> {
+                airplanesGUI.updateAirplane(airplaneJLabel, (int) x, (int) y, finalAngle);
+                airplanesGUI.updateFuelStatusAirplane(thisAirplane);
             });
             if(x== targetAirport.getX() && y== targetAirport.getY()){
                 land(targetAirport);
