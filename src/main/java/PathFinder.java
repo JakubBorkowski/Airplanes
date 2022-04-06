@@ -1,14 +1,16 @@
+import com.sun.istack.internal.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.*;
 
 public class PathFinder {
-    private final World world;
-    private final Double fuel;
-    private final Airport initialAirport;
-    private final Airport finalAirport;
+    @NonNull private final World world;
+    @NonNull private final Double fuel;
+    @NonNull private final Airport initialAirport;
+    @NonNull private final Airport finalAirport;
 
     /**
      * Creates a PathFinder. The PathFinder allows you to find the shortest path between two airports
@@ -351,15 +353,15 @@ class DijkstraTable {
     /**
      * Airport for which the shortest distance is sought.
      */
-    @Getter private final Airport airport;
+    @NonNull @Getter private final Airport airport;
     /**
      * Shortest known overall distance from initialAirport to Airport.
      * If not yet calculated, it should have a value of infinity.
      */
-    @Getter @Setter private Double distance;
+    @NonNull @Getter @Setter private Double distance;
     /**
      * Airport from which airplane can arrive to airport specified in
      * the same DijkstraTable row with the shortest known overall distance.
      */
-    @Getter @Setter private Airport previousAirport;
+    @Nullable @Getter @Setter private Airport previousAirport;
 }

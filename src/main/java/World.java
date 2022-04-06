@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class World {
-    public ArrayList<Airport> airportsArrayList = new ArrayList<>();
-    public ArrayList<Airplane> airplanesArrayList = new ArrayList<>();
+    public final ArrayList<Airport> airportsArrayList = new ArrayList<>();
+    public final ArrayList<Airplane> airplanesArrayList = new ArrayList<>();
 
     /**
      * Creates the world.

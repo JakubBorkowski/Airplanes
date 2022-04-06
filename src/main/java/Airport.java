@@ -1,13 +1,14 @@
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Airport {
-    @Getter private final int x;
-    @Getter private final int y;
-    @Getter private final String name;
-    private final World world;
+    @NonNull @Getter private final int x;
+    @NonNull @Getter private final int y;
+    @NonNull @Getter private final String name;
+    @NonNull private final World world;
 
     /**
      * Creates an airport.

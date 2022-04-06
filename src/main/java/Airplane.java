@@ -1,4 +1,6 @@
+import com.sun.istack.internal.Nullable;
 import lombok.Getter;
+import lombok.NonNull;
 
 import javax.swing.*;
 import java.util.*;
@@ -7,20 +9,20 @@ import java.util.concurrent.TimeUnit;
 import static java.lang.Math.abs;
 
 public class Airplane implements Runnable {
-    private final AirplanesGUI airplanesGUI;
-    private final World world;
-    private double x;
-    private double y;
-    @Getter private final String name;
-    @Getter private final double fuel;
-    @Getter private double currentFuel;
-    private Airport airport;
-    private Airport targetAirport;
-    @Getter private final JLabel airplaneJLabel;
-    @Getter private final JLabel maxFuelJLabel;
-    @Getter private final JLabel currentFuelJLabel;
-    @Getter private LinkedList<Airport[]> track = new LinkedList<>();
-    private final String algorithmName;
+    @NonNull private final AirplanesGUI airplanesGUI;
+    @NonNull private final World world;
+    @NonNull private double x;
+    @NonNull private double y;
+    @NonNull @Getter private final String name;
+    @NonNull @Getter private final double fuel;
+    @NonNull @Getter private double currentFuel;
+    @Nullable private Airport airport;
+    @Nullable private Airport targetAirport;
+    @NonNull @Getter private final JLabel airplaneJLabel;
+    @NonNull @Getter private final JLabel maxFuelJLabel;
+    @NonNull @Getter private final JLabel currentFuelJLabel;
+    @Nullable @Getter private LinkedList<Airport[]> track;
+    @NonNull private final String algorithmName;
 
     /**
      * Creates an airplane.
