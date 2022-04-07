@@ -14,7 +14,7 @@ class PathFinderTest {
         AirplanesGUI airplanesGUI = new AirplanesGUI();
         World world = new World(airplanesGUI, 0, 1, 1, "DFS");
         PathFinder pathFinder = new PathFinder(
-                world.airportsArrayList.get(0), world.airportsArrayList.get(1), 1.0, world);
+                world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1), 1.0, world);
         assertNull(pathFinder.findPath("DFS"));
     }
 
@@ -23,7 +23,7 @@ class PathFinderTest {
         AirplanesGUI airplanesGUI = new AirplanesGUI();
         World world = new World(airplanesGUI, 0, 1, 1, "BFS");
         PathFinder pathFinder = new PathFinder(
-                world.airportsArrayList.get(0), world.airportsArrayList.get(1), 1.0, world);
+                world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1), 1.0, world);
         assertNull(pathFinder.findPath("BFS"));
     }
 
@@ -32,7 +32,7 @@ class PathFinderTest {
         AirplanesGUI airplanesGUI = new AirplanesGUI();
         World world = new World(airplanesGUI, 0, 1, 1, "DIJKSTRA");
         PathFinder pathFinder = new PathFinder(
-                world.airportsArrayList.get(0), world.airportsArrayList.get(1), 1.0, world);
+                world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1), 1.0, world);
         assertNull(pathFinder.findPath("DIJKSTRA"));
     }
 
@@ -43,7 +43,7 @@ class PathFinderTest {
         AirplanesGUI airplanesGUI = new AirplanesGUI();
         World world = new World(airplanesGUI, 0, 0, 0, "DFS");
         PathFinder pathFinder = new PathFinder(
-                world.airportsArrayList.get(0), world.airportsArrayList.get(1), 0.0, world);
+                world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1), 0.0, world);
         assertNull(pathFinder.findPath("DFS"));
     }
 
@@ -52,7 +52,7 @@ class PathFinderTest {
         AirplanesGUI airplanesGUI = new AirplanesGUI();
         World world = new World(airplanesGUI, 0, 0, 0, "BFS");
         PathFinder pathFinder = new PathFinder(
-                world.airportsArrayList.get(0), world.airportsArrayList.get(1), 0.0, world);
+                world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1), 0.0, world);
         assertNull(pathFinder.findPath("BFS"));
     }
 
@@ -61,7 +61,7 @@ class PathFinderTest {
         AirplanesGUI airplanesGUI = new AirplanesGUI();
         World world = new World(airplanesGUI, 0, 0, 0, "DIJKSTRA");
         PathFinder pathFinder = new PathFinder(
-                world.airportsArrayList.get(0), world.airportsArrayList.get(1),0.0, world);
+                world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1),0.0, world);
         assertNull(pathFinder.findPath("DIJKSTRA"));
     }
 
@@ -72,11 +72,11 @@ class PathFinderTest {
         AirplanesGUI airplanesGUI = new AirplanesGUI();
         World world = new World(airplanesGUI, 0,
                 (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "DFS");
-        PathFinder pathFinder = new PathFinder(world.airportsArrayList.get(0), world.airportsArrayList.get(1),
+        PathFinder pathFinder = new PathFinder(world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1),
                 Double.POSITIVE_INFINITY, world);
         LinkedList<Airport[]> foundTrack = new LinkedList<>(pathFinder.findPath("DFS"));
         LinkedList<Airport[]> track = new LinkedList<>();
-        track.add(new Airport[]{world.airportsArrayList.get(0), world.airportsArrayList.get(1)});
+        track.add(new Airport[]{world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1)});
         boolean equal = false;
         if(track.size()==foundTrack.size()){
             equal = true;
@@ -96,11 +96,11 @@ class PathFinderTest {
         AirplanesGUI airplanesGUI = new AirplanesGUI();
         World world = new World(airplanesGUI, 0,
                 (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "BFS");
-        PathFinder pathFinder = new PathFinder(world.airportsArrayList.get(0), world.airportsArrayList.get(1),
+        PathFinder pathFinder = new PathFinder(world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1),
                 Double.POSITIVE_INFINITY, world);
         LinkedList<Airport[]> foundTrack = new LinkedList<>(pathFinder.findPath("BFS"));
         LinkedList<Airport[]> track = new LinkedList<>();
-        track.add(new Airport[]{world.airportsArrayList.get(0), world.airportsArrayList.get(1)});
+        track.add(new Airport[]{world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1)});
         boolean equal = false;
         if(track.size()==foundTrack.size()){
             equal = true;
@@ -120,11 +120,11 @@ class PathFinderTest {
         AirplanesGUI airplanesGUI = new AirplanesGUI();
         World world = new World(airplanesGUI, 0,
                 (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "DIJKSTRA");
-        PathFinder pathFinder = new PathFinder(world.airportsArrayList.get(0), world.airportsArrayList.get(1),
+        PathFinder pathFinder = new PathFinder(world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1),
                 Double.POSITIVE_INFINITY, world);
         LinkedList<Airport[]> foundTrack = new LinkedList<>(pathFinder.findPath("DIJKSTRA"));
         LinkedList<Airport[]> track = new LinkedList<>();
-        track.add(new Airport[]{world.airportsArrayList.get(0), world.airportsArrayList.get(1)});
+        track.add(new Airport[]{world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1)});
         boolean equal = false;
         if(track.size()==foundTrack.size()){
             equal = true;
@@ -148,8 +148,8 @@ class PathFinderTest {
      */
     double calculateMinFuel(World world){
         LinkedList<Double> distanceBetweenAirports = new LinkedList<>();
-        for(Airport airport1 : world.airportsArrayList){
-            for(Airport airport2 : world.airportsArrayList){
+        for(Airport airport1 : world.getAirportsArrayList()){
+            for(Airport airport2 : world.getAirportsArrayList()){
                 if(!(airport1.getName().equals(airport2.getName()))){
                     distanceBetweenAirports.add(world.checkDistance(airport1, airport2));
                 }
@@ -162,7 +162,7 @@ class PathFinderTest {
         do {
             numberOfAirplanesWithNeighbor = 0;
             minFuel = distanceBetweenAirports.get(i);
-            for (Airport airport : world.airportsArrayList) {
+            for (Airport airport : world.getAirportsArrayList()) {
                 if (airport.getNearAirports(minFuel).isEmpty()) {
                     i++;
                     break;
@@ -170,7 +170,7 @@ class PathFinderTest {
                     numberOfAirplanesWithNeighbor++;
                 }
             }
-        } while (numberOfAirplanesWithNeighbor != world.airportsArrayList.size());
+        } while (numberOfAirplanesWithNeighbor != world.getAirportsArrayList().size());
         return minFuel;
     }
 
@@ -183,8 +183,8 @@ class PathFinderTest {
         double minFuel = calculateMinFuel(world);
         //Checks if path was found to every airport//
         boolean notFound = false;
-        for(Airport airport1 : world.airportsArrayList){
-            for(Airport airport2 : world.airportsArrayList){
+        for(Airport airport1 : world.getAirportsArrayList()){
+            for(Airport airport2 : world.getAirportsArrayList()){
                 if(!airport1.getName().equals(airport2.getName())){
                     PathFinder pathFinder = new PathFinder(airport1, airport2, minFuel, world);
                     if(pathFinder.findPath("DFS")==null){
@@ -206,8 +206,8 @@ class PathFinderTest {
         double minFuel = calculateMinFuel(world);
         //Checks if path was found to every airport//
         boolean notFound = false;
-        for(Airport airport1 : world.airportsArrayList){
-            for(Airport airport2 : world.airportsArrayList){
+        for(Airport airport1 : world.getAirportsArrayList()){
+            for(Airport airport2 : world.getAirportsArrayList()){
                 if(!airport1.getName().equals(airport2.getName())){
                     PathFinder pathFinder = new PathFinder(airport1, airport2, minFuel, world);
                     if(pathFinder.findPath("BFS")==null){
@@ -229,8 +229,8 @@ class PathFinderTest {
         double minFuel = calculateMinFuel(world);
         //Checks if path was found to every airport//
         boolean notFound = false;
-        for(Airport airport1 : world.airportsArrayList){
-            for(Airport airport2 : world.airportsArrayList){
+        for(Airport airport1 : world.getAirportsArrayList()){
+            for(Airport airport2 : world.getAirportsArrayList()){
                 if(!airport1.getName().equals(airport2.getName())){
                     PathFinder pathFinder = new PathFinder(airport1, airport2, minFuel, world);
                     if(pathFinder.findPath("DIJKSTRA")==null){

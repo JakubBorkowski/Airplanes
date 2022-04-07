@@ -1,9 +1,11 @@
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class World {
-    public final ArrayList<Airport> airportsArrayList = new ArrayList<>();
-    public final ArrayList<Airplane> airplanesArrayList = new ArrayList<>();
+    @Getter private final ArrayList<Airport> airportsArrayList = new ArrayList<>();
+    @Getter private final ArrayList<Airplane> airplanesArrayList = new ArrayList<>();
 
     /**
      * Creates the world.

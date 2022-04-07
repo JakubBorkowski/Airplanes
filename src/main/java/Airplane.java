@@ -199,7 +199,8 @@ public class Airplane implements Runnable {
         while(generateNewTargets){
             if(targetAirport==null){
                 do{
-                    targetAirport = world.airportsArrayList.get(random.nextInt(world.airportsArrayList.size()));
+                    targetAirport = world.getAirportsArrayList().get(
+                            random.nextInt(world.getAirportsArrayList().size()));
                 }
                 while (airport == targetAirport);
                 System.out.println(name + ": New target: " + targetAirport.getName());

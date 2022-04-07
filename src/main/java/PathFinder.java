@@ -257,9 +257,9 @@ public class PathFinder {
      * @return track to finalAirport.
      */
     private LinkedList<Airport[]> startDijkstra(){
-        ArrayList<Airport> unvisitedAirports = new ArrayList<>(world.airportsArrayList);
+        ArrayList<Airport> unvisitedAirports = new ArrayList<>(world.getAirportsArrayList());
         ArrayList<DijkstraTable> dijkstraTableArrayList = new ArrayList<>();
-        for(Airport airport : world.airportsArrayList){
+        for(Airport airport : world.getAirportsArrayList()){
             if(airport.equals(initialAirport)){
                 dijkstraTableArrayList.add(new DijkstraTable(airport, (double) 0, null));
             }

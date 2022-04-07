@@ -33,7 +33,7 @@ public class Airport {
      */
     public ArrayList<Airport> getNearAirports(double fuel){
         ArrayList<Airport> nearAirportsArrayList = new ArrayList<>();
-        for(Airport airport : world.airportsArrayList){
+        for(Airport airport : world.getAirportsArrayList()){
             if(fuel >= world.checkDistance(this, airport)){
                 nearAirportsArrayList.add(airport);
             }
@@ -49,7 +49,7 @@ public class Airport {
      */
     public ArrayList<Airport[]> getNodes(double fuel){
         ArrayList<Airport[]> nearAirportsArrayList = new ArrayList<>();
-        for(Airport airport : world.airportsArrayList){
+        for(Airport airport : world.getAirportsArrayList()){
             if(!airport.equals(this) && fuel >= world.checkDistance(this, airport)){
                 Airport[] node = {this, airport};
                 nearAirportsArrayList.add(node);
