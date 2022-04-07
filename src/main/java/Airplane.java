@@ -1,6 +1,7 @@
 import com.sun.istack.internal.Nullable;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.util.*;
@@ -23,6 +24,7 @@ public class Airplane implements Runnable {
     @NonNull @Getter private final JLabel currentFuelJLabel;
     @Nullable @Getter private LinkedList<Airport[]> track;
     @NonNull private final String algorithmName;
+    @NonNull @Getter @Setter private boolean generateNewTargets;
 
     /**
      * Creates an airplane.
@@ -48,6 +50,7 @@ public class Airplane implements Runnable {
         this.currentFuelJLabel = airplanesGUI.drawCurrentFuelStatus(this);
         this.maxFuelJLabel = airplanesGUI.drawMaxFuelStatus(this);
         this.algorithmName = algorithmName;
+        this.generateNewTargets = true;
     }
 
     /**
@@ -57,7 +60,7 @@ public class Airplane implements Runnable {
      * @param targetAirport destination airport.
      */
     public void setTarget(Airport targetAirport){
-        PathFinder pathFinder = new PathFinder(this.airport, targetAirport, fuel, world);
+        PathFinder pathFinder = new PathFinder(airport, targetAirport, fuel, world);
         track = pathFinder.findPath(algorithmName);
         if(track == null){
             System.out.println(name + ": Can't reach " + targetAirport.getName());
@@ -68,15 +71,11 @@ public class Airplane implements Runnable {
                 e.printStackTrace();
             }
         } else {
-            System.out.println(name + ": New track has been set up: " + this.airport.getName() + trackDisplay(track));
+            System.out.println(name + ": New track has been set up: " + airport.getName() + trackDisplay(track));
             for (Airport[] airports : track){
-                try {
-                    fly(airports[1]);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                fly(airports[1]);
             }
-            this.track.clear();
+            track.clear();
         }
     }
 
@@ -99,9 +98,9 @@ public class Airplane implements Runnable {
      * Displays airplane and updates its position until it reach targetAirport.
      * @param targetAirport airport to which airplane will fly.
      */
-    private void fly(Airport targetAirport) throws InterruptedException {
-        this.airport = null;
-        this.airplaneJLabel.setVisible(true);
+    private void fly(Airport targetAirport) {
+        airport = null;
+        airplaneJLabel.setVisible(true);
         currentFuelJLabel.setVisible(true);
         maxFuelJLabel.setVisible(true);
         currentFuel = fuel;
@@ -160,7 +159,11 @@ public class Airplane implements Runnable {
                 land(targetAirport);
                 break;
             }
-            TimeUnit.MILLISECONDS.sleep(10);
+            try {
+                TimeUnit.MILLISECONDS.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -193,14 +196,14 @@ public class Airplane implements Runnable {
     @Override
     public void run() {
         Random random = new Random();
-        while(true){
-            if(this.targetAirport==null){
+        while(generateNewTargets){
+            if(targetAirport==null){
                 do{
                     targetAirport = world.airportsArrayList.get(random.nextInt(world.airportsArrayList.size()));
                 }
-                while (targetAirport.getX() == this.x && targetAirport.getY() == this.y);
+                while (airport == targetAirport);
                 System.out.println(name + ": New target: " + targetAirport.getName());
-                System.out.println(name + ": Searching flight: " + this.airport.getName()
+                System.out.println(name + ": Searching flight: " + airport.getName()
                         + " -> "  + targetAirport.getName());
                 setTarget(targetAirport);
             }
