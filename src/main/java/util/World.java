@@ -1,3 +1,5 @@
+package util;
+
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -77,11 +79,11 @@ public class World {
 
     /**
      * Check distance between two airports.
-     * @param initialAirport Airport, from which distance will be calculated.
-     * @param finalAirport Airport to which distance will be calculated.
+     * @param initialAirport util.Airport, from which distance will be calculated.
+     * @param finalAirport util.Airport to which distance will be calculated.
      * @return distance between initialAirport and finalAirport.
      */
-    double checkDistance(Airport initialAirport, Airport finalAirport){
+    public double checkDistance(Airport initialAirport, Airport finalAirport){
         return Math.sqrt(Math.pow((initialAirport.getX() - finalAirport.getX()), 2) +
                 Math.pow((initialAirport.getY() - finalAirport.getY()), 2));
     }

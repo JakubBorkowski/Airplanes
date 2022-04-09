@@ -1,5 +1,10 @@
 import org.junit.jupiter.api.Test;
 
+import util.AirplanesGUI;
+import util.Airport;
+import util.World;
+import pathfinding.PathFinder;
+
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -143,7 +148,7 @@ class PathFinderTest {
 
     /**
      * Finds minimal fuel which will allow for flying to every airport in provided world.
-     * @param world World for which minimal required fuel will be calculated.
+     * @param world util.World for which minimal required fuel will be calculated.
      * @return Minimal fuel required for travel to every airport in provided world.
      */
     double calculateMinFuel(World world){

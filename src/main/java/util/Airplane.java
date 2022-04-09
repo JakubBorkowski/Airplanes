@@ -1,4 +1,7 @@
+package util;
+
 import com.sun.istack.internal.Nullable;
+import pathfinding.PathFinder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -28,11 +31,11 @@ public class Airplane implements Runnable {
 
     /**
      * Creates an airplane.
-     * @param airport Airport in which airplane currently is.
+     * @param airport util.Airport in which airplane currently is.
      * @param name Name of airplane.
      * @param fuel Maximum fuel of airplane.
      * @param airplanesGUI Application JFrame in which airplane will be displayed.
-     * @param world World object with information about all airports on map.
+     * @param world util.World object with information about all airports on map.
      * @param algorithmName Name of algorithm which should be used. Available names: "BFS", "DFS", "DIJKSTRA".
      */
     public Airplane(Airport airport, String name, double fuel, String algorithmName,
@@ -170,7 +173,7 @@ public class Airplane implements Runnable {
     /**
      * Hides airplane image and refuels airplane. If destination airport is reached,
      * updates current airplane airport and set its targetAirport to null.
-     * @param targetAirport Airport at which airplane will land.
+     * @param targetAirport util.Airport at which airplane will land.
      */
     private void land(Airport targetAirport) {
         airplaneJLabel.setVisible(false);

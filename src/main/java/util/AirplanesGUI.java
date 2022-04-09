@@ -1,3 +1,5 @@
+package util;
+
 import thirdparty.RotatedIcon;
 
 import javax.swing.*;
@@ -27,7 +29,7 @@ public class AirplanesGUI extends JFrame {
         //Adding main JLayerPane//
         jLayeredPane.setBounds(0, 0, worldImageIcon.getIconWidth(), worldImageIcon.getIconHeight());
         add(jLayeredPane);
-        //Adding World map//
+        //Adding util.World map//
         JLabel worldJLabel = new JLabel(worldImageIcon);
         worldJLabel.setBounds(0, 0, worldImageIcon.getIconWidth(), worldImageIcon.getIconHeight());
         jLayeredPane.add(worldJLabel, JLayeredPane.DEFAULT_LAYER);
@@ -128,7 +130,7 @@ public class AirplanesGUI extends JFrame {
 
     /**
      * Creates JLabel indicated maximum fuel of specified airplane.
-     * @param airplane Airplane for which maxFuel JLabel will be created.
+     * @param airplane util.Airplane for which maxFuel JLabel will be created.
      * @return created maxFuel JLabel for airplane.
      */
     public JLabel drawMaxFuelStatus(Airplane airplane) {
@@ -146,7 +148,7 @@ public class AirplanesGUI extends JFrame {
 
     /**
      * Creates JLabel indicated current fuel of specified airplane.
-     * @param airplane Airplane for which currentFuel JLabel will be created.
+     * @param airplane util.Airplane for which currentFuel JLabel will be created.
      * @return created currentFuel JLabel for airplane.
      */
     public JLabel drawCurrentFuelStatus(Airplane airplane) {
@@ -164,7 +166,7 @@ public class AirplanesGUI extends JFrame {
 
     /**
      * Updates position and width of maximum and current fuel JLabels of specified airplane.
-     * @param airplane Airplane for which fuel JLabels will be updated.
+     * @param airplane util.Airplane for which fuel JLabels will be updated.
      */
     public void updateFuelStatusAirplane(Airplane airplane) {
         int width = (int) (35 * airplane.getCurrentFuel() / (airplane.getFuel()));
