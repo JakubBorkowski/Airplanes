@@ -1,4 +1,3 @@
-import util.AirplanesGUI;
 import util.World;
 
 import java.util.Locale;
@@ -89,6 +88,25 @@ public class App {
         System.out.println("Name of algorithm  : " + algorithmName);
         System.out.println();
         //Starting app GUI//
-        new World(numberOfAirplanes, minFuel, maxFuel, algorithmName);
+        World world = new World();
+        world.addAirport(101, 319, "Zielona Góra");
+        world.addAirport(81, 238, "Gorzów Wielokopolski");
+        world.addAirport(44, 163, "Szczecin");
+        world.addAirport(301, 71, "Gdańsk");
+        world.addAirport(413, 138, "Olsztyn");
+        world.addAirport(578, 203, "Białystok");
+        world.addAirport(443, 286, "Warszawa");
+        world.addAirport(253, 196, "Bydgoszcz");
+        world.addAirport(299, 209, "Toruń");
+        world.addAirport(189, 272, "Poznań");
+        world.addAirport(348, 346, "Łódź");
+        world.addAirport(200, 399, "Wrocław");
+        world.addAirport(252, 455, "Opole");
+        world.addAirport(319, 498, "Katowice");
+        world.addAirport(376, 501, "Kraków");
+        world.addAirport(516, 517, "Rzeszów");
+        world.addAirport(422, 385, "Kielce");
+        world.addAirport(545, 393, "Lublin");
+        world.addAirplanes(numberOfAirplanes, minFuel, maxFuel, algorithmName);
     }
 }

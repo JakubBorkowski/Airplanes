@@ -17,15 +17,14 @@ public class Airport {
      * @param x X-axis position of airport.
      * @param y Y-axis position of airport.
      * @param name Name of airport.
-     * @param airplanesGUI Application JFrame in which airplane will be displayed.
      * @param world util.World object with information about all airports on map.
      */
-    Airport(int x, int y, String name, AirplanesGUI airplanesGUI, World world){
+    Airport(int x, int y, String name, World world){
         this.x = x;
         this.y = y;
         this.name = name;
         this.world = world;
-        airplanesGUI.drawAirport(x, y, name);
+        world.getAirplanesGUI().drawAirport(x, y, name);
     }
 
     /**

@@ -34,13 +34,11 @@ public class Airplane implements Runnable {
      * @param airport util.Airport in which airplane currently is.
      * @param name Name of airplane.
      * @param fuel Maximum fuel of airplane.
-     * @param airplanesGUI Application JFrame in which airplane will be displayed.
      * @param world util.World object with information about all airports on map.
      * @param algorithmName Name of algorithm which should be used. Available names: "BFS", "DFS", "DIJKSTRA".
      */
-    public Airplane(Airport airport, String name, double fuel, String algorithmName,
-                    AirplanesGUI airplanesGUI, World world){
-        this.airplanesGUI = airplanesGUI;
+    public Airplane(Airport airport, String name, double fuel, String algorithmName, World world){
+        this.airplanesGUI = world.getAirplanesGUI();
         this.targetAirport = null;
         this.airport = airport;
         this.x = airport.getX();

@@ -1,39 +1,26 @@
 package util;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+@NoArgsConstructor
 public class World {
     @Getter private final ArrayList<Airport> airportsArrayList = new ArrayList<>();
     @Getter private final ArrayList<Airplane> airplanesArrayList = new ArrayList<>();
-
-    /**
-     * Creates the world.
-     * @param numberOfAirplanes Number of airplanes to create.
-     * @param minFuel Minimal number of fuel with airplane can have.
-     * @param maxFuel Maximum number of fuel with airplane can have.
-     * @param algorithmName name of algorithm witch will be used by airplane to find track.
-     *                      Available names: "BFS", "DFS", "DIJKSTRA".
-     */
-    public World(int numberOfAirplanes, int minFuel, int maxFuel, String algorithmName){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        createAirports(airplanesGUI);
-        createAirplanes(numberOfAirplanes, minFuel, maxFuel, algorithmName, airplanesGUI);
-    }
+    @Getter private final AirplanesGUI airplanesGUI = new AirplanesGUI();
 
     /**
      * Creates specified number of airplanes. All airplanes will be distributed equally between all airports.
      * @param numberOfAirplanes Number of airplanes to create.
      * @param minFuel Minimal number of fuel with airplane can have.
      * @param maxFuel Maximum number of fuel with airplane can have.
-     * @param airplanesGUI Graphic interface on which airplane will be displayed.
      * @param algorithmName name of algorithm witch will be used by airplane to find track.
      *                      Available names: "BFS", "DFS", "DIJKSTRA".
      */
-    private void createAirplanes(int numberOfAirplanes, int minFuel, int maxFuel, String algorithmName,
-                                 AirplanesGUI airplanesGUI){
+    public void addAirplanes(int numberOfAirplanes, int minFuel, int maxFuel, String algorithmName){
         Random rand = new Random();
         for(int i = 0, j=0; i<numberOfAirplanes; i++, j++){
             if(j==airportsArrayList.size()){
@@ -41,11 +28,11 @@ public class World {
             }
             if(minFuel==maxFuel){
                 airplanesArrayList.add(new Airplane(airportsArrayList.get(j), "Airplane_" + (i+1),
-                        maxFuel, algorithmName, airplanesGUI, this));
+                        maxFuel, algorithmName, this));
             }
             else{
                 airplanesArrayList.add(new Airplane(airportsArrayList.get(j), "Airplane_" + (i+1),
-                        rand.nextInt(maxFuel - minFuel) + minFuel, algorithmName, airplanesGUI, this));
+                        rand.nextInt(maxFuel - minFuel) + minFuel, algorithmName, this));
             }
             Thread airplaneThread = new Thread(airplanesArrayList.get(i));
             airplaneThread.start();
@@ -53,28 +40,13 @@ public class World {
     }
 
     /**
-     * Crate airports.
-     * @param airplanesGUI Graphic interface on which airport will be displayed.
+     * Creates an airport.
+     * @param x X-axis position of airport.
+     * @param y Y-axis position of airport.
+     * @param name Name of airport.
      */
-    private void createAirports(AirplanesGUI airplanesGUI){
-        airportsArrayList.add(new Airport(101, 319, "Zielona Góra", airplanesGUI, this));
-        airportsArrayList.add(new Airport(81, 238, "Gorzów Wielokopolski", airplanesGUI, this));
-        airportsArrayList.add(new Airport(44, 163, "Szczecin", airplanesGUI, this));
-        airportsArrayList.add(new Airport(301, 71, "Gdańsk", airplanesGUI, this));
-        airportsArrayList.add(new Airport(413, 138, "Olsztyn", airplanesGUI, this));
-        airportsArrayList.add(new Airport(578, 203, "Białystok", airplanesGUI, this));
-        airportsArrayList.add(new Airport(443, 286, "Warszawa", airplanesGUI, this));
-        airportsArrayList.add(new Airport(253, 196, "Bydgoszcz", airplanesGUI, this));
-        airportsArrayList.add(new Airport(299, 209, "Toruń", airplanesGUI, this));
-        airportsArrayList.add(new Airport(189, 272, "Poznań", airplanesGUI, this));
-        airportsArrayList.add(new Airport(348, 346, "Łódź", airplanesGUI, this));
-        airportsArrayList.add(new Airport(200, 399, "Wrocław", airplanesGUI, this));
-        airportsArrayList.add(new Airport(252, 455, "Opole", airplanesGUI, this));
-        airportsArrayList.add(new Airport(319, 498, "Katowice", airplanesGUI, this));
-        airportsArrayList.add(new Airport(376, 501, "Kraków", airplanesGUI, this));
-        airportsArrayList.add(new Airport(516, 517, "Rzeszów", airplanesGUI, this));
-        airportsArrayList.add(new Airport(422, 385, "Kielce", airplanesGUI, this));
-        airportsArrayList.add(new Airport(545, 393, "Lublin", airplanesGUI, this));
+    public void addAirport(int x, int y, String name){
+        airportsArrayList.add(new Airport(x, y, name, this));
     }
 
     /**

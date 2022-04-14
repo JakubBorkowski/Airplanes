@@ -63,7 +63,7 @@ public class DFS extends PathFinder {
             ArrayList<Airport[]> node1GetNodes = new ArrayList<>(path.get(path.size()-1)[1].getNodes(fuel));
             for(Airport[] nodeNeighbor : node1GetNodes){
                 if(!(nodeNeighbor[0] == initialAirport) && !(nodeNeighbor[1] == initialAirport) &&
-                        !(nodeNeighbor[1] == path.get(path.size()-1)[0]) && isPathNotContainingNode(nodeNeighbor, path)){
+                        !(nodeNeighbor[1] == path.get(path.size()-1)[0]) && isPathNotContainingNode(nodeNeighbor,path)){
                     if(nodeNeighbor[1].equals(finalAirport)){
                         path.add(nodeNeighbor);
                         if(isAllPossiblePathsNotContainingPath(path, allPossiblePaths)){
