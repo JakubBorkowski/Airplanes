@@ -89,7 +89,6 @@ public class App {
         System.out.println("Name of algorithm  : " + algorithmName);
         System.out.println();
         //Starting app GUI//
-        AirplanesGUI gui = new AirplanesGUI();
-        new World(gui, numberOfAirplanes, minFuel, maxFuel, algorithmName);
+        new World(numberOfAirplanes, minFuel, maxFuel, algorithmName);
     }
 }

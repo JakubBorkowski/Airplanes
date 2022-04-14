@@ -11,14 +11,14 @@ public class World {
 
     /**
      * Creates the world.
-     * @param airplanesGUI Graphic interface on which airplanes and airports will be displayed.
      * @param numberOfAirplanes Number of airplanes to create.
      * @param minFuel Minimal number of fuel with airplane can have.
      * @param maxFuel Maximum number of fuel with airplane can have.
      * @param algorithmName name of algorithm witch will be used by airplane to find track.
      *                      Available names: "BFS", "DFS", "DIJKSTRA".
      */
-    public World(AirplanesGUI airplanesGUI, int numberOfAirplanes, int minFuel, int maxFuel, String algorithmName){
+    public World(int numberOfAirplanes, int minFuel, int maxFuel, String algorithmName){
+        AirplanesGUI airplanesGUI = new AirplanesGUI();
         createAirports(airplanesGUI);
         createAirplanes(numberOfAirplanes, minFuel, maxFuel, algorithmName, airplanesGUI);
     }

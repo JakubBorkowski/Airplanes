@@ -8,6 +8,9 @@ import java.util.Objects;
 
 import static java.lang.Math.abs;
 
+/**
+ * Graphic interface on which airplanes and airports will be displayed.
+ */
 public class AirplanesGUI extends JFrame {
     private final JLayeredPane jLayeredPane = new JLayeredPane();//Main Layer
     private final ImageIcon airportImageIcon = new ImageIcon(Objects.requireNonNull(

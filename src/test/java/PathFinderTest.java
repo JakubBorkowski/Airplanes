@@ -16,8 +16,7 @@ class PathFinderTest {
 
     @Test
     void oneFuelDFS(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0, 1, 1, "DFS");
+        World world = new World(0, 1, 1, "DFS");
         PathFinder pathFinder = new PathFinder(
                 world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1), 1.0, world);
         assertNull(pathFinder.findPath("DFS"));
@@ -25,8 +24,7 @@ class PathFinderTest {
 
     @Test
     void oneFuelBFS(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0, 1, 1, "BFS");
+        World world = new World(0, 1, 1, "BFS");
         PathFinder pathFinder = new PathFinder(
                 world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1), 1.0, world);
         assertNull(pathFinder.findPath("BFS"));
@@ -34,8 +32,7 @@ class PathFinderTest {
 
     @Test
     void oneFuelDIJKSTRA(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0, 1, 1, "DIJKSTRA");
+        World world = new World(0, 1, 1, "DIJKSTRA");
         PathFinder pathFinder = new PathFinder(
                 world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1), 1.0, world);
         assertNull(pathFinder.findPath("DIJKSTRA"));
@@ -45,8 +42,7 @@ class PathFinderTest {
 
     @Test
     void noFuelDFS(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0, 0, 0, "DFS");
+        World world = new World(0, 0, 0, "DFS");
         PathFinder pathFinder = new PathFinder(
                 world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1), 0.0, world);
         assertNull(pathFinder.findPath("DFS"));
@@ -54,8 +50,7 @@ class PathFinderTest {
 
     @Test
     void noFuelBFS(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0, 0, 0, "BFS");
+        World world = new World(0, 0, 0, "BFS");
         PathFinder pathFinder = new PathFinder(
                 world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1), 0.0, world);
         assertNull(pathFinder.findPath("BFS"));
@@ -63,8 +58,7 @@ class PathFinderTest {
 
     @Test
     void noFuelDIJKSTRA(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0, 0, 0, "DIJKSTRA");
+        World world = new World(0, 0, 0, "DIJKSTRA");
         PathFinder pathFinder = new PathFinder(
                 world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1),0.0, world);
         assertNull(pathFinder.findPath("DIJKSTRA"));
@@ -74,8 +68,7 @@ class PathFinderTest {
 
     @Test
     void infiniteFuelDFS(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0,
+        World world = new World(0,
                 (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "DFS");
         PathFinder pathFinder = new PathFinder(world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1),
                 Double.POSITIVE_INFINITY, world);
@@ -98,8 +91,7 @@ class PathFinderTest {
 
     @Test
     void infiniteFuelBFS(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0,
+        World world = new World(0,
                 (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "BFS");
         PathFinder pathFinder = new PathFinder(world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1),
                 Double.POSITIVE_INFINITY, world);
@@ -122,8 +114,7 @@ class PathFinderTest {
 
     @Test
     void infiniteFuelDIJKSTRA(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0,
+        World world = new World(0,
                 (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "DIJKSTRA");
         PathFinder pathFinder = new PathFinder(world.getAirportsArrayList().get(0), world.getAirportsArrayList().get(1),
                 Double.POSITIVE_INFINITY, world);
@@ -181,8 +172,7 @@ class PathFinderTest {
 
     @Test
     void minRequiredFuelDFS(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0,
+        World world = new World(0,
                 (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "DFS");
         //Finding minimal fuel which will allow for flying to every airport//
         double minFuel = calculateMinFuel(world);
@@ -204,8 +194,7 @@ class PathFinderTest {
 
     @Test
     void minRequiredFuelBFS(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0,
+        World world = new World(0,
                 (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "BFS");
         //Finding minimal fuel which will allow for flying to every airport//
         double minFuel = calculateMinFuel(world);
@@ -227,8 +216,7 @@ class PathFinderTest {
 
     @Test
     void minRequiredFuelDIJKSTRA(){
-        AirplanesGUI airplanesGUI = new AirplanesGUI();
-        World world = new World(airplanesGUI, 0,
+        World world = new World(0,
                 (int) Double.POSITIVE_INFINITY, (int)  Double.POSITIVE_INFINITY, "DIJKSTRA");
         //Finding minimal fuel which will allow for flying to every airport//
         double minFuel = calculateMinFuel(world);
