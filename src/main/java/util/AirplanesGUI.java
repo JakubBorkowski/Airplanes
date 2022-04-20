@@ -1,5 +1,6 @@
 package util;
 
+import lombok.Getter;
 import thirdparty.RotatedIcon;
 
 import javax.swing.*;
@@ -11,34 +12,25 @@ import static java.lang.Math.abs;
 /**
  * Graphic interface on which airplanes and airports will be displayed.
  */
-public class AirplanesGUI extends JFrame {
-    private final JLayeredPane jLayeredPane = new JLayeredPane();//Main Layer
+public class AirplanesGUI {
+    @Getter private final static JLayeredPane jLayeredPane = new JLayeredPane();//Main Layer
     private final ImageIcon airportImageIcon = new ImageIcon(Objects.requireNonNull(
             AirplanesGUI.class.getResource("/images/Airport.png")));
-    private final ImageIcon airplaneImageIcon = new ImageIcon(Objects.requireNonNull(
+    @Getter private final static ImageIcon airplaneImageIcon = new ImageIcon(Objects.requireNonNull(
             AirplanesGUI.class.getResource("/images/Airplane.png")));
-    private final ImageIcon worldImageIcon = new ImageIcon(Objects.requireNonNull(
+    @Getter private final static ImageIcon worldImageIcon = new ImageIcon(Objects.requireNonNull(
             AirplanesGUI.class.getResource("/images/World.png")));
 
     /**
      * Main JFrame of an app.
      */
     public AirplanesGUI(){
-        setTitle("Airplanes");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(worldImageIcon.getIconWidth(), worldImageIcon.getIconHeight());
-        setResizable(false);
-        setVisible(true);
         //Adding main JLayerPane//
         jLayeredPane.setBounds(0, 0, worldImageIcon.getIconWidth(), worldImageIcon.getIconHeight());
-        add(jLayeredPane);
-        //Adding util.World map//
+        //Adding World map//
         JLabel worldJLabel = new JLabel(worldImageIcon);
         worldJLabel.setBounds(0, 0, worldImageIcon.getIconWidth(), worldImageIcon.getIconHeight());
         jLayeredPane.add(worldJLabel, JLayeredPane.DEFAULT_LAYER);
-        //Centering window on screen//
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(screenSize.width/2 - this.getSize().width/2, screenSize.height/2 - this.getSize().height/2);
     }
 
     /**
@@ -125,10 +117,6 @@ public class AirplanesGUI extends JFrame {
         airplaneJLabel.setIcon(airplaneRotatedIcon);
         airplaneJLabel.setBounds(x - airplaneImageIcon.getIconWidth()/2, y - airplaneImageIcon.getIconHeight()/2,
                 airplaneImageIcon.getIconWidth(), airplaneImageIcon.getIconHeight());
-        revalidate();
-        validate();
-        repaint();
-        setVisible(true);
     }
 
     /**
@@ -142,10 +130,6 @@ public class AirplanesGUI extends JFrame {
                 airplane.getAirplaneJLabel().getBounds().y + 25, 35, 3);
         fuelJLabel.setBackground(Color.RED);
         jLayeredPane.add(fuelJLabel, JLayeredPane.MODAL_LAYER);
-        revalidate();
-        validate();
-        repaint();
-        setVisible(true);
         return fuelJLabel;
     }
 
@@ -160,10 +144,6 @@ public class AirplanesGUI extends JFrame {
                 airplane.getAirplaneJLabel().getBounds().y + 25, 35, 3);
         fuelJLabel.setBackground(Color.GREEN);
         jLayeredPane.add(fuelJLabel, JLayeredPane.MODAL_LAYER);
-        revalidate();
-        validate();
-        repaint();
-        setVisible(true);
         return fuelJLabel;
     }
 
@@ -179,9 +159,5 @@ public class AirplanesGUI extends JFrame {
         airplane.getCurrentFuelJLabel().setBounds(airplane.getAirplaneJLabel().getBounds().x - 5,
                 airplane.getAirplaneJLabel().getBounds().y + 25, width, 3);
         airplane.getCurrentFuelJLabel().setOpaque(true);
-        revalidate();
-        validate();
-        repaint();
-        setVisible(true);
     }
 }
