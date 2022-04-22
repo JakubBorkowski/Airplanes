@@ -1,7 +1,8 @@
-package util;
+package gui;
 
 import lombok.Getter;
 import thirdparty.RotatedIcon;
+import util.Airplane;
 
 import javax.swing.*;
 import java.awt.*;

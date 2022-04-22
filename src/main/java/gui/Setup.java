@@ -1,4 +1,6 @@
-package util;
+package gui;
+
+import util.World;
 
 import javax.swing.*;
 import java.awt.*;

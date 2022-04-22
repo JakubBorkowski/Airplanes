@@ -1,4 +1,4 @@
-import util.Setup;
+import gui.Setup;
 
 import java.util.Locale;
 

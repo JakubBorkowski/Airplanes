@@ -1,5 +1,6 @@
 package util;
 
+import gui.AirplanesGUI;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
