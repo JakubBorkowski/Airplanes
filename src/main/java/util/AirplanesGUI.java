@@ -33,6 +33,12 @@ public class AirplanesGUI {
         jLayeredPane.add(worldJLabel, JLayeredPane.DEFAULT_LAYER);
     }
 
+    public void addBackButton(JButton backButton) {
+        jLayeredPane.add(backButton, JLayeredPane.DRAG_LAYER);
+        jLayeredPane.revalidate();
+        jLayeredPane.validate();
+    }
+
     /**
      * Draws airport in specified position.
      * @param x X-axis position of the airport.
@@ -121,7 +127,7 @@ public class AirplanesGUI {
 
     /**
      * Creates JLabel indicated maximum fuel of specified airplane.
-     * @param airplane util.Airplane for which maxFuel JLabel will be created.
+     * @param airplane Airplane for which maxFuel JLabel will be created.
      * @return created maxFuel JLabel for airplane.
      */
     public JLabel drawMaxFuelStatus(Airplane airplane) {
@@ -135,7 +141,7 @@ public class AirplanesGUI {
 
     /**
      * Creates JLabel indicated current fuel of specified airplane.
-     * @param airplane util.Airplane for which currentFuel JLabel will be created.
+     * @param airplane Airplane for which currentFuel JLabel will be created.
      * @return created currentFuel JLabel for airplane.
      */
     public JLabel drawCurrentFuelStatus(Airplane airplane) {
@@ -149,7 +155,7 @@ public class AirplanesGUI {
 
     /**
      * Updates position and width of maximum and current fuel JLabels of specified airplane.
-     * @param airplane util.Airplane for which fuel JLabels will be updated.
+     * @param airplane Airplane for which fuel JLabels will be updated.
      */
     public void updateFuelStatusAirplane(Airplane airplane) {
         int width = (int) (35 * airplane.getCurrentFuel() / (airplane.getFuel()));

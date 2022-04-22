@@ -1,12 +1,6 @@
-import util.AirplanesGUI;
 import util.Setup;
-import util.World;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.Locale;
-
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 public class App {
 
@@ -83,6 +77,7 @@ public class App {
      */
     public static void main(String[] args) {
         if(args.length==0){
+            //Starting app GUI//
             new Setup();
         } else {
             //Checking if provided arguments can be applied.//
@@ -92,45 +87,8 @@ public class App {
             int minFuel = Integer.parseInt(args[1]);
             int maxFuel = Integer.parseInt(args[2]);
             String algorithmName = args[3];
-            //Displaying provided values//
-            System.out.println();
-            System.out.println("Number of airplanes: " + numberOfAirplanes);
-            System.out.println("Minimum fuel       : " + minFuel);
-            System.out.println("Maximum fuel       : " + maxFuel);
-            System.out.println("Name of algorithm  : " + algorithmName);
-            System.out.println();
             //Starting app GUI//
-            JFrame jFrame = new JFrame();
-            jFrame.setTitle("Airplanes");
-            jFrame.setResizable(false);
-            jFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-            jFrame.setIconImage(AirplanesGUI.getAirplaneImageIcon().getImage());
-            World world = new World();
-            jFrame.setSize(AirplanesGUI.getWorldImageIcon().getIconWidth(), AirplanesGUI.getWorldImageIcon().getIconHeight());
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            jFrame.setLocation(screenSize.width/2 - jFrame.getSize().width/2, screenSize.height/2 - jFrame.getSize().height/2);
-            jFrame.setResizable(false);
-            jFrame.setVisible(true);
-            jFrame.setContentPane(AirplanesGUI.getJLayeredPane());
-            world.addAirport(101, 319, "Zielona Góra");
-            world.addAirport(81, 238, "Gorzów Wielokopolski");
-            world.addAirport(44, 163, "Szczecin");
-            world.addAirport(301, 71, "Gdańsk");
-            world.addAirport(413, 138, "Olsztyn");
-            world.addAirport(578, 203, "Białystok");
-            world.addAirport(443, 286, "Warszawa");
-            world.addAirport(253, 196, "Bydgoszcz");
-            world.addAirport(299, 209, "Toruń");
-            world.addAirport(189, 272, "Poznań");
-            world.addAirport(348, 346, "Łódź");
-            world.addAirport(200, 399, "Wrocław");
-            world.addAirport(252, 455, "Opole");
-            world.addAirport(319, 498, "Katowice");
-            world.addAirport(376, 501, "Kraków");
-            world.addAirport(516, 517, "Rzeszów");
-            world.addAirport(422, 385, "Kielce");
-            world.addAirport(545, 393, "Lublin");
-            world.addAirplanes(numberOfAirplanes, minFuel, maxFuel, algorithmName);
+            new Setup(numberOfAirplanes, minFuel, maxFuel, algorithmName);
         }
     }
 }

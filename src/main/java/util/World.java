@@ -15,9 +15,9 @@ public class World {
     /**
      * Creates specified number of airplanes. All airplanes will be distributed equally between all airports.
      * @param numberOfAirplanes Number of airplanes to create.
-     * @param minFuel Minimal number of fuel with airplane can have.
-     * @param maxFuel Maximum number of fuel with airplane can have.
-     * @param algorithmName name of algorithm witch will be used by airplane to find track.
+     * @param minFuel Minimal number of fuel which airplane can have.
+     * @param maxFuel Maximum number of fuel which airplane can have.
+     * @param algorithmName name of algorithm which will be used by airplane to find path.
      *                      Available names: "BFS", "DFS", "DIJKSTRA".
      */
     public void addAirplanes(int numberOfAirplanes, int minFuel, int maxFuel, String algorithmName){
@@ -51,8 +51,8 @@ public class World {
 
     /**
      * Check distance between two airports.
-     * @param initialAirport util.Airport, from which distance will be calculated.
-     * @param finalAirport util.Airport to which distance will be calculated.
+     * @param initialAirport Airport, from which distance will be calculated.
+     * @param finalAirport Airport to which distance will be calculated.
      * @return distance between initialAirport and finalAirport.
      */
     public double checkDistance(Airport initialAirport, Airport finalAirport){

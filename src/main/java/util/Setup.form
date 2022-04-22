@@ -441,7 +441,7 @@
                   <text value="Breadth-first search"/>
                 </properties>
               </component>
-              <component id="671ac" class="javax.swing.JRadioButton" binding="dijkstraSShortestPathRadioButton" default-binding="true">
+              <component id="671ac" class="javax.swing.JRadioButton" binding="dijkstraShortestPathRadioButton" default-binding="true">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>

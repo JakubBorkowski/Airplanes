@@ -17,7 +17,7 @@ public class Airport {
      * @param x X-axis position of airport.
      * @param y Y-axis position of airport.
      * @param name Name of airport.
-     * @param world util.World object with information about all airports on map.
+     * @param world World object with information about all airports on map.
      */
     Airport(int x, int y, String name, World world){
         this.x = x;
