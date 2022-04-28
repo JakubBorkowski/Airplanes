@@ -4,6 +4,8 @@ import util.World;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Setup extends JFrame {
     private JPanel mainPanel;
@@ -63,6 +65,30 @@ public class Setup extends JFrame {
                 minFuelSpinner.setValue(maxFuelSpinner.getValue());
             }
         });
+        //Adding ActionListener to selectAllAirportsCheckBox//
+        selectAllAirportsCheckBox.addActionListener(e -> {
+            if(selectAllAirportsCheckBox.isSelected()){
+                for (JCheckBox airportCheckBox : polishAirportsCheckBoxes){
+                    airportCheckBox.setSelected(true);
+                }
+            } else {
+                for (JCheckBox airportCheckBox : polishAirportsCheckBoxes){
+                    airportCheckBox.setSelected(false);
+                }
+            }
+        });
+        //Adding ActionListeners to airports checkboxes//
+        for (JCheckBox airportCheckBox : polishAirportsCheckBoxes){
+            airportCheckBox.addActionListener(e -> {
+                if(!airportCheckBox.isSelected()){
+                    selectAllAirportsCheckBox.setSelected(false);
+                } else {
+                    if(areAllAirportsCheckBoxesSelected()){
+                        selectAllAirportsCheckBox.setSelected(true);
+                    }
+                }
+            });
+        }
         //Adding ActionListener to submitButton//
         submitButton.addActionListener(e -> {
             //Determining algorithm name//
@@ -78,7 +104,7 @@ public class Setup extends JFrame {
             }
             //Displaying provided values//
             displayValues((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
-                          (Integer) maxFuelSpinner.getValue(), algorithmName);
+                    (Integer) maxFuelSpinner.getValue(), algorithmName);
             //Creating new world//
             world = new World();
             //Adding back button//
@@ -90,49 +116,7 @@ public class Setup extends JFrame {
             //Adding airports and airplanes
             addAirports();
             world.addAirplanes((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
-                               (Integer) maxFuelSpinner.getValue(), algorithmName);
-        });
-        //Adding ActionListener to selectAllAirportsCheckBox//
-        selectAllAirportsCheckBox.addActionListener(e -> {
-            if(selectAllAirportsCheckBox.isSelected()){
-                zielonaGoraCheckBox.setSelected(true);
-                gorzowWielokopolskiCheckBox.setSelected(true);
-                szczecinCheckBox.setSelected(true);
-                gdanskCheckBox.setSelected(true);
-                olsztynCheckBox.setSelected(true);
-                bialystokCheckBox.setSelected(true);
-                warszawaCheckBox.setSelected(true);
-                bydgoszczCheckBox.setSelected(true);
-                torunCheckBox.setSelected(true);
-                poznanCheckBox.setSelected(true);
-                lodzCheckBox.setSelected(true);
-                wroclawCheckBox.setSelected(true);
-                opoleCheckBox.setSelected(true);
-                katowiceCheckBox.setSelected(true);
-                krakowCheckBox.setSelected(true);
-                rzeszowCheckBox.setSelected(true);
-                kielceCheckBox.setSelected(true);
-                lublinCheckBox.setSelected(true);
-            } else {
-                zielonaGoraCheckBox.setSelected(false);
-                gorzowWielokopolskiCheckBox.setSelected(false);
-                szczecinCheckBox.setSelected(false);
-                gdanskCheckBox.setSelected(false);
-                olsztynCheckBox.setSelected(false);
-                bialystokCheckBox.setSelected(false);
-                warszawaCheckBox.setSelected(false);
-                bydgoszczCheckBox.setSelected(false);
-                torunCheckBox.setSelected(false);
-                poznanCheckBox.setSelected(false);
-                lodzCheckBox.setSelected(false);
-                wroclawCheckBox.setSelected(false);
-                opoleCheckBox.setSelected(false);
-                katowiceCheckBox.setSelected(false);
-                krakowCheckBox.setSelected(false);
-                rzeszowCheckBox.setSelected(false);
-                kielceCheckBox.setSelected(false);
-                lublinCheckBox.setSelected(false);
-            }
+                    (Integer) maxFuelSpinner.getValue(), algorithmName);
         });
     }
 
@@ -249,6 +233,46 @@ public class Setup extends JFrame {
         if(lublinCheckBox.isSelected()){
             world.addAirport(545, 393, "Lublin");
         }
+    }
+
+    /**
+     * LinkedList of all airports JCheckBox
+     */
+    private final LinkedList<JCheckBox> polishAirportsCheckBoxes = new LinkedList<>(Arrays.asList(
+            zielonaGoraCheckBox,
+            gorzowWielokopolskiCheckBox,
+            szczecinCheckBox,
+            gdanskCheckBox,
+            olsztynCheckBox,
+            bialystokCheckBox,
+            warszawaCheckBox,
+            bydgoszczCheckBox,
+            torunCheckBox,
+            poznanCheckBox,
+            lodzCheckBox,
+            wroclawCheckBox,
+            opoleCheckBox,
+            katowiceCheckBox,
+            krakowCheckBox,
+            rzeszowCheckBox,
+            kielceCheckBox,
+            lublinCheckBox
+    ));
+
+    /**
+     * Checks if all JCheckBoxes in polishAirportsCheckBoxes LinkedList are selected
+     * @return True if all JCheckBoxes in polishAirportsCheckBoxes LinkedList are selected
+     *         or false, if at least one of them is not selected
+     */
+    private boolean areAllAirportsCheckBoxesSelected(){
+        boolean areAllAirportsCheckBoxesSelected = true;
+        for (JCheckBox airportCheckBox : polishAirportsCheckBoxes){
+            if(!airportCheckBox.isSelected()){
+                areAllAirportsCheckBoxesSelected = false;
+                break;
+            }
+        }
+        return areAllAirportsCheckBoxesSelected;
     }
 
     /**
