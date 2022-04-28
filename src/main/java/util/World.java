@@ -22,21 +22,23 @@ public class World {
      *                      Available names: "BFS", "DFS", "DIJKSTRA".
      */
     public void addAirplanes(int numberOfAirplanes, int minFuel, int maxFuel, String algorithmName){
-        Random rand = new Random();
-        for(int i = 0, j=0; i<numberOfAirplanes; i++, j++){
-            if(j==airportsArrayList.size()){
-                j=0;
+        if(!airportsArrayList.isEmpty()){
+            Random rand = new Random();
+            for(int i = 0, j=0; i<numberOfAirplanes; i++, j++){
+                if(j==airportsArrayList.size()){
+                    j=0;
+                }
+                if(minFuel==maxFuel){
+                    airplanesArrayList.add(new Airplane(airportsArrayList.get(j), "Airplane_" + (i+1),
+                            maxFuel, algorithmName, this));
+                }
+                else{
+                    airplanesArrayList.add(new Airplane(airportsArrayList.get(j), "Airplane_" + (i+1),
+                            rand.nextInt(maxFuel - minFuel) + minFuel, algorithmName, this));
+                }
+                Thread airplaneThread = new Thread(airplanesArrayList.get(i));
+                airplaneThread.start();
             }
-            if(minFuel==maxFuel){
-                airplanesArrayList.add(new Airplane(airportsArrayList.get(j), "Airplane_" + (i+1),
-                        maxFuel, algorithmName, this));
-            }
-            else{
-                airplanesArrayList.add(new Airplane(airportsArrayList.get(j), "Airplane_" + (i+1),
-                        rand.nextInt(maxFuel - minFuel) + minFuel, algorithmName, this));
-            }
-            Thread airplaneThread = new Thread(airplanesArrayList.get(i));
-            airplaneThread.start();
         }
     }
 
