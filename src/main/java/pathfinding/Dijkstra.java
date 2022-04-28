@@ -102,10 +102,10 @@ public class Dijkstra {
             Comparator.comparingDouble(DijkstraTable::getDistance);
 
     /**
-     * Finds findingpath.DijkstraTable with specified airport in dijkstraTableArrayList.
-     * @param airport that wanted findingpath.DijkstraTable should contain.
-     * @param dijkstraTableArrayList ArrayList with all findingpath.DijkstraTable objects.
-     * @return findingpath.DijkstraTable with specified airport or null if findingpath.DijkstraTable was not found.
+     * Finds DijkstraTable with specified airport in dijkstraTableArrayList.
+     * @param airport that wanted DijkstraTable should contain.
+     * @param dijkstraTableArrayList ArrayList with all DijkstraTable objects.
+     * @return DijkstraTable with specified airport or null if DijkstraTable was not found.
      */
     private DijkstraTable findAirportInDijkstraTable(Airport airport, ArrayList<DijkstraTable> dijkstraTableArrayList){
         for (DijkstraTable dijkstraTable : dijkstraTableArrayList){
@@ -126,8 +126,7 @@ class DijkstraTable {
     /**
      * util.Airport for which the shortest distance is sought.
      */
-    @NonNull
-    @Getter
+    @NonNull @Getter
     private final Airport airport;
     /**
      * Shortest known overall distance from initialAirport to util.Airport.
@@ -139,6 +138,6 @@ class DijkstraTable {
      * util.Airport from which airplane can arrive to airport specified in
      * the same findingpath.DijkstraTable row with the shortest known overall distance.
      */
-    @Nullable
-    @Getter @Setter private Airport previousAirport;
+    @Nullable @Getter @Setter
+    private Airport previousAirport;
 }

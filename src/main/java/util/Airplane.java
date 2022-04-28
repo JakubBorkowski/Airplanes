@@ -64,20 +64,22 @@ public class Airplane implements Runnable {
     public void setTarget(Airport targetAirport){
         PathFinder pathFinder = new PathFinder(airport, targetAirport, fuel, world);
         track = pathFinder.findPath(algorithmName);
-        if(track == null){
-            System.out.println(name + ": Can't reach " + targetAirport.getName());
-            this.targetAirport = null;
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if(generateNewTargets){
+            if(track == null){
+                System.out.println(name + ": Can't reach " + targetAirport.getName());
+                this.targetAirport = null;
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println(name + ": New track has been set up: " + airport.getName() + trackDisplay(track));
+                for (Airport[] airports : track){
+                    fly(airports[1]);
+                }
+                track.clear();
             }
-        } else {
-            System.out.println(name + ": New track has been set up: " + airport.getName() + trackDisplay(track));
-            for (Airport[] airports : track){
-                fly(airports[1]);
-            }
-            track.clear();
         }
     }
 
@@ -115,7 +117,7 @@ public class Airplane implements Runnable {
         double yMultiplier = (abs(targetAirport.getY() - y) / distance);
         double xBackup;
         double yBackup;
-        while(true) {
+        while(generateNewTargets) {
             xBackup = x;
             yBackup = y;
             if ((x < targetAirport.getX())){

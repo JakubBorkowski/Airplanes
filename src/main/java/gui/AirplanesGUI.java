@@ -22,11 +22,8 @@ public class AirplanesGUI {
     @Getter private final static ImageIcon worldImageIcon = new ImageIcon(Objects.requireNonNull(
             AirplanesGUI.class.getResource("/images/World.png")));
 
-    /**
-     * Main JFrame of an app.
-     */
     public AirplanesGUI(){
-        //Adding main JLayerPane//
+        //Setting up main JLayerPane//
         jLayeredPane.setBounds(0, 0, worldImageIcon.getIconWidth(), worldImageIcon.getIconHeight());
         //Adding World map//
         JLabel worldJLabel = new JLabel(worldImageIcon);
@@ -34,6 +31,10 @@ public class AirplanesGUI {
         jLayeredPane.add(worldJLabel, JLayeredPane.DEFAULT_LAYER);
     }
 
+    /**
+     * Adds backButton to AirplanesGUI jLayeredPane
+     * @param backButton JButton that changes main JFrame content pane to Set up screen
+     */
     public void addBackButton(JButton backButton) {
         jLayeredPane.add(backButton, JLayeredPane.DRAG_LAYER);
         jLayeredPane.revalidate();
@@ -106,7 +107,7 @@ public class AirplanesGUI {
     public JLabel drawAirplane(int x, int y) {
         JLabel airplaneJLabel = new JLabel(airplaneImageIcon);
         airplaneJLabel.setBounds(x - airplaneImageIcon.getIconWidth()/2, y - airplaneImageIcon.getIconHeight()/2,
-                airplaneImageIcon.getIconWidth(), airplaneImageIcon.getIconHeight());
+                                 airplaneImageIcon.getIconWidth(), airplaneImageIcon.getIconHeight());
         jLayeredPane.add(airplaneJLabel, JLayeredPane.MODAL_LAYER);
         airplaneJLabel.setVisible(false);
         return airplaneJLabel;

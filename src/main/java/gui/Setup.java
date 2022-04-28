@@ -34,17 +34,24 @@ public class Setup extends JFrame {
     private JCheckBox lublinCheckBox;
     private World world;
 
+    /**
+     * Creates main JFrame of an app
+     */
     public Setup() {
+        //Setting up JFrame//
         initializeJFrame();
         //Centering window on screen//
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(screenSize.width/2 - this.getSize().width/2, screenSize.height/2 - this.getSize().height/2);
+        //Setting up JFrame components//
+        //Setting up minFuelSpinner and maxFuelSpinner//
         SpinnerModel value = new SpinnerNumberModel(1,1,99,1);
         airplanesNumberSpinner.setModel(value);
         SpinnerModel value2 = new SpinnerNumberModel(200,1,999,1);
         minFuelSpinner.setModel(value2);
         SpinnerModel value3 = new SpinnerNumberModel(200,1,999,1);
         maxFuelSpinner.setModel(value3);
+        //Adding ChangeListeners to Spinners//
         minFuelSpinner.addChangeListener(e -> {
             if((Integer) maxFuelSpinner.getValue() < (Integer) minFuelSpinner.getValue()){
                 maxFuelSpinner.setValue(minFuelSpinner.getValue());
@@ -55,7 +62,9 @@ public class Setup extends JFrame {
                 minFuelSpinner.setValue(maxFuelSpinner.getValue());
             }
         });
+        //Adding ChangeListener to submitButton//
         submitButton.addActionListener(e -> {
+            //Determining algorithm name//
             String algorithmName = "DIJKSTRA";
             if(depthFirstSearchRadioButton.isSelected()){
                 algorithmName = "DFS";
@@ -66,54 +75,82 @@ public class Setup extends JFrame {
             else if(dijkstraShortestPathRadioButton.isSelected()){
                 algorithmName = "DIJKSTRA";
             }
+            //Displaying provided values//
             displayValues((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
                           (Integer) maxFuelSpinner.getValue(), algorithmName);
+            //Creating new world//
             world = new World();
+            //Adding back button//
+            world.getAirplanesGUI().addBackButton(backButton());
+            //Changing JFrame settings//
+            setContentPane(AirplanesGUI.getJLayeredPane());
+            setSize(AirplanesGUI.getWorldImageIcon().getIconWidth(), AirplanesGUI.getWorldImageIcon().getIconHeight());
+            setLocation(this.getX(), Math.max(this.getY() - (this.getHeight()/4) + 25, 0));
+            //Adding airports and airplanes
             addAirports();
             world.addAirplanes((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
                                (Integer) maxFuelSpinner.getValue(), algorithmName);
-            setSize(AirplanesGUI.getWorldImageIcon().getIconWidth(), AirplanesGUI.getWorldImageIcon().getIconHeight());
-            setLocation(this.getX(), Math.max(this.getY() - (this.getHeight() / 4) + 25, 0));
-            world.getAirplanesGUI().addBackButton(backButton());
-            setContentPane(AirplanesGUI.getJLayeredPane());
         });
     }
 
-    private JButton backButton(){
-        JButton jButton = new JButton();
-        jButton.setText("Back");
-        jButton.setVisible(true);
-        jButton.setSize(70,20);
-        jButton.addActionListener(event -> {
-            getContentPane().removeAll();
-            revalidate();
-            validate();
-            repaint();
-            setContentPane(mainPanel);
-            setSize(mainPanel.getPreferredSize());
-            setLocation(this.getX(), this.getY()+(this.getHeight()/4)+44);
-            world.getAirplanesArrayList().get(0).setGenerateNewTargets(false);
-            world.getAirplanesArrayList().forEach((n) -> (n).setGenerateNewTargets(false));
-            revalidate();
-            validate();
-            repaint();
-        });
-        return jButton;
-    }
-
+    /**
+     * Creates JFrame with world map, skipping the setting page
+     * @param numberOfAirplanes Number of airplanes to create.
+     * @param minFuel Minimal number of fuel which airplane can have.
+     * @param maxFuel Maximum number of fuel which airplane can have.
+     * @param algorithmName name of algorithm which will be used by airplane to find path.
+     *                      Available names: "BFS", "DFS", "DIJKSTRA".
+     */
     public Setup(int numberOfAirplanes, int minFuel, int maxFuel, String algorithmName){
+        //Displaying provided values//
         displayValues(numberOfAirplanes, minFuel, maxFuel, algorithmName);
+        //Setting up JFrame//
         initializeJFrame();
         setSize(AirplanesGUI.getWorldImageIcon().getIconWidth(), AirplanesGUI.getWorldImageIcon().getIconHeight());
         //Centering window on screen//
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(screenSize.width/2 - this.getSize().width/2, screenSize.height/2 - this.getSize().height/2);
+        //Displaying world map//
         world = new World();
         setContentPane(AirplanesGUI.getJLayeredPane());
+        //Adding airports and airplanes//
         addAirports();
         world.addAirplanes(numberOfAirplanes, minFuel, maxFuel, algorithmName);
     }
 
+    /**
+     * Configures main JFrame
+     */
+    private void initializeJFrame(){
+        setTitle("Airplanes");
+        setResizable(false);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setIconImage(AirplanesGUI.getAirplaneImageIcon().getImage());
+        setSize(mainPanel.getPreferredSize());
+        setContentPane(mainPanel);
+        setVisible(true);
+    }
+
+    /**
+     * Displays provided values
+     * @param numberOfAirplanes Number of airplanes which will be created.
+     * @param minFuel Minimal number of fuel which airplane can have.
+     * @param maxFuel Maximum number of fuel which airplane can have.
+     * @param algorithmName name of algorithm which will be used by airplane to find path.
+     *                      Available names: "BFS", "DFS", "DIJKSTRA".
+     */
+    private void displayValues(int numberOfAirplanes, int minFuel, int maxFuel, String algorithmName){
+        System.out.println();
+        System.out.println("Number of airplanes: " + numberOfAirplanes);
+        System.out.println("Minimum fuel       : " + minFuel);
+        System.out.println("Maximum fuel       : " + maxFuel);
+        System.out.println("Name of algorithm  : " + algorithmName.toUpperCase());
+        System.out.println();
+    }
+
+    /**
+     * Adds selected airports to the world
+     */
     private void addAirports(){
         if(zielonaGoraCheckBox.isSelected()){
             world.addAirport(101, 319, "Zielona Góra");
@@ -172,29 +209,32 @@ public class Setup extends JFrame {
     }
 
     /**
-     * Displaying provided values
-     * @param numberOfAirplanes Number of airplanes which will be created.
-     * @param minFuel Minimal number of fuel which airplane can have.
-     * @param maxFuel Maximum number of fuel which airplane can have.
-     * @param algorithmName name of algorithm which will be used by airplane to find path.
-     *                      Available names: "BFS", "DFS", "DIJKSTRA".
+     * @return backButton that allows to back to setting (changes ContentPane of JFrame to mainPanel)
      */
-    private void displayValues(int numberOfAirplanes, int minFuel, int maxFuel, String algorithmName){
-        System.out.println();
-        System.out.println("Number of airplanes: " + numberOfAirplanes);
-        System.out.println("Minimum fuel       : " + minFuel);
-        System.out.println("Maximum fuel       : " + maxFuel);
-        System.out.println("Name of algorithm  : " + algorithmName.toUpperCase());
-        System.out.println();
-    }
-
-    private void initializeJFrame(){
-        setTitle("Airplanes");
-        setResizable(false);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setIconImage(AirplanesGUI.getAirplaneImageIcon().getImage());
-        setSize(mainPanel.getPreferredSize());
-        setContentPane(mainPanel);
-        setVisible(true);
+    private JButton backButton(){
+        JButton jButton = new JButton();
+        jButton.setText("Back");
+        jButton.setVisible(true);
+        jButton.setSize(70,20);
+        jButton.addActionListener(event -> {
+            getContentPane().removeAll();
+            setContentPane(mainPanel);
+            setSize(mainPanel.getPreferredSize());
+            //Setting up location on screen//
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int y = (this.getY() + (this.getHeight()/4) + 44);
+            if(y >= screenSize.getHeight()){
+                y = this.getY();
+            }
+            setLocation(this.getX(), y);
+            //Deleting old world//
+            world.getAirplanesArrayList().forEach((n) -> (n).setGenerateNewTargets(false));
+            world.getAirportsArrayList().forEach((n) -> (n) = null);
+            world.getAirplanesArrayList().forEach((n) -> (n) = null);
+            world = null;
+            //Refreshing gui//
+            revalidate();
+        });
+        return jButton;
     }
 }
