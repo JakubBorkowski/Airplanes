@@ -32,6 +32,7 @@ public class Setup extends JFrame {
     private JCheckBox rzeszowCheckBox;
     private JCheckBox kielceCheckBox;
     private JCheckBox lublinCheckBox;
+    private JCheckBox selectAllAirportsCheckBox;
     private World world;
 
     /**
@@ -62,7 +63,7 @@ public class Setup extends JFrame {
                 minFuelSpinner.setValue(maxFuelSpinner.getValue());
             }
         });
-        //Adding ChangeListener to submitButton//
+        //Adding ActionListener to submitButton//
         submitButton.addActionListener(e -> {
             //Determining algorithm name//
             String algorithmName = "DIJKSTRA";
@@ -90,6 +91,48 @@ public class Setup extends JFrame {
             addAirports();
             world.addAirplanes((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
                                (Integer) maxFuelSpinner.getValue(), algorithmName);
+        });
+        //Adding ActionListener to selectAllAirportsCheckBox//
+        selectAllAirportsCheckBox.addActionListener(e -> {
+            if(selectAllAirportsCheckBox.isSelected()){
+                zielonaGoraCheckBox.setSelected(true);
+                gorzowWielokopolskiCheckBox.setSelected(true);
+                szczecinCheckBox.setSelected(true);
+                gdanskCheckBox.setSelected(true);
+                olsztynCheckBox.setSelected(true);
+                bialystokCheckBox.setSelected(true);
+                warszawaCheckBox.setSelected(true);
+                bydgoszczCheckBox.setSelected(true);
+                torunCheckBox.setSelected(true);
+                poznanCheckBox.setSelected(true);
+                lodzCheckBox.setSelected(true);
+                wroclawCheckBox.setSelected(true);
+                opoleCheckBox.setSelected(true);
+                katowiceCheckBox.setSelected(true);
+                krakowCheckBox.setSelected(true);
+                rzeszowCheckBox.setSelected(true);
+                kielceCheckBox.setSelected(true);
+                lublinCheckBox.setSelected(true);
+            } else {
+                zielonaGoraCheckBox.setSelected(false);
+                gorzowWielokopolskiCheckBox.setSelected(false);
+                szczecinCheckBox.setSelected(false);
+                gdanskCheckBox.setSelected(false);
+                olsztynCheckBox.setSelected(false);
+                bialystokCheckBox.setSelected(false);
+                warszawaCheckBox.setSelected(false);
+                bydgoszczCheckBox.setSelected(false);
+                torunCheckBox.setSelected(false);
+                poznanCheckBox.setSelected(false);
+                lodzCheckBox.setSelected(false);
+                wroclawCheckBox.setSelected(false);
+                opoleCheckBox.setSelected(false);
+                katowiceCheckBox.setSelected(false);
+                krakowCheckBox.setSelected(false);
+                rzeszowCheckBox.setSelected(false);
+                kielceCheckBox.setSelected(false);
+                lublinCheckBox.setSelected(false);
+            }
         });
     }
 
@@ -216,7 +259,7 @@ public class Setup extends JFrame {
         jButton.setText("Back");
         jButton.setVisible(true);
         jButton.setSize(70,20);
-        jButton.addActionListener(event -> {
+        jButton.addActionListener(e -> {
             getContentPane().removeAll();
             setContentPane(mainPanel);
             setSize(mainPanel.getPreferredSize());
