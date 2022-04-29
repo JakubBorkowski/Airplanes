@@ -152,6 +152,7 @@ public class Setup extends JFrame {
         setTitle("Airplanes");
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setDefaultLookAndFeelDecorated();
         setIconImage(AirplanesGUI.getAirplaneImageIcon().getImage());
         setSize(mainPanel.getPreferredSize());
         setContentPane(mainPanel);
@@ -289,7 +290,7 @@ public class Setup extends JFrame {
             setSize(mainPanel.getPreferredSize());
             //Setting up location on screen//
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            int y = (this.getY() + (this.getHeight()/4) + 44);
+            int y = (this.getY() + (this.getHeight()/4) + 56);
             if(y >= screenSize.getHeight()){
                 y = this.getY();
             }

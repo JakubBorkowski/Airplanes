@@ -1,3 +1,5 @@
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import gui.Setup;
 
 import java.util.Locale;
@@ -9,12 +11,11 @@ public class App {
      * @param args String array of provided by user arguments.
      */
     private static void checkArguments(String[] args){
-        String errorMessage =
-                "Please provide exactly 4 arguments in the following order:\n" +
-                "-Number of airplanes\n" +
-                "-Minimum fuel\n" +
-                "-Maximum fuel\n" +
-                "-Name of algorithm";
+        String errorMessage = "Please provide exactly 4 arguments in the following order:\n" +
+                              "-Number of airplanes\n" +
+                              "-Minimum fuel\n" +
+                              "-Maximum fuel\n" +
+                              "-Name of algorithm";
         if(!(args.length == 4)){
             System.err.println("Wrong number of arguments!");
             System.err.println("\n" + errorMessage);
@@ -76,6 +77,10 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //FlatLaf setup
+        FlatLaf.registerCustomDefaultsSource( "themes" );
+        FlatLightLaf.setup();
+        //Checking if program was run with arguments
         if(args.length==0){
             //Starting app GUI//
             new Setup();
