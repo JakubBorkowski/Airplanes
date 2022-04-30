@@ -5,7 +5,7 @@ shortest path to this airport. Current there are three path finding algorithm av
 User can select which one should be used.
 
 <p align="center">
-<img align="center" src="https://dl.dropbox.com/s/wiydt6p6yrexm0k/screenshot621.gif" height="450" width="450">
+<img align="center" src="https://dl.dropbox.com/s/wiydt6p6yrexm0k/screenshot621.gif" width="450">
 </p>
 
 ## Available algorithms
@@ -39,6 +39,13 @@ airport is calculated, base on this information it is created the shortest path 
 Algorithm guarantee to find the shortest path relatively quick.
 
 ## Usage
+
+### Graphical user interface
+<p align="center">
+<img align="center" src="https://dl.dropbox.com/s/taipn2tjh58hteh/airplanesSetup.png">
+</p>
+
+### Command line interface
 Program must be started with the following arguments in the same order:
 - `[Number of airplanes]` - Number of airplanes to create, that will be distributed equally across airports.
 - `[Minimal fuel]` - Minimal fuel that created airplane can have.
