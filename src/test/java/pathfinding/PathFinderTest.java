@@ -1,5 +1,6 @@
 package pathfinding;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import util.Airport;
@@ -76,6 +77,7 @@ class PathFinderTest {
 
 
     @Test
+    @DisplayName("Shouldn't find path with '1' fuel - DFS")
     void shouldNotFindPathWithOneFuelDFS(){
         //Given//
         World poland = poland();
@@ -87,6 +89,7 @@ class PathFinderTest {
     }
 
     @Test
+    @DisplayName("Shouldn't find path with '1' fuel - BFS")
     void shouldNotFindPathWithOneFuelBFS(){
         //Given//
         World poland = poland();
@@ -98,6 +101,7 @@ class PathFinderTest {
     }
 
     @Test
+    @DisplayName("Shouldn't find path with '1' fuel - Dijkstra")
     void shouldNotFindPathWithOneFuelDIJKSTRA(){
         //Given//
         World poland = poland();
@@ -113,6 +117,7 @@ class PathFinderTest {
 
 
     @Test
+    @DisplayName("Shouldn't find path with no fuel - DFS")
     void shouldNotFindPathWithNoFuelDFS(){
         //Given//
         World poland = poland();
@@ -124,6 +129,7 @@ class PathFinderTest {
     }
 
     @Test
+    @DisplayName("Shouldn't find path with no fuel - BFS")
     void shouldNotFindPathWithNoFuelBFS(){
         //Given//
         World poland = poland();
@@ -135,6 +141,7 @@ class PathFinderTest {
     }
 
     @Test
+    @DisplayName("Shouldn't find path with no fuel - Dijkstra")
     void shouldNotFindPathWithNoFuelDIJKSTRA(){
         //Given//
         World poland = poland();
@@ -150,6 +157,7 @@ class PathFinderTest {
 
 
     @Test
+    @DisplayName("Should find path with infinite fuel - DFS")
     void shouldFindPathWithInfiniteFuelDFS(){
         //Given//
         World world = poland();
@@ -166,6 +174,7 @@ class PathFinderTest {
     }
 
     @Test
+    @DisplayName("Should find path with infinite fuel - BFS")
     void shouldFindPathWithInfiniteFuelBFS(){
         //Given//
         World world = poland();
@@ -182,6 +191,7 @@ class PathFinderTest {
     }
 
     @Test
+    @DisplayName("Should find path with infinite fuel - Dijkstra")
     void shouldFindPathWithInfiniteFuelDIJKSTRA(){
         //Given//
         World world = poland();
@@ -202,6 +212,7 @@ class PathFinderTest {
 
 
     @Test
+    @DisplayName("Should find path with minimum required fuel - DFS")
     void shouldFindPathWithMinRequiredFuelDFS(){
         //Given//
         World world = poland();
@@ -219,6 +230,7 @@ class PathFinderTest {
     }
 
     @Test
+    @DisplayName("Should find path with minimum required fuel - BFS")
     void shouldFindPathWithMinRequiredFuelBFS(){
         //Given//
         World world = poland();
@@ -236,6 +248,7 @@ class PathFinderTest {
     }
 
     @Test
+    @DisplayName("Should find path with minimum required fuel - Dijkstra")
     void shouldFindPathWithMinRequiredFuelDIJKSTRA(){
         //Given//
         World world = poland();
@@ -253,6 +266,7 @@ class PathFinderTest {
     }
 
     @Test
+    @DisplayName("Should find path to every airport with minimum required fuel - DFS")
     void shouldFindPathToEveryAirportWithMinRequiredFuelDFS(){
         //Given//
         World world = poland();
@@ -278,6 +292,7 @@ class PathFinderTest {
     }
 
     @Test
+    @DisplayName("Should find path to every airport with minimum required fuel - BFS")
     void shouldFindPathToEveryAirportWithMinRequiredFuelBFS(){
         //Given//
         World world = poland();
@@ -303,6 +318,7 @@ class PathFinderTest {
     }
 
     @Test
+    @DisplayName("Should find path to every airport with minimum required fuel - Dijkstra")
     void shouldFindPathToEveryAirportWithMinRequiredFuelDIJKSTRA(){
         //Given//
         World world = poland();
