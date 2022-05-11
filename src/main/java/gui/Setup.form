@@ -50,7 +50,9 @@
                             <preferred-size width="35" height="24"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <toolTipText value="Number of airplanes to create, that will be distributed equally across airports."/>
+                        </properties>
                       </component>
                       <component id="f11bc" class="javax.swing.JLabel">
                         <constraints>
@@ -86,7 +88,9 @@
                             <preferred-size width="35" height="24"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <toolTipText value="Minimal fuel that created airplanes can have."/>
+                        </properties>
                       </component>
                     </children>
                   </grid>
@@ -113,7 +117,9 @@
                             <preferred-size width="35" height="24"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <toolTipText value="Maximal fuel that created airplanes can have."/>
+                        </properties>
                       </component>
                     </children>
                   </grid>
@@ -142,6 +148,7 @@
                           <model>
                             <item value="Poland"/>
                           </model>
+                          <toolTipText value="Feature not yet implemented."/>
                         </properties>
                       </component>
                     </children>
@@ -443,6 +450,7 @@
                     </constraints>
                     <properties>
                       <text value="Breadth-first search"/>
+                      <toolTipText value="Algorithm don't guarantee finding the shortest path in terms of overall distance traveled, but number of airports to which airplane will stop by will be the smallest."/>
                     </properties>
                   </component>
                 </children>
@@ -463,6 +471,7 @@
                       <enabled value="true"/>
                       <selected value="true"/>
                       <text value="Dijkstra's shortest path algorithm"/>
+                      <toolTipText value="Algorithm guarantee to find the shortest path relatively quick."/>
                     </properties>
                   </component>
                 </children>
@@ -481,6 +490,7 @@
                     </constraints>
                     <properties>
                       <text value="Depth-first search"/>
+                      <toolTipText value="Algorithm guarantee to find the best path, but it's highly ineffective."/>
                     </properties>
                   </component>
                 </children>
