@@ -1,6 +1,6 @@
 package util;
 
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.Nullable;
 import gui.AirplanesGUI;
 import pathfinding.PathFinder;
 import lombok.Getter;

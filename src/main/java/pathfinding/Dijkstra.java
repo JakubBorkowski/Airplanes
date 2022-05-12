@@ -1,6 +1,6 @@
 package pathfinding;
 
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
