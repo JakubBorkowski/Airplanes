@@ -16,11 +16,11 @@ import static java.lang.Math.abs;
 public class Airplane implements Runnable {
     @NonNull private final AirplanesGUI airplanesGUI;
     @NonNull private final World world;
-    @NonNull private double x;
-    @NonNull private double y;
-    @NonNull @Getter private final String name;
-    @NonNull @Getter private final double fuel;
-    @NonNull @Getter private double currentFuel;
+    private double x;
+    private double y;
+    @Getter private final String name;
+    @Getter private final double fuel;
+    @Getter private double currentFuel;
     @Nullable private Airport airport;
     @Nullable private Airport targetAirport;
     @NonNull @Getter private final JLabel airplaneJLabel;
@@ -28,7 +28,7 @@ public class Airplane implements Runnable {
     @NonNull @Getter private final JLabel currentFuelJLabel;
     @Nullable @Getter private LinkedList<Airport[]> track;
     @NonNull private final String algorithmName;
-    @NonNull @Getter @Setter private boolean generateNewTargets;
+    @Getter @Setter private boolean generateNewTargets;
 
     /**
      * Creates an airplane.
@@ -38,7 +38,8 @@ public class Airplane implements Runnable {
      * @param world World object with information about all airports on map.
      * @param algorithmName Name of algorithm which should be used. Available names: "BFS", "DFS", "DIJKSTRA".
      */
-    public Airplane(Airport airport, String name, double fuel, String algorithmName, World world){
+    public Airplane(@NonNull Airport airport, @NonNull String name, double fuel, @NonNull String algorithmName,
+                    @NonNull World world){
         this.airplanesGUI = world.getAirplanesGUI();
         this.targetAirport = null;
         this.airport = airport;
@@ -62,6 +63,7 @@ public class Airplane implements Runnable {
      * @param targetAirport destination airport.
      */
     public void setTarget(Airport targetAirport){
+        assert airport != null;
         PathFinder pathFinder = new PathFinder(airport, targetAirport, fuel, world);
         track = pathFinder.findPath(algorithmName);
         if(generateNewTargets){
@@ -207,6 +209,7 @@ public class Airplane implements Runnable {
                             random.nextInt(world.getAirportsArrayList().size()));
                 }
                 while (airport == targetAirport);
+                assert airport != null;
                 System.out.println(name + ": New target: " + targetAirport.getName());
                 System.out.println(name + ": Searching flight: " + airport.getName()
                         + " -> "  + targetAirport.getName());

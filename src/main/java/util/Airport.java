@@ -8,8 +8,8 @@ import java.util.Comparator;
 import java.util.Objects;
 
 public class Airport {
-    @NonNull @Getter private final int x;
-    @NonNull @Getter private final int y;
+    @Getter private final int x;
+    @Getter private final int y;
     @NonNull @Getter private final String name;
     @NonNull private final World world;
 
@@ -20,7 +20,7 @@ public class Airport {
      * @param name Name of airport.
      * @param world World object with information about all airports on map.
      */
-    Airport(int x, int y, String name, World world){
+    Airport(int x, int y, @NonNull String name, @NonNull World world){
         this.x = x;
         this.y = y;
         this.name = name;

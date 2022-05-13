@@ -77,12 +77,14 @@ public class Dijkstra {
         path.add(finalAirport);
         Airport airport = dijkstraTableArrayList.get(finalAirportIndex).getPreviousAirport();
         path.add(airport);
+        assert airport != null;
         while (!airport.equals(initialAirport)){
             int airportIndex = dijkstraTableArrayList.indexOf(
                     findAirportInDijkstraTable(airport, dijkstraTableArrayList)
             );
             airport = dijkstraTableArrayList.get(airportIndex).getPreviousAirport();
             path.add(airport);
+            assert airport != null;
         }
         Collections.reverse(path);
         //Converting airports to nodes of airports in path//
@@ -124,7 +126,7 @@ public class Dijkstra {
 @AllArgsConstructor
 class DijkstraTable {
     /**
-     * util.Airport for which the shortest distance is sought.
+     * Airport for which the shortest distance is sought.
      */
     @NonNull @Getter
     private final Airport airport;
@@ -135,8 +137,8 @@ class DijkstraTable {
     @NonNull @Getter @Setter
     private Double distance;
     /**
-     * util.Airport from which airplane can arrive to airport specified in
-     * the same findingpath.DijkstraTable row with the shortest known overall distance.
+     * Airport from which airplane can arrive to airport specified in
+     * the same DijkstraTable row with the shortest known overall distance.
      */
     @Nullable @Getter @Setter
     private Airport previousAirport;
