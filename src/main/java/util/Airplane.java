@@ -2,8 +2,8 @@ package util;
 
 import org.jetbrains.annotations.Nullable;
 import gui.AirplanesGUI;
-import pathfinding.Node;
-import pathfinding.Path;
+import pathfinding.model.Node;
+import pathfinding.model.Path;
 import pathfinding.PathFinder;
 import lombok.Getter;
 import lombok.NonNull;

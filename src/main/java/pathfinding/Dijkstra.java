@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import pathfinding.model.Node;
+import pathfinding.model.Path;
 import util.Airport;
 import util.World;
 

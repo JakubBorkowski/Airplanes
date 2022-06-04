@@ -1,4 +1,4 @@
-package pathfinding;
+package pathfinding.model;
 
 import lombok.Getter;
 import lombok.NonNull;

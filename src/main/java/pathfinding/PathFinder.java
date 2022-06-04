@@ -3,6 +3,8 @@ package pathfinding;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
+import pathfinding.model.Node;
+import pathfinding.model.Path;
 import util.Airport;
 import util.World;
 

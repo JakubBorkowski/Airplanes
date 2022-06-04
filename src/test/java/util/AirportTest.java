@@ -1,7 +1,7 @@
 package util;
 
 import org.junit.jupiter.api.Test;
-import pathfinding.Node;
+import pathfinding.model.Node;
 
 import java.util.ArrayList;
 

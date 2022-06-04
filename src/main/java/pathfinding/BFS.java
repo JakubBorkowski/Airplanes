@@ -1,5 +1,7 @@
 package pathfinding;
 
+import pathfinding.model.Node;
+import pathfinding.model.Path;
 import util.Airport;
 import util.World;
 

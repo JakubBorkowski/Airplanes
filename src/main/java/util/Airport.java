@@ -2,7 +2,7 @@ package util;
 
 import lombok.Getter;
 import lombok.NonNull;
-import pathfinding.Node;
+import pathfinding.model.Node;
 
 import java.util.ArrayList;
 import java.util.Comparator;
