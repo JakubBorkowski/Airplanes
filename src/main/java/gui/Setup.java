@@ -152,7 +152,6 @@ public class Setup extends JFrame {
         setTitle("Airplanes");
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //setDefaultLookAndFeelDecorated();
         setIconImage(AirplanesGUI.getAirplaneImageIcon().getImage());
         setSize(mainPanel.getPreferredSize());
         setContentPane(mainPanel);

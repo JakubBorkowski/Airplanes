@@ -24,8 +24,8 @@ public class PathFinder {
      * @param algorithmName Name of algorithm which should be used. Available names: "BFS", "DFS", "DIJKSTRA".
      * @return Path from initialAirport to finalAirport, if there is one.
      */
-    public LinkedList<Airport[]> findPath(String algorithmName){
-        LinkedList<Airport[]> path = new LinkedList<>();
+    public Path findPath(String algorithmName){
+        Path path = new Path();
         switch (algorithmName.toUpperCase(Locale.ROOT)) {
             case "BFS":
                 BFS bfs = new BFS(initialAirport, finalAirport, fuel, world);
@@ -44,68 +44,18 @@ public class PathFinder {
     }
 
     /**
-     * Checks if the specified path does not contain the specified node.
-     * @param node Array of 2 airports, from which you can fly to each other [from Airport1 -> to Airport2]
-     * @param path LinkedList of arrays containing nodes. Every node should contain exactly 2 airports.
-     *              The second airport in the array should be the same as the first one in the next node.
-     *              [Airport1, Airport2], [Airport2, Airport3]...
-     * @return true if specified path not contain specified node.
-     */
-    boolean isPathNotContainingNode(Airport[] node, LinkedList<Airport[]> path){
-        for(Airport[] nodeInPath : path){
-            if(node[0]==nodeInPath[0] || node[1]==nodeInPath[1]){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Checks if the specified path does not contain the specified node.
-     * @param path LinkedList of arrays containing nodes. Every node should contain exactly 2 airports.
-     *              The second airport in the array should be the same as the first one in the next node.
-     *              [Airport1, Airport2], [Airport2, Airport3]...
-     * @param allPossiblePaths LinkedList of multiple paths.
-     * @return true if allPossiblePaths not contains path.
-     */
-    boolean isAllPossiblePathsNotContainingPath(LinkedList<Airport[]> path,
-                                                LinkedList<LinkedList<Airport[]>> allPossiblePaths){
-        if(!path.get(0)[0].equals(initialAirport) && path.get(path.size()-1)[1].equals(finalAirport)){
-            return true;
-        }
-        int count = 0;
-        for(LinkedList<Airport[]> pathFromAllPossiblePaths : allPossiblePaths){
-            if(path.size()==pathFromAllPossiblePaths.size()){
-                for(Airport[] nodeFromAllPossiblePaths : pathFromAllPossiblePaths){
-                    for(Airport[] nodeFromPossiblePath : path){
-                        if(nodeFromAllPossiblePaths[0]==nodeFromPossiblePath[0]
-                                && nodeFromAllPossiblePaths[1]==nodeFromPossiblePath[1]){
-                            count++;
-                        }
-                    }
-                    if(count==path.size()){
-                        return false;
-                    }
-                    count = 0;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
      * Allows for comparing paths by overall distance that must be travel.
      */
-    final Comparator<LinkedList<Airport[]>> compareByDistancePath = new Comparator<LinkedList<Airport[]>>() {
+    final Comparator<Path> comparePathByDistance = new Comparator<Path>() {
         @Override
-        public int compare(LinkedList<Airport[]> path1, LinkedList<Airport[]> path2) {
+        public int compare(Path path1, Path path2) {
             double distance1 = 0;
-            for(Airport[] node : path1){
-                distance1 += world.checkDistance(node[0], node[1]);
+            for(Node node : path1){
+                distance1 += world.checkDistance(node.getInitialAirport(), node.getFinalAirport());
             }
             double distance2 = 0;
-            for(Airport[] node : path2){
-                distance2 += world.checkDistance(node[0], node[1]);
+            for(Node node : path2){
+                distance2 += world.checkDistance(node.getInitialAirport(), node.getFinalAirport());
             }
             return Double.compare(distance1, distance2);
         }

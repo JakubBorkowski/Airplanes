@@ -1,17 +1,18 @@
 package pathfinding;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import util.Airport;
 import util.World;
 
-import java.util.Collections;
-import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PathFinderTest {
+
+    private final double polandMinFuel = 160.0;
 
     /**
      * @return World with all airports in Poland
@@ -41,35 +42,24 @@ class PathFinderTest {
 
     /**
      * Finds minimal fuel which will allow for flying to every airport in provided world.
-     * @param world util.World for which minimal required fuel will be calculated.
+     * @param world World for which minimal required fuel will be calculated.
      * @return Minimal fuel required for travel to every airport in provided world.
      */
-    private double calculateMinRequiredFuel(World world){
-        LinkedList<Double> distanceBetweenAirports = new LinkedList<>();
+    private double calculateMinRequiredFuel(@NotNull World world){
+        PathFinder pathFinder;
+        Double fuel = 0.0;
         for(Airport airport1 : world.getAirportsArrayList()){
             for(Airport airport2 : world.getAirportsArrayList()){
                 if(!(airport1.getName().equals(airport2.getName()))){
-                    distanceBetweenAirports.add(world.checkDistance(airport1, airport2));
+                    pathFinder = new PathFinder(airport1, airport2, fuel, world);
+                    while (pathFinder.findPath("DIJKSTRA") == null){
+                        pathFinder = new PathFinder(airport1, airport2, fuel++, world);
+                    }
                 }
             }
         }
-        Collections.sort(distanceBetweenAirports);
-        double minFuel;
-        int i=0;
-        int numberOfAirplanesWithNeighbor;
-        do {
-            numberOfAirplanesWithNeighbor = 0;
-            minFuel = distanceBetweenAirports.get(i);
-            for (Airport airport : world.getAirportsArrayList()) {
-                if (airport.getNearAirports(minFuel).isEmpty()) {
-                    i++;
-                    break;
-                } else {
-                    numberOfAirplanesWithNeighbor++;
-                }
-            }
-        } while (numberOfAirplanesWithNeighbor != world.getAirportsArrayList().size());
-        return minFuel;
+        System.out.println(fuel);
+        return fuel;
     }
 
 
@@ -165,11 +155,11 @@ class PathFinderTest {
         Airport finalAirport = world.getAirportsArrayList().get(1);
         //When//
         PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, Double.POSITIVE_INFINITY, world);
-        LinkedList<Airport[]> foundPath = pathFinder.findPath("DFS");
+        Path foundPath = pathFinder.findPath("DFS");
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst()[0], initialAirport),
-                () ->  assertEquals(foundPath.getLast()[1], finalAirport)
+                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
+                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
         );
     }
 
@@ -182,11 +172,11 @@ class PathFinderTest {
         Airport finalAirport = world.getAirportsArrayList().get(1);
         //When//
         PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, Double.POSITIVE_INFINITY, world);
-        LinkedList<Airport[]> foundPath = pathFinder.findPath("BFS");
+        Path foundPath = pathFinder.findPath("BFS");
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst()[0], initialAirport),
-                () ->  assertEquals(foundPath.getLast()[1], finalAirport)
+                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
+                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
         );
     }
 
@@ -199,11 +189,11 @@ class PathFinderTest {
         Airport finalAirport = world.getAirportsArrayList().get(1);
         //When//
         PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, Double.POSITIVE_INFINITY, world);
-        LinkedList<Airport[]> foundPath = pathFinder.findPath("DIJKSTRA");
+        Path foundPath = pathFinder.findPath("DIJKSTRA");
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst()[0], initialAirport),
-                () ->  assertEquals(foundPath.getLast()[1], finalAirport)
+                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
+                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
         );
     }
 
@@ -218,14 +208,13 @@ class PathFinderTest {
         World world = poland();
         Airport initialAirport = world.getAirportsArrayList().get(0);
         Airport finalAirport = world.getAirportsArrayList().get(1);
-        double minFuel = calculateMinRequiredFuel(world);
         //When//
-        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, minFuel, world);
-        LinkedList<Airport[]> foundPath = pathFinder.findPath("DFS");
+        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
+        Path foundPath = pathFinder.findPath("DFS");
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst()[0], initialAirport),
-                () ->  assertEquals(foundPath.getLast()[1], finalAirport)
+                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
+                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
         );
     }
 
@@ -236,14 +225,13 @@ class PathFinderTest {
         World world = poland();
         Airport initialAirport = world.getAirportsArrayList().get(0);
         Airport finalAirport = world.getAirportsArrayList().get(1);
-        double minFuel = calculateMinRequiredFuel(world);
         //When//
-        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, minFuel, world);
-        LinkedList<Airport[]> foundPath = pathFinder.findPath("BFS");
+        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
+        Path foundPath = pathFinder.findPath("BFS");
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst()[0], initialAirport),
-                () ->  assertEquals(foundPath.getLast()[1], finalAirport)
+                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
+                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
         );
     }
 
@@ -254,14 +242,13 @@ class PathFinderTest {
         World world = poland();
         Airport initialAirport = world.getAirportsArrayList().get(0);
         Airport finalAirport = world.getAirportsArrayList().get(1);
-        double minFuel = calculateMinRequiredFuel(world);
         //When//
-        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, minFuel, world);
-        LinkedList<Airport[]> foundPath = pathFinder.findPath("DIJKSTRA");
+        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
+        Path foundPath = pathFinder.findPath("DIJKSTRA");
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst()[0], initialAirport),
-                () ->  assertEquals(foundPath.getLast()[1], finalAirport)
+                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
+                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
         );
     }
 
@@ -270,17 +257,17 @@ class PathFinderTest {
     void shouldFindPathToEveryAirportWithMinRequiredFuelDFS(){
         //Given//
         World world = poland();
-        double minFuel = calculateMinRequiredFuel(world);
         PathFinder pathFinder;
-        LinkedList<Airport[]> foundPath;
+        Path foundPath;
         //When//
         boolean notFound = false;
         for(Airport initialAirport : world.getAirportsArrayList()) {
             for (Airport finalAirport : world.getAirportsArrayList()) {
                 if(!initialAirport.equals(finalAirport)){
-                    pathFinder = new PathFinder(initialAirport, finalAirport, minFuel, world);
+                    pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
                     foundPath = pathFinder.findPath("DFS");
-                    if(!foundPath.getFirst()[0].equals(initialAirport) || !foundPath.getLast()[1].equals(finalAirport)){
+                    if (foundPath == null || (!foundPath.getFirst().getInitialAirport().equals(initialAirport) ||
+                            !foundPath.getLast().getFinalAirport().equals(finalAirport))) {
                         notFound = true;
                         break;
                     }
@@ -296,17 +283,17 @@ class PathFinderTest {
     void shouldFindPathToEveryAirportWithMinRequiredFuelBFS(){
         //Given//
         World world = poland();
-        double minFuel = calculateMinRequiredFuel(world);
         PathFinder pathFinder;
-        LinkedList<Airport[]> foundPath;
+        Path foundPath;
         //When//
         boolean notFound = false;
         for(Airport initialAirport : world.getAirportsArrayList()) {
             for (Airport finalAirport : world.getAirportsArrayList()) {
                 if(!initialAirport.equals(finalAirport)){
-                    pathFinder = new PathFinder(initialAirport, finalAirport, minFuel, world);
+                    pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
                     foundPath = pathFinder.findPath("BFS");
-                    if(!foundPath.getFirst()[0].equals(initialAirport) || !foundPath.getLast()[1].equals(finalAirport)){
+                    if(foundPath == null || !foundPath.getFirst().getInitialAirport().equals(initialAirport) ||
+                            !foundPath.getLast().getFinalAirport().equals(finalAirport)){
                         notFound = true;
                         break;
                     }
@@ -322,17 +309,17 @@ class PathFinderTest {
     void shouldFindPathToEveryAirportWithMinRequiredFuelDIJKSTRA(){
         //Given//
         World world = poland();
-        double minFuel = calculateMinRequiredFuel(world);
         PathFinder pathFinder;
-        LinkedList<Airport[]> foundPath;
+        Path foundPath;
         //When//
         boolean notFound = false;
         for(Airport initialAirport : world.getAirportsArrayList()) {
             for (Airport finalAirport : world.getAirportsArrayList()) {
                 if(!initialAirport.equals(finalAirport)){
-                    pathFinder = new PathFinder(initialAirport, finalAirport, minFuel, world);
+                    pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
                     foundPath = pathFinder.findPath("DIJKSTRA");
-                    if(!foundPath.getFirst()[0].equals(initialAirport) || !foundPath.getLast()[1].equals(finalAirport)){
+                    if(foundPath == null || !foundPath.getFirst().getInitialAirport().equals(initialAirport) ||
+                            !foundPath.getLast().getFinalAirport().equals(finalAirport)){
                         notFound = true;
                         break;
                     }

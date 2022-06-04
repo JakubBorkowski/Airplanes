@@ -2,6 +2,7 @@ package util;
 
 import lombok.Getter;
 import lombok.NonNull;
+import pathfinding.Node;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -49,12 +50,11 @@ public class Airport {
      * @param fuel Maximum fuel of airplane for which the flight is being searched for.
      * @return ArrayList of nodes of airports in reach from this airport.
      */
-    public ArrayList<Airport[]> getNodes(double fuel){
-        ArrayList<Airport[]> nearAirportsArrayList = new ArrayList<>();
+    public ArrayList<Node> getNodes(double fuel){
+        ArrayList<Node> nearAirportsArrayList = new ArrayList<>();
         for(Airport airport : world.getAirportsArrayList()){
             if(!airport.equals(this) && fuel >= world.checkDistance(this, airport)){
-                Airport[] node = {this, airport};
-                nearAirportsArrayList.add(node);
+                nearAirportsArrayList.add(new Node(this, airport));
             }
         }
         return nearAirportsArrayList;
@@ -66,11 +66,11 @@ public class Airport {
      * @param fuel Maximum fuel of airplane for which the flight is being searched for.
      * @return ArrayList of sorted nodes of airports in reach from this airport.
      */
-    public ArrayList<Airport[]> getSortedNodes(double fuel){
-        ArrayList<Airport[]> nodesToSort = getNodes(fuel);
-        Comparator<Airport[]> compareByDistance = (node1, node2) -> {
-            double distance1 = world.checkDistance(node1[0], node1[1]);
-            double distance2 = world.checkDistance(node2[0], node2[1]);
+    public ArrayList<Node> getSortedNodes(double fuel){
+        ArrayList<Node> nodesToSort = getNodes(fuel);
+        Comparator<Node> compareByDistance = (node1, node2) -> {
+            double distance1 = world.checkDistance(node1.getInitialAirport(), node1.getFinalAirport());
+            double distance2 = world.checkDistance(node2.getInitialAirport(), node2.getFinalAirport());
             return Double.compare(distance1, distance2);
         };
         nodesToSort.sort(compareByDistance);

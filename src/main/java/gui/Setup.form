@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.Setup">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="9" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="16" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="10" bottom="10" right="10"/>
     <constraints>
       <xy x="404" y="48" width="737" height="439"/>
     </constraints>
@@ -12,379 +12,372 @@
     </properties>
     <border type="none"/>
     <children>
-      <grid id="6356c" layout-manager="GridLayoutManager" row-count="14" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="-1">
-        <margin top="0" left="10" bottom="10" right="10"/>
+      <grid id="9e262" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="5" bottom="0" right="5"/>
         <constraints>
-          <grid row="1" column="0" row-span="7" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="9e262" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="5" bottom="0" right="5"/>
+          <component id="671ac" class="javax.swing.JRadioButton" binding="dijkstraShortestPathRadioButton" default-binding="true">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="671ac" class="javax.swing.JRadioButton" binding="dijkstraShortestPathRadioButton" default-binding="true">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <enabled value="true"/>
-                  <selected value="true"/>
-                  <text value="&amp;Dijkstra's shortest path algorithm"/>
-                  <toolTipText value="Algorithm guarantee to find the shortest path relatively quick."/>
-                </properties>
-              </component>
-              <component id="8277b" class="javax.swing.JRadioButton" binding="breadthFirstSearchRadioButton" default-binding="true">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="&amp;Breadth-first search"/>
-                  <toolTipText value="Algorithm don't guarantee finding the shortest path in terms of overall distance traveled, but number of airports to which airplane will stop by will be the smallest."/>
-                </properties>
-              </component>
-              <component id="99728" class="javax.swing.JRadioButton" binding="depthFirstSearchRadioButton" default-binding="true">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Depth-&amp;first search"/>
-                  <toolTipText value="Algorithm guarantee to find the best path, but it's highly ineffective."/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-          <grid id="b71bb" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="5" bottom="0" right="0"/>
-            <constraints>
-              <grid row="13" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="ad293" class="javax.swing.JButton" binding="submitButton" default-binding="true">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font style="1"/>
-                  <text value="&amp;Submit"/>
-                </properties>
-              </component>
-              <component id="ccc18" class="javax.swing.JCheckBox" binding="selectAllAirportsCheckBox">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font style="1"/>
-                  <selected value="true"/>
-                  <text value="Select &amp;all airports"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-          <component id="2281" class="javax.swing.JSeparator">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
+            <properties>
+              <enabled value="true"/>
+              <selected value="true"/>
+              <text value="&amp;Dijkstra's shortest path algorithm"/>
+              <toolTipText value="Algorithm guarantee to find the shortest path relatively quick."/>
+            </properties>
           </component>
-          <component id="9d88f" class="javax.swing.JSeparator">
+          <component id="8277b" class="javax.swing.JRadioButton" binding="breadthFirstSearchRadioButton" default-binding="true">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <text value="&amp;Breadth-first search"/>
+              <toolTipText value="Algorithm don't guarantee finding the shortest path in terms of overall distance traveled, but number of airports to which airplane will stop by will be the smallest."/>
+            </properties>
           </component>
-          <component id="f7b33" class="javax.swing.JSeparator">
+          <component id="99728" class="javax.swing.JRadioButton" binding="depthFirstSearchRadioButton" default-binding="true">
             <constraints>
-              <grid row="12" column="0" row-span="1" col-span="5" vsize-policy="6" hsize-policy="6" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <text value="Depth-&amp;first search"/>
+              <toolTipText value="Algorithm guarantee to find the best path, but it's highly ineffective."/>
+            </properties>
           </component>
-          <grid id="a5c14" layout-manager="GridLayoutManager" row-count="5" column-count="4" same-size-horizontally="true" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="5" bottom="0" right="5"/>
+        </children>
+      </grid>
+      <grid id="b71bb" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="5" bottom="0" right="0"/>
+        <constraints>
+          <grid row="14" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="ad293" class="javax.swing.JButton" binding="submitButton" default-binding="true">
             <constraints>
-              <grid row="6" column="0" row-span="5" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="f4711" class="javax.swing.JCheckBox" binding="zielonaGoraCheckBox" default-binding="true">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Zielona Góra" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="8a645" class="javax.swing.JCheckBox" binding="gorzowWielokopolskiCheckBox" default-binding="true">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Gorzów Wielokopolski" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="3619e" class="javax.swing.JCheckBox" binding="szczecinCheckBox" default-binding="true">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Szczecin" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="b1010" class="javax.swing.JCheckBox" binding="gdanskCheckBox">
-                <constraints>
-                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Gdańsk" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="3c4e3" class="javax.swing.JCheckBox" binding="olsztynCheckBox">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Olsztyn" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="ea7c8" class="javax.swing.JCheckBox" binding="bialystokCheckBox">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Białystok" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="2a897" class="javax.swing.JCheckBox" binding="warszawaCheckBox">
-                <constraints>
-                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Warszawa" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="c80cb" class="javax.swing.JCheckBox" binding="bydgoszczCheckBox">
-                <constraints>
-                  <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Bydgoszcz" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="cc0d4" class="javax.swing.JCheckBox" binding="torunCheckBox">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Toruń" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="87889" class="javax.swing.JCheckBox" binding="poznanCheckBox">
-                <constraints>
-                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Poznań" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="276f9" class="javax.swing.JCheckBox" binding="lodzCheckBox">
-                <constraints>
-                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Łódź" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="24df8" class="javax.swing.JCheckBox" binding="wroclawCheckBox">
-                <constraints>
-                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Wrocław" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="abf0a" class="javax.swing.JCheckBox" binding="opoleCheckBox">
-                <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Opole" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="7e78d" class="javax.swing.JCheckBox" binding="katowiceCheckBox">
-                <constraints>
-                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Katowice" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="de249" class="javax.swing.JCheckBox" binding="krakowCheckBox">
-                <constraints>
-                  <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Kraków" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="b06be" class="javax.swing.JCheckBox" binding="rzeszowCheckBox">
-                <constraints>
-                  <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Rzeszów" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="45163" class="javax.swing.JCheckBox" binding="kielceCheckBox">
-                <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Kielce" noi18n="true"/>
-                </properties>
-              </component>
-              <component id="498f5" class="javax.swing.JCheckBox" binding="lublinCheckBox">
-                <constraints>
-                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <selected value="true"/>
-                  <text value="Lublin" noi18n="true"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-          <grid id="6c540" layout-manager="GridLayoutManager" row-count="1" column-count="8" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="5" left="0" bottom="5" right="0"/>
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="90b7e" class="javax.swing.JSpinner" binding="airplanesNumberSpinner" default-binding="true">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="1" use-parent-layout="false">
-                    <preferred-size width="35" height="24"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <toolTipText value="Number of airplanes to create, that will be distributed equally across airports."/>
-                </properties>
-              </component>
-              <component id="f11bc" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font style="1"/>
-                  <text value="Number of airplanes:"/>
-                </properties>
-              </component>
-              <component id="4a528" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font style="1"/>
-                  <text value="Minimal fuel:"/>
-                </properties>
-              </component>
-              <component id="7870c" class="javax.swing.JSpinner" binding="minFuelSpinner" default-binding="true">
-                <constraints>
-                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="1" use-parent-layout="false">
-                    <preferred-size width="35" height="24"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <toolTipText value="Minimal fuel that created airplanes can have."/>
-                </properties>
-              </component>
-              <component id="7c124" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font style="1"/>
-                  <text value="Maximal fuel:"/>
-                </properties>
-              </component>
-              <component id="419b2" class="javax.swing.JSpinner" binding="maxFuelSpinner" default-binding="true">
-                <constraints>
-                  <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="1" use-parent-layout="false">
-                    <preferred-size width="35" height="24"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <toolTipText value="Maximal fuel that created airplanes can have."/>
-                </properties>
-              </component>
-              <component id="67139" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font style="1"/>
-                  <text value="Map:"/>
-                </properties>
-              </component>
-              <component id="6dc1" class="javax.swing.JComboBox" default-binding="true">
-                <constraints>
-                  <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <model>
-                    <item value="Poland"/>
-                  </model>
-                  <toolTipText value="Feature not yet implemented."/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-          <component id="e3ed9" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font style="1"/>
-              <text value="Airports:"/>
+              <text value="&amp;Submit"/>
             </properties>
           </component>
-          <component id="b9680" class="javax.swing.JLabel">
+          <component id="ccc18" class="javax.swing.JCheckBox" binding="selectAllAirportsCheckBox">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font style="1"/>
+              <selected value="true"/>
+              <text value="Select &amp;all airports"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="2281" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="9d88f" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="f7b33" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="13" column="0" row-span="1" col-span="5" vsize-policy="6" hsize-policy="6" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <grid id="a5c14" layout-manager="GridLayoutManager" row-count="5" column-count="4" same-size-horizontally="true" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="5" bottom="0" right="5"/>
+        <constraints>
+          <grid row="7" column="0" row-span="5" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="f4711" class="javax.swing.JCheckBox" binding="zielonaGoraCheckBox" default-binding="true">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Zielona Góra" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="8a645" class="javax.swing.JCheckBox" binding="gorzowWielokopolskiCheckBox" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Gorzów Wielokopolski" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="3619e" class="javax.swing.JCheckBox" binding="szczecinCheckBox" default-binding="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Szczecin" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="b1010" class="javax.swing.JCheckBox" binding="gdanskCheckBox">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Gdańsk" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="3c4e3" class="javax.swing.JCheckBox" binding="olsztynCheckBox">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Olsztyn" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="ea7c8" class="javax.swing.JCheckBox" binding="bialystokCheckBox">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Białystok" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="2a897" class="javax.swing.JCheckBox" binding="warszawaCheckBox">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Warszawa" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="c80cb" class="javax.swing.JCheckBox" binding="bydgoszczCheckBox">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Bydgoszcz" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="cc0d4" class="javax.swing.JCheckBox" binding="torunCheckBox">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Toruń" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="87889" class="javax.swing.JCheckBox" binding="poznanCheckBox">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Poznań" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="276f9" class="javax.swing.JCheckBox" binding="lodzCheckBox">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Łódź" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="24df8" class="javax.swing.JCheckBox" binding="wroclawCheckBox">
+            <constraints>
+              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Wrocław" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="abf0a" class="javax.swing.JCheckBox" binding="opoleCheckBox">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Opole" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="7e78d" class="javax.swing.JCheckBox" binding="katowiceCheckBox">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Katowice" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="de249" class="javax.swing.JCheckBox" binding="krakowCheckBox">
+            <constraints>
+              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Kraków" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="b06be" class="javax.swing.JCheckBox" binding="rzeszowCheckBox">
+            <constraints>
+              <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Rzeszów" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="45163" class="javax.swing.JCheckBox" binding="kielceCheckBox">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Kielce" noi18n="true"/>
+            </properties>
+          </component>
+          <component id="498f5" class="javax.swing.JCheckBox" binding="lublinCheckBox">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Lublin" noi18n="true"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="6c540" layout-manager="GridLayoutManager" row-count="1" column-count="8" same-size-horizontally="false" same-size-vertically="false" hgap="8" vgap="-1">
+        <margin top="5" left="0" bottom="5" right="0"/>
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="90b7e" class="javax.swing.JSpinner" binding="airplanesNumberSpinner" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="35" height="24"/>
+                <maximum-size width="55" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <toolTipText value="Number of airplanes to create, that will be distributed equally across airports."/>
+            </properties>
+          </component>
+          <component id="f11bc" class="javax.swing.JLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font style="1"/>
-              <text value="Available algorithms:"/>
+              <text value="Number of airplanes:"/>
+            </properties>
+          </component>
+          <component id="4a528" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font style="1"/>
+              <text value="Minimal fuel:"/>
+            </properties>
+          </component>
+          <component id="7870c" class="javax.swing.JSpinner" binding="minFuelSpinner" default-binding="true">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="35" height="24"/>
+                <maximum-size width="55" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <toolTipText value="Minimal fuel that created airplanes can have."/>
+            </properties>
+          </component>
+          <component id="7c124" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font style="1"/>
+              <text value="Maximal fuel:"/>
+            </properties>
+          </component>
+          <component id="419b2" class="javax.swing.JSpinner" binding="maxFuelSpinner" default-binding="true">
+            <constraints>
+              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="35" height="24"/>
+                <maximum-size width="55" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <toolTipText value="Maximal fuel that created airplanes can have."/>
+            </properties>
+          </component>
+          <component id="67139" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font style="1"/>
+              <text value="Map:"/>
+            </properties>
+          </component>
+          <component id="6dc1" class="javax.swing.JComboBox" default-binding="true">
+            <constraints>
+              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Poland"/>
+              </model>
+              <toolTipText value="Feature not yet implemented."/>
             </properties>
           </component>
         </children>
       </grid>
+      <component id="e3ed9" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font style="1"/>
+          <text value="Airports:"/>
+        </properties>
+      </component>
+      <component id="b9680" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font style="1"/>
+          <text value="Available algorithms:"/>
+        </properties>
+      </component>
     </children>
   </grid>
   <buttonGroups>

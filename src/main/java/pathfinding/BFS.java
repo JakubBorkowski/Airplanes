@@ -19,29 +19,30 @@ public class BFS extends PathFinder {
      * Starts Breadth-first search.
      * @return path to finalAirport.
      */
-    public LinkedList<Airport[]> startBFS(){
-        LinkedList<LinkedList<Airport[]>> queue = new LinkedList<>();
-        LinkedList<Airport[]> path = new LinkedList<>();
-        for(Airport[] node : initialAirport.getSortedNodes(fuel)){
+    public Path startBFS(){
+        LinkedList<Path> queue = new LinkedList<>();
+        Path path = new Path();
+        for(Node node : initialAirport.getSortedNodes(fuel)){
             path.add(node);
-            if(node[1].equals(finalAirport)){
+            if(node.getFinalAirport().equals(finalAirport)){
                 return path;
+            } else {
+                queue.add(new Path(path));
+                path.clear();
             }
-            queue.add(new LinkedList<>(path));
-            path.clear();
         }
         for(int i = 0; i < queue.size(); i++) {
             path = queue.get(i);
-            ArrayList<Airport[]> path3Nodes = path.getLast()[1].getSortedNodes(fuel);
-            for(Airport[] node3 : path3Nodes){
-                if(!(node3[0] == initialAirport) && !(node3[1] == initialAirport) &&
-                        !(node3[1] == path.getLast()[0]) && isPathNotContainingNode(node3, path)){
+            ArrayList<Node> path3Nodes = path.getLast().getFinalAirport().getSortedNodes(fuel);
+            for(Node node3 : path3Nodes){
+                if(!(node3.getInitialAirport() == initialAirport) && !(node3.getFinalAirport() == initialAirport) &&
+                        !(node3.getFinalAirport() == path.getLast().getInitialAirport()) && !path.contains(node3)){
                     path.add(node3);
-                    if(path.getLast()[1].equals(finalAirport)){
+                    if(path.getLast().getFinalAirport().equals(finalAirport)){
                         return path;
                     }
                     else {
-                        queue.add(new LinkedList<>(path));
+                        queue.add(new Path(path));
                     }
                     path.remove(node3);
                 }

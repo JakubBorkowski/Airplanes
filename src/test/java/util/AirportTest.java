@@ -1,6 +1,7 @@
 package util;
 
 import org.junit.jupiter.api.Test;
+import pathfinding.Node;
 
 import java.util.ArrayList;
 
@@ -44,14 +45,14 @@ class AirportTest {
         Airport airport3 = new Airport(10, 10, "Airport3", world);
         world.addAirport(airport3.getX(), airport3.getY(), airport3.getName());
         //When//
-        ArrayList<Airport[]> airportNodes = airport.getNodes(5);
+        ArrayList<Node> airportNodes = airport.getNodes(5);
         //Then//
         assertAll(
                 () -> assertEquals(2, airportNodes.size()),
-                () -> assertEquals(airport, airportNodes.get(0)[0]),
-                () -> assertEquals(airport1, airportNodes.get(0)[1]),
-                () -> assertEquals(airport, airportNodes.get(1)[0]),
-                () -> assertEquals(airport2, airportNodes.get(1)[1])
+                () -> assertEquals(airport, airportNodes.get(0).getInitialAirport()),
+                () -> assertEquals(airport1, airportNodes.get(0).getFinalAirport()),
+                () -> assertEquals(airport, airportNodes.get(1).getInitialAirport()),
+                () -> assertEquals(airport2, airportNodes.get(1).getFinalAirport())
         );
     }
 
@@ -70,16 +71,16 @@ class AirportTest {
         Airport airport4 = new Airport(1, 0, "Airport4", world);
         world.addAirport(airport4.getX(), airport4.getY(), airport4.getName());
         //When//
-        ArrayList<Airport[]> airportNodes = airport.getSortedNodes(5);
+        ArrayList<Node> airportNodes = airport.getSortedNodes(5);
         //Then//
         assertAll(
                 () -> assertEquals(3, airportNodes.size()),
-                () -> assertEquals(airport, airportNodes.get(0)[0]),
-                () -> assertEquals(airport4, airportNodes.get(0)[1]),
-                () -> assertEquals(airport, airportNodes.get(1)[0]),
-                () -> assertEquals(airport1, airportNodes.get(1)[1]),
-                () -> assertEquals(airport, airportNodes.get(2)[0]),
-                () -> assertEquals(airport2, airportNodes.get(2)[1])
+                () -> assertEquals(airport, airportNodes.get(0).getInitialAirport()),
+                () -> assertEquals(airport4, airportNodes.get(0).getFinalAirport()),
+                () -> assertEquals(airport, airportNodes.get(1).getInitialAirport()),
+                () -> assertEquals(airport1, airportNodes.get(1).getFinalAirport()),
+                () -> assertEquals(airport, airportNodes.get(2).getInitialAirport()),
+                () -> assertEquals(airport2, airportNodes.get(2).getFinalAirport())
         );
     }
 }

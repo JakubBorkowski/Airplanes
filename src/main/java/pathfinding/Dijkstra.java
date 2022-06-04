@@ -28,7 +28,7 @@ public class Dijkstra {
      * Starts Dijkstra's shortest path algorithm.
      * @return path to finalAirport.
      */
-    public LinkedList<Airport[]> startDijkstra(){
+    public Path startDijkstra(){
         ArrayList<Airport> unvisitedAirports = new ArrayList<>(world.getAirportsArrayList());
         ArrayList<DijkstraTable> dijkstraTableArrayList = new ArrayList<>();
         for(Airport airport : world.getAirportsArrayList()){
@@ -88,10 +88,10 @@ public class Dijkstra {
         }
         Collections.reverse(path);
         //Converting airports to nodes of airports in path//
-        LinkedList<Airport[]> nodePath = new LinkedList<>();
+        Path nodePath = new Path();
         for(Airport airportFromPath : path){
             if(path.size() > path.indexOf(airportFromPath)+1){
-                nodePath.add(new Airport[]{airportFromPath, path.get(path.indexOf(airportFromPath)+1)});
+                nodePath.add(new Node(airportFromPath, path.get(path.indexOf(airportFromPath)+1)));
             }
         }
         return nodePath;

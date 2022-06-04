@@ -2,6 +2,8 @@ package util;
 
 import org.jetbrains.annotations.Nullable;
 import gui.AirplanesGUI;
+import pathfinding.Node;
+import pathfinding.Path;
 import pathfinding.PathFinder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -26,7 +28,7 @@ public class Airplane implements Runnable {
     @NonNull @Getter private final JLabel airplaneJLabel;
     @NonNull @Getter private final JLabel maxFuelJLabel;
     @NonNull @Getter private final JLabel currentFuelJLabel;
-    @Nullable @Getter private LinkedList<Airport[]> track;
+    @Nullable @Getter private Path path;
     @NonNull private final String algorithmName;
     @Getter @Setter private boolean generateNewTargets;
 
@@ -65,9 +67,9 @@ public class Airplane implements Runnable {
     public void setTarget(Airport targetAirport){
         assert airport != null;
         PathFinder pathFinder = new PathFinder(airport, targetAirport, fuel, world);
-        track = pathFinder.findPath(algorithmName);
+        path = pathFinder.findPath(algorithmName);
         if(generateNewTargets){
-            if(track == null){
+            if(path == null){
                 System.out.println(name + ": Can't reach " + targetAirport.getName());
                 this.targetAirport = null;
                 try {
@@ -76,28 +78,13 @@ public class Airplane implements Runnable {
                     e.printStackTrace();
                 }
             } else {
-                System.out.println(name + ": New track has been set up: " + airport.getName() + trackDisplay(track));
-                for (Airport[] airports : track){
-                    fly(airports[1]);
+                System.out.println(name + ": New track has been set up: " + airport.getName() + path.toString());
+                for (Node airports : path){
+                    fly(airports.getFinalAirport());
                 }
-                track.clear();
+                path.clear();
             }
         }
-    }
-
-    /**
-     * Converts track to string ready to display.
-     * @param track LinkedList of arrays containing nodes. Every node should contain exactly 2 airports.
-     *              The second airport in the array should be the same as the first one in the next node.
-     *              [Airport1, Airport2], [Airport2, Airport3]...
-     * @return track converted to string.
-     */
-    private String trackDisplay(LinkedList<Airport[]> track){
-        StringBuilder trackString = new StringBuilder();
-        for (Airport[] airports : track){
-            trackString.append(" -> ").append(airports[1].getName());
-        }
-        return trackString.toString();
     }
 
     /**

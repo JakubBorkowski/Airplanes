@@ -5,7 +5,7 @@ immediately it will search for the shortest path to this airport. Currently, the
 available in the app. User can select which one should be used.
 
 <p align="center">
-<img align="center" src="https://dl.dropbox.com/s/wiydt6p6yrexm0k/screenshot621.gif" width="450">
+<img align="center" alt="Airplanes world map" src="https://dl.dropbox.com/s/wiydt6p6yrexm0k/screenshot621.gif" width="450">
 </p>
 
 ## Available algorithms
@@ -31,7 +31,7 @@ but number of airports to which airplane will stop by will be the smallest.
 The algorithm first creates a table with:
 - Name of each airport,
 - The shortest distance that is currently known from initial airport to this airport,
-- Name of airport, from which we got to this airport in the currently known shortest distance.
+- Name of airport, from which we got to this airport in the currently known the shortest distance.
 
 Initial values for every airport in the table, except initial airport:
 - Name of an airport,
@@ -51,7 +51,7 @@ Algorithm guarantee to find the shortest path relatively quick.
 
 ### Graphical user interface
 <p align="center">
-<img align="center" src="https://dl.dropbox.com/s/taipn2tjh58hteh/airplanesSetup.png">
+<img align="center" alt="Airplanes setup screen" src="https://dl.dropbox.com/s/taipn2tjh58hteh/airplanesSetup.png">
 </p>
 
 ### Command line interface
