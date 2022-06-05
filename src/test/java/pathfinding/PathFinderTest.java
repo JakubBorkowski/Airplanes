@@ -1,7 +1,6 @@
 package pathfinding;
 
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import pathfinding.model.Path;
@@ -63,271 +62,31 @@ class PathFinderTest {
         return fuel;
     }
 
-
-    //Finding path with one fuel tests
-
-
     @Test
-    @DisplayName("Shouldn't find path with '1' fuel - DFS")
-    void shouldNotFindPathWithOneFuelDFS(){
+    void findPath() {
         //Given//
+        Path pathDFS;
+        Path pathBFS;
+        Path pathDijkstra;
         World poland = poland();
-        //When//
-        PathFinder pathFinder = new PathFinder(
-                poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 1.0, poland);
-        //Then//
-        assertNull(pathFinder.findPath("DFS"));
-    }
-
-    @Test
-    @DisplayName("Shouldn't find path with '1' fuel - BFS")
-    void shouldNotFindPathWithOneFuelBFS(){
-        //Given//
-        World poland = poland();
-        //When//
-        PathFinder pathFinder = new PathFinder(
-                poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 1.0, poland);
-        //Then//
-        assertNull(pathFinder.findPath("BFS"));
-    }
-
-    @Test
-    @DisplayName("Shouldn't find path with '1' fuel - Dijkstra")
-    void shouldNotFindPathWithOneFuelDIJKSTRA(){
-        //Given//
-        World poland = poland();
-        //When//
-        PathFinder pathFinder = new PathFinder(
-                poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 1.0, poland);
-        //Then//
-        assertNull(pathFinder.findPath("DIJKSTRA"));
-    }
-
-
-    //Finding path with no fuel tests
-
-
-    @Test
-    @DisplayName("Shouldn't find path with no fuel - DFS")
-    void shouldNotFindPathWithNoFuelDFS(){
-        //Given//
-        World poland = poland();
-        //When//
-        PathFinder pathFinder = new PathFinder(
-                poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 0.0, poland);
-        //Then//
-        assertNull(pathFinder.findPath("DFS"));
-    }
-
-    @Test
-    @DisplayName("Shouldn't find path with no fuel - BFS")
-    void shouldNotFindPathWithNoFuelBFS(){
-        //Given//
-        World poland = poland();
-        //When//
-        PathFinder pathFinder = new PathFinder(
-                poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 0.0, poland);
-        //Then//
-        assertNull(pathFinder.findPath("BFS"));
-    }
-
-    @Test
-    @DisplayName("Shouldn't find path with no fuel - Dijkstra")
-    void shouldNotFindPathWithNoFuelDIJKSTRA(){
-        //Given//
-        World poland = poland();
-        //When//
-        PathFinder pathFinder = new PathFinder(
-                poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 0.0, poland);
-        //Then//
-        assertNull(pathFinder.findPath("DIJKSTRA"));
-    }
-
-
-    //Finding path with infinite fuel tests
-
-
-    @Test
-    @DisplayName("Should find path with infinite fuel - DFS")
-    void shouldFindPathWithInfiniteFuelDFS(){
-        //Given//
-        World world = poland();
-        Airport initialAirport = world.getAirportsArrayList().get(0);
-        Airport finalAirport = world.getAirportsArrayList().get(1);
-        //When//
-        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, Double.POSITIVE_INFINITY, world);
-        Path foundPath = pathFinder.findPath("DFS");
-        //Then//
-        assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
-                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
-        );
-    }
-
-    @Test
-    @DisplayName("Should find path with infinite fuel - BFS")
-    void shouldFindPathWithInfiniteFuelBFS(){
-        //Given//
-        World world = poland();
-        Airport initialAirport = world.getAirportsArrayList().get(0);
-        Airport finalAirport = world.getAirportsArrayList().get(1);
-        //When//
-        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, Double.POSITIVE_INFINITY, world);
-        Path foundPath = pathFinder.findPath("BFS");
-        //Then//
-        assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
-                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
-        );
-    }
-
-    @Test
-    @DisplayName("Should find path with infinite fuel - Dijkstra")
-    void shouldFindPathWithInfiniteFuelDIJKSTRA(){
-        //Given//
-        World world = poland();
-        Airport initialAirport = world.getAirportsArrayList().get(0);
-        Airport finalAirport = world.getAirportsArrayList().get(1);
-        //When//
-        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, Double.POSITIVE_INFINITY, world);
-        Path foundPath = pathFinder.findPath("DIJKSTRA");
-        //Then//
-        assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
-                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
-        );
-    }
-
-
-    //Finding path with minimal required fuel tests
-
-
-    @Test
-    @DisplayName("Should find path with minimum required fuel - DFS")
-    void shouldFindPathWithMinRequiredFuelDFS(){
-        //Given//
-        World world = poland();
-        Airport initialAirport = world.getAirportsArrayList().get(0);
-        Airport finalAirport = world.getAirportsArrayList().get(1);
-        //When//
-        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
-        Path foundPath = pathFinder.findPath("DFS");
-        //Then//
-        assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
-                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
-        );
-    }
-
-    @Test
-    @DisplayName("Should find path with minimum required fuel - BFS")
-    void shouldFindPathWithMinRequiredFuelBFS(){
-        //Given//
-        World world = poland();
-        Airport initialAirport = world.getAirportsArrayList().get(0);
-        Airport finalAirport = world.getAirportsArrayList().get(1);
-        //When//
-        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
-        Path foundPath = pathFinder.findPath("BFS");
-        //Then//
-        assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
-                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
-        );
-    }
-
-    @Test
-    @DisplayName("Should find path with minimum required fuel - Dijkstra")
-    void shouldFindPathWithMinRequiredFuelDIJKSTRA(){
-        //Given//
-        World world = poland();
-        Airport initialAirport = world.getAirportsArrayList().get(0);
-        Airport finalAirport = world.getAirportsArrayList().get(1);
-        //When//
-        PathFinder pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
-        Path foundPath = pathFinder.findPath("DIJKSTRA");
-        //Then//
-        assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(foundPath.getFirst().getInitialAirport(), initialAirport),
-                () ->  assertEquals(foundPath.getLast().getFinalAirport(), finalAirport)
-        );
-    }
-
-    @Test
-    @DisplayName("Should find path to every airport with minimum required fuel - DFS")
-    void shouldFindPathToEveryAirportWithMinRequiredFuelDFS(){
-        //Given//
-        World world = poland();
         PathFinder pathFinder;
-        Path foundPath;
+        Airport initialAirport = poland.getAirportsArrayList().get(0);
+        Airport finalAirport = poland.getAirportsArrayList().get(1);
         //When//
-        boolean notFound = false;
-        for(Airport initialAirport : world.getAirportsArrayList()) {
-            for (Airport finalAirport : world.getAirportsArrayList()) {
-                if(!initialAirport.equals(finalAirport)){
-                    pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
-                    foundPath = pathFinder.findPath("DFS");
-                    if (foundPath == null || (!foundPath.getFirst().getInitialAirport().equals(initialAirport) ||
-                            !foundPath.getLast().getFinalAirport().equals(finalAirport))) {
-                        notFound = true;
-                        break;
-                    }
-                }
-            }
-        }
+        pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, poland);
+        pathDFS = pathFinder.findPath("DFS");
+        pathBFS = pathFinder.findPath("BFS");
+        pathDijkstra = pathFinder.findPath("DIJKSTRA");
         //Then//
-        assertFalse(notFound);
-    }
+        assertAll("Should return path from initialAirport to finalAirport",
+                () ->  assertEquals(pathDFS.getFirst().getInitialAirport(), initialAirport),
+                () ->  assertEquals(pathDFS.getLast().getFinalAirport(), finalAirport),
 
-    @Test
-    @DisplayName("Should find path to every airport with minimum required fuel - BFS")
-    void shouldFindPathToEveryAirportWithMinRequiredFuelBFS(){
-        //Given//
-        World world = poland();
-        PathFinder pathFinder;
-        Path foundPath;
-        //When//
-        boolean notFound = false;
-        for(Airport initialAirport : world.getAirportsArrayList()) {
-            for (Airport finalAirport : world.getAirportsArrayList()) {
-                if(!initialAirport.equals(finalAirport)){
-                    pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
-                    foundPath = pathFinder.findPath("BFS");
-                    if(foundPath == null || !foundPath.getFirst().getInitialAirport().equals(initialAirport) ||
-                            !foundPath.getLast().getFinalAirport().equals(finalAirport)){
-                        notFound = true;
-                        break;
-                    }
-                }
-            }
-        }
-        //Then//
-        assertFalse(notFound);
-    }
+                () ->  assertEquals(pathBFS.getFirst().getInitialAirport(), initialAirport),
+                () ->  assertEquals(pathBFS.getLast().getFinalAirport(), finalAirport),
 
-    @Test
-    @DisplayName("Should find path to every airport with minimum required fuel - Dijkstra")
-    void shouldFindPathToEveryAirportWithMinRequiredFuelDIJKSTRA(){
-        //Given//
-        World world = poland();
-        PathFinder pathFinder;
-        Path foundPath;
-        //When//
-        boolean notFound = false;
-        for(Airport initialAirport : world.getAirportsArrayList()) {
-            for (Airport finalAirport : world.getAirportsArrayList()) {
-                if(!initialAirport.equals(finalAirport)){
-                    pathFinder = new PathFinder(initialAirport, finalAirport, polandMinFuel, world);
-                    foundPath = pathFinder.findPath("DIJKSTRA");
-                    if(foundPath == null || !foundPath.getFirst().getInitialAirport().equals(initialAirport) ||
-                            !foundPath.getLast().getFinalAirport().equals(finalAirport)){
-                        notFound = true;
-                        break;
-                    }
-                }
-            }
-        }
-        //Then//
-        assertFalse(notFound);
+                () ->  assertEquals(pathDijkstra.getFirst().getInitialAirport(), initialAirport),
+                () ->  assertEquals(pathDijkstra.getLast().getFinalAirport(), finalAirport)
+        );
     }
 }
