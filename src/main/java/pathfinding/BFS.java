@@ -24,9 +24,9 @@ public class BFS extends PathFinder {
     public Path startBFS(){
         LinkedList<Path> queue = new LinkedList<>();
         Path path = new Path();
-        for(Node node : initialAirport.getSortedNodes(fuel)){
-            path.add(node);
-            if(node.getFinalAirport().equals(finalAirport)){
+        for(Node initialNode : initialAirport.getSortedNodes(fuel)){
+            path.add(initialNode);
+            if(initialNode.getFinalAirport().equals(finalAirport)){
                 return path;
             } else {
                 queue.add(new Path(path));
@@ -35,18 +35,18 @@ public class BFS extends PathFinder {
         }
         for(int i = 0; i < queue.size(); i++) {
             path = queue.get(i);
-            ArrayList<Node> path3Nodes = path.getLast().getFinalAirport().getSortedNodes(fuel);
-            for(Node node3 : path3Nodes){
-                if(!(node3.getInitialAirport() == initialAirport) && !(node3.getFinalAirport() == initialAirport) &&
-                        !(node3.getFinalAirport() == path.getLast().getInitialAirport()) && !path.contains(node3)){
-                    path.add(node3);
+            ArrayList<Node> nodesOfLastAirportInPath = path.getLast().getFinalAirport().getSortedNodes(fuel);
+            for(Node node : nodesOfLastAirportInPath){
+                if(!(node.getInitialAirport() == initialAirport) && !(node.getFinalAirport() == initialAirport) &&
+                        !(node.getFinalAirport() == path.getLast().getInitialAirport()) && !path.contains(node)){
+                    path.add(node);
                     if(path.getLast().getFinalAirport().equals(finalAirport)){
                         return path;
                     }
                     else {
                         queue.add(new Path(path));
                     }
-                    path.remove(node3);
+                    path.remove(node);
                 }
             }
         }
