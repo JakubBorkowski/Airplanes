@@ -16,21 +16,21 @@ import java.util.concurrent.TimeUnit;
 import static java.lang.Math.abs;
 
 public class Airplane implements Runnable {
-    @NonNull private final AirplanesGUI airplanesGUI;
-    @NonNull private final World world;
-    private double x;
-    private double y;
-    @Getter private final String name;
-    @Getter private final double fuel;
-    @Getter private double currentFuel;
-    @Nullable private Airport airport;
-    @Nullable private Airport targetAirport;
-    @NonNull @Getter private final JLabel airplaneJLabel;
-    @NonNull @Getter private final JLabel maxFuelJLabel;
-    @NonNull @Getter private final JLabel currentFuelJLabel;
-    @Nullable @Getter private Path path;
-    @NonNull private final String algorithmName;
-    @Getter @Setter private boolean generateNewTargets;
+    @NonNull private final AirplanesGUI airplanesGUI;//GUI on which airplane will be displayed
+    @NonNull private final World world;//World to which airplane belongs
+    private double x;//X-axis position of an airplane
+    private double y;//Y-axis position of an airplane
+    @Getter private final String name;//Name of the airplane
+    @Getter private final double fuel;//Maximal fuel level
+    @Getter private double currentFuel;//Current state of fuel
+    @Nullable @Getter private Airport airport;//Airport in which airplane currently is
+    @Nullable @Getter private Airport targetAirport;//Airport to which airplane will fly
+    @NonNull @Getter private final JLabel airplaneJLabel;//JLabel with airplane graphic
+    @NonNull @Getter private final JLabel maxFuelJLabel;//JLabel indicating maximal fuel level of an airplane
+    @NonNull @Getter private final JLabel currentFuelJLabel;//JLabel indicating current fuel level of an airplane
+    @Nullable @Getter private Path path;//Path to the targetAirport that airplane follows
+    @NonNull private final String algorithmName;//Name of algorithm which will be used to find path to targetAirport
+    @Getter @Setter private boolean generateNewTargets;//If true, the airplane will be constantly flying to new airports
 
     /**
      * Creates an airplane.
@@ -169,8 +169,8 @@ public class Airplane implements Runnable {
         airplaneJLabel.setVisible(false);
         currentFuelJLabel.setVisible(false);
         maxFuelJLabel.setVisible(false);
+        this.airport = targetAirport;
         if(targetAirport.equals(this.targetAirport)){
-            this.airport = targetAirport;
             this.targetAirport = null;
             System.out.println(name + ": Landed in: " + airport.getName());
             try {
