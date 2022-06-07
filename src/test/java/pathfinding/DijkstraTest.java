@@ -103,8 +103,8 @@ class DijkstraTest {
         path = dijkstra.startDijkstra();
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(path.getFirst().getInitialAirport(), initialAirport),
-                () ->  assertEquals(path.getLast().getFinalAirport(), finalAirport)
+                () ->  assertEquals(initialAirport, path.getFirst().getInitialAirport()),
+                () ->  assertEquals(finalAirport, path.getLast().getFinalAirport())
         );
     }
 
@@ -122,8 +122,8 @@ class DijkstraTest {
         path = dijkstra.startDijkstra();
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(path.getFirst().getInitialAirport(), initialAirport),
-                () ->  assertEquals(path.getLast().getFinalAirport(), finalAirport)
+                () ->  assertEquals(initialAirport, path.getFirst().getInitialAirport()),
+                () ->  assertEquals(finalAirport, path.getLast().getFinalAirport())
         );
     }
 

@@ -79,14 +79,14 @@ class PathFinderTest {
         pathDijkstra = pathFinder.findPath("DIJKSTRA");
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(pathDFS.getFirst().getInitialAirport(), initialAirport),
-                () ->  assertEquals(pathDFS.getLast().getFinalAirport(), finalAirport),
+                () ->  assertEquals(initialAirport, pathDFS.getFirst().getInitialAirport()),
+                () ->  assertEquals(finalAirport, pathDFS.getLast().getFinalAirport()),
 
-                () ->  assertEquals(pathBFS.getFirst().getInitialAirport(), initialAirport),
-                () ->  assertEquals(pathBFS.getLast().getFinalAirport(), finalAirport),
+                () ->  assertEquals(initialAirport, pathBFS.getFirst().getInitialAirport()),
+                () ->  assertEquals(finalAirport, pathBFS.getLast().getFinalAirport()),
 
-                () ->  assertEquals(pathDijkstra.getFirst().getInitialAirport(), initialAirport),
-                () ->  assertEquals(pathDijkstra.getLast().getFinalAirport(), finalAirport)
+                () ->  assertEquals(initialAirport, pathDijkstra.getFirst().getInitialAirport()),
+                () ->  assertEquals(finalAirport, pathDijkstra.getLast().getFinalAirport())
         );
     }
 }
