@@ -1,9 +1,10 @@
 package pathfinding;
 
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import pathfinding.model.Node;
 import pathfinding.model.Path;
 import util.Airport;
-import util.World;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -11,11 +12,11 @@ import java.util.LinkedList;
 /**
  * Breadth-first search algorithm
  */
-public class BFS extends PathFinder {
-
-    public BFS(Airport initialAirport, Airport finalAirport, Double fuel, World world) {
-        super(initialAirport, finalAirport, fuel, world);
-    }
+@AllArgsConstructor
+public class BFS {
+    @NonNull private final Airport initialAirport;
+    @NonNull private final Airport finalAirport;
+    @NonNull private final Double fuel;
 
     /**
      * Starts Breadth-first search.

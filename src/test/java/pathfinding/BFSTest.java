@@ -70,7 +70,7 @@ class BFSTest {
         Path path;
         World poland = poland();
         //When//
-        bfs = new BFS(poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 1.0, poland);
+        bfs = new BFS(poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 1.0);
         path = bfs.startBFS();
         //Then//
         assertNull(path);
@@ -84,7 +84,7 @@ class BFSTest {
         Path path;
         World poland = poland();
         //When//
-        bfs = new BFS(poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 0.0, poland);
+        bfs = new BFS(poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 0.0);
         path = bfs.startBFS();
         //Then//
         assertNull(path);
@@ -100,7 +100,7 @@ class BFSTest {
         Airport initialAirport = world.getAirportsArrayList().get(0);
         Airport finalAirport = world.getAirportsArrayList().get(1);
         //When//
-        bfs = new BFS(initialAirport, finalAirport, Double.POSITIVE_INFINITY, world);
+        bfs = new BFS(initialAirport, finalAirport, Double.POSITIVE_INFINITY);
         path = bfs.startBFS();
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
@@ -119,7 +119,7 @@ class BFSTest {
         Airport initialAirport = world.getAirportsArrayList().get(0);
         Airport finalAirport = world.getAirportsArrayList().get(1);
         //When//
-        bfs = new BFS(initialAirport, finalAirport, polandMinFuel, world);
+        bfs = new BFS(initialAirport, finalAirport, polandMinFuel);
         path = bfs.startBFS();
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
@@ -140,7 +140,7 @@ class BFSTest {
         for (Airport initialAirport : world.getAirportsArrayList()) {
             for (Airport finalAirport : world.getAirportsArrayList()) {
                 if (!initialAirport.equals(finalAirport)) {
-                    bfs = new BFS(initialAirport, finalAirport, polandMinFuel, world);
+                    bfs = new BFS(initialAirport, finalAirport, polandMinFuel);
                     path = bfs.startBFS();
                     if (path == null || !path.getFirst().getInitialAirport().equals(initialAirport) ||
                             !path.getLast().getFinalAirport().equals(finalAirport)) {

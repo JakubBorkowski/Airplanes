@@ -3,7 +3,6 @@ package pathfinding;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
-import pathfinding.model.Node;
 import pathfinding.model.Path;
 import util.Airport;
 import util.World;
@@ -31,7 +30,7 @@ public class PathFinder {
         Path path = new Path();
         switch (algorithmName.toUpperCase(Locale.ROOT)) {
             case "BFS":
-                BFS bfs = new BFS(initialAirport, finalAirport, fuel, world);
+                BFS bfs = new BFS(initialAirport, finalAirport, fuel);
                 path = bfs.startBFS();
                 break;
             case "DFS":
@@ -45,23 +44,5 @@ public class PathFinder {
         }
         return path;
     }
-
-    /**
-     * Allows for comparing paths by overall distance that must be travel.
-     */
-    final Comparator<Path> comparePathByDistance = new Comparator<Path>() {
-        @Override
-        public int compare(Path path1, Path path2) {
-            double distance1 = 0;
-            for (Node node : path1) {
-                distance1 += world.checkDistance(node.getInitialAirport(), node.getFinalAirport());
-            }
-            double distance2 = 0;
-            for (Node node : path2) {
-                distance2 += world.checkDistance(node.getInitialAirport(), node.getFinalAirport());
-            }
-            return Double.compare(distance1, distance2);
-        }
-    };
 
 }
