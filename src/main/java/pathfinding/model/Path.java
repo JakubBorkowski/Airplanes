@@ -8,13 +8,13 @@ import java.util.LinkedList;
 @NoArgsConstructor
 public class Path extends LinkedList<Node> {
 
-    public Path(Path path){
+    public Path(Path path) {
         this.addAll(path);
     }
 
     public double getDistance() {
         double distance = 0.0;
-        for(Node node : this){
+        for (Node node : this) {
             distance += node.getDistance();
         }
         return distance;
@@ -22,14 +22,14 @@ public class Path extends LinkedList<Node> {
 
     @Override
     public boolean equals(Object o) {
-        if(o == null || getClass() != o.getClass()) return false;
-        if(!super.equals(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Path path = (Path) o;
-        if(path.size()==this.size()){
-            for(Node nodeFromPath : path){
-                for(Node nodeFromThis : path){
-                    if(nodeFromPath.getInitialAirport() != nodeFromThis.getInitialAirport()
-                            && nodeFromPath.getFinalAirport() != nodeFromThis.getFinalAirport()){
+        if (path.size() == this.size()) {
+            for (Node nodeFromPath : path) {
+                for (Node nodeFromThis : path) {
+                    if (nodeFromPath.getInitialAirport() != nodeFromThis.getInitialAirport()
+                            && nodeFromPath.getFinalAirport() != nodeFromThis.getFinalAirport()) {
                         return false;
                     }
                 }
@@ -40,8 +40,8 @@ public class Path extends LinkedList<Node> {
     }
 
     public boolean contains(Airport airport) {
-        for(Node node : this){
-            if(node.getInitialAirport()==airport || node.getFinalAirport()==airport){
+        for (Node node : this) {
+            if (node.getInitialAirport() == airport || node.getFinalAirport() == airport) {
                 return true;
             }
         }
@@ -51,7 +51,7 @@ public class Path extends LinkedList<Node> {
     @Override
     public String toString() {
         StringBuilder trackString = new StringBuilder();
-        for (Node airport : this){
+        for (Node airport : this) {
             trackString.append(" -> ").append(airport.getFinalAirport().getName());
         }
         return trackString.toString();

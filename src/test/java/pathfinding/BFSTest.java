@@ -16,7 +16,7 @@ class BFSTest {
     /**
      * @return World with all airports in Poland
      */
-    private World poland(){
+    private World poland() {
         World world = new World();
         world.addAirport(101, 319, "Zielona Góra");
         world.addAirport(81, 238, "Gorzów Wielokopolski");
@@ -41,17 +41,18 @@ class BFSTest {
 
     /**
      * Finds minimal fuel which will allow for flying to every airport in provided world.
+     *
      * @param world World for which minimal required fuel will be calculated.
      * @return Minimal fuel required for travel to every airport in provided world.
      */
-    private double calculateMinRequiredFuel(@NotNull World world){
+    private double calculateMinRequiredFuel(@NotNull World world) {
         PathFinder pathFinder;
         Double fuel = 0.0;
-        for(Airport airport1 : world.getAirportsArrayList()){
-            for(Airport airport2 : world.getAirportsArrayList()){
-                if(!(airport1.getName().equals(airport2.getName()))){
+        for (Airport airport1 : world.getAirportsArrayList()) {
+            for (Airport airport2 : world.getAirportsArrayList()) {
+                if (!(airport1.getName().equals(airport2.getName()))) {
                     pathFinder = new PathFinder(airport1, airport2, fuel, world);
-                    while (pathFinder.findPath("DIJKSTRA") == null){
+                    while (pathFinder.findPath("DIJKSTRA") == null) {
                         pathFinder = new PathFinder(airport1, airport2, fuel++, world);
                     }
                 }
@@ -63,7 +64,7 @@ class BFSTest {
 
     @Test
     @DisplayName("Shouldn't find path with '1' fuel - BFS")
-    void shouldNotFindPathWithOneFuelBFS(){
+    void shouldNotFindPathWithOneFuelBFS() {
         //Given//
         BFS bfs;
         Path path;
@@ -77,7 +78,7 @@ class BFSTest {
 
     @Test
     @DisplayName("Shouldn't find path with no fuel - BFS")
-    void shouldNotFindPathWithNoFuelBFS(){
+    void shouldNotFindPathWithNoFuelBFS() {
         //Given//
         BFS bfs;
         Path path;
@@ -91,7 +92,7 @@ class BFSTest {
 
     @Test
     @DisplayName("Should find path with infinite fuel - BFS")
-    void shouldFindPathWithInfiniteFuelBFS(){
+    void shouldFindPathWithInfiniteFuelBFS() {
         //Given//
         BFS bfs;
         Path path;
@@ -103,14 +104,14 @@ class BFSTest {
         path = bfs.startBFS();
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(initialAirport, path.getFirst().getInitialAirport()),
-                () ->  assertEquals(finalAirport, path.getLast().getFinalAirport())
+                () -> assertEquals(initialAirport, path.getFirst().getInitialAirport()),
+                () -> assertEquals(finalAirport, path.getLast().getFinalAirport())
         );
     }
 
     @Test
     @DisplayName("Should find path with minimum required fuel - BFS")
-    void shouldFindPathWithMinRequiredFuelBFS(){
+    void shouldFindPathWithMinRequiredFuelBFS() {
         //Given//
         BFS bfs;
         Path path;
@@ -122,27 +123,27 @@ class BFSTest {
         path = bfs.startBFS();
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(initialAirport, path.getFirst().getInitialAirport()),
-                () ->  assertEquals(finalAirport, path.getLast().getFinalAirport())
+                () -> assertEquals(initialAirport, path.getFirst().getInitialAirport()),
+                () -> assertEquals(finalAirport, path.getLast().getFinalAirport())
         );
     }
 
     @Test
     @DisplayName("Should find path to every airport with minimum required fuel - BFS")
-    void shouldFindPathToEveryAirportWithMinRequiredFuelBFS(){
+    void shouldFindPathToEveryAirportWithMinRequiredFuelBFS() {
         //Given//
         BFS bfs;
         Path path;
         World world = poland();
         //When//
         boolean notFound = false;
-        for(Airport initialAirport : world.getAirportsArrayList()) {
+        for (Airport initialAirport : world.getAirportsArrayList()) {
             for (Airport finalAirport : world.getAirportsArrayList()) {
-                if(!initialAirport.equals(finalAirport)){
+                if (!initialAirport.equals(finalAirport)) {
                     bfs = new BFS(initialAirport, finalAirport, polandMinFuel, world);
                     path = bfs.startBFS();
-                    if(path == null || !path.getFirst().getInitialAirport().equals(initialAirport) ||
-                            !path.getLast().getFinalAirport().equals(finalAirport)){
+                    if (path == null || !path.getFirst().getInitialAirport().equals(initialAirport) ||
+                            !path.getLast().getFinalAirport().equals(finalAirport)) {
                         notFound = true;
                         break;
                     }

@@ -22,7 +22,7 @@ public class AirplanesGUI {
     @Getter private final static ImageIcon worldImageIcon = new ImageIcon(Objects.requireNonNull(
             AirplanesGUI.class.getResource("/images/World.png")));
 
-    public AirplanesGUI(){
+    public AirplanesGUI() {
         //Setting up main JLayerPane//
         jLayeredPane.setBounds(0, 0, worldImageIcon.getIconWidth(), worldImageIcon.getIconHeight());
         //Adding World map//
@@ -33,6 +33,7 @@ public class AirplanesGUI {
 
     /**
      * Adds backButton to AirplanesGUI jLayeredPane
+     *
      * @param backButton JButton that changes main JFrame content pane to Set up screen
      */
     public void addBackButton(JButton backButton) {
@@ -43,11 +44,12 @@ public class AirplanesGUI {
 
     /**
      * Draws airport in specified position.
-     * @param x X-axis position of the airport.
-     * @param y Y-axis position of the airport.
+     *
+     * @param x    X-axis position of the airport.
+     * @param y    Y-axis position of the airport.
      * @param name Name of airport.
      */
-    public void drawAirport(int x, int y, String name){
+    public void drawAirport(int x, int y, String name) {
         //Centering position of airport image//
         x = x - (airportImageIcon.getIconWidth() / 2);
         y = y - (airportImageIcon.getIconHeight() / 2);
@@ -59,12 +61,12 @@ public class AirplanesGUI {
         JLabel airportNameJLabel = new JLabel(name);
         airportNameJLabel.setFont(new Font("Courier New", Font.BOLD, 12));
         airportNameJLabel.setForeground(Color.WHITE);
-        if((airportImageIcon.getIconWidth()/2) - (name.length()*7/2) > 0){
-            airportNameJLabel.setBounds(x + abs((airportImageIcon.getIconWidth()/2) - (name.length()*7/2)),
-                    y + airportImageIcon.getIconHeight() + 3, name.length()*7, 15);
+        if ((airportImageIcon.getIconWidth() / 2) - (name.length() * 7 / 2) > 0) {
+            airportNameJLabel.setBounds(x + abs((airportImageIcon.getIconWidth() / 2) - (name.length() * 7 / 2)),
+                    y + airportImageIcon.getIconHeight() + 3, name.length() * 7, 15);
         } else {
-            airportNameJLabel.setBounds(x - abs((airportImageIcon.getIconWidth()/2) - (name.length()*7/2)),
-                    y + airportImageIcon.getIconHeight() + 3, name.length()*7, 15);
+            airportNameJLabel.setBounds(x - abs((airportImageIcon.getIconWidth() / 2) - (name.length() * 7 / 2)),
+                    y + airportImageIcon.getIconHeight() + 3, name.length() * 7, 15);
         }
         jLayeredPane.add(airportNameJLabel, JLayeredPane.PALETTE_LAYER);
         //Drawing airport name background//
@@ -73,25 +75,26 @@ public class AirplanesGUI {
 
     /**
      * Draws dark background behind airport name.
-     * @param x X-axis position of the airport.
-     * @param y Y-axis position of the airport.
+     *
+     * @param x    X-axis position of the airport.
+     * @param y    Y-axis position of the airport.
      * @param name Name of airport.
      */
-    private void drawAirportNameBackground(int x, int y, String name){
+    private void drawAirportNameBackground(int x, int y, String name) {
         ImageIcon airportNameBackground = new ImageIcon(Objects.requireNonNull(
                 AirplanesGUI.class.getResource("/images/Background.png")));
         Image image = airportNameBackground.getImage();
-        Image scaledImage = image.getScaledInstance(name.length()*7+5, 15,  java.awt.Image.SCALE_SMOOTH);
+        Image scaledImage = image.getScaledInstance(name.length() * 7 + 5, 15, java.awt.Image.SCALE_SMOOTH);
         airportNameBackground = new ImageIcon(scaledImage);
         JLabel airportNameBackgroundJLabel = new JLabel(airportNameBackground);
-        if((airportImageIcon.getIconWidth()/2) - (name.length()*7/2) > 0){
+        if ((airportImageIcon.getIconWidth() / 2) - (name.length() * 7 / 2) > 0) {
             airportNameBackgroundJLabel.setBounds(
-                    x + abs((airportImageIcon.getIconWidth()/2) - (name.length()*7/2)) - 3,
+                    x + abs((airportImageIcon.getIconWidth() / 2) - (name.length() * 7 / 2)) - 3,
                     y + airportImageIcon.getIconHeight() + 2,
                     airportNameBackground.getIconWidth(), airportNameBackground.getIconHeight());
         } else {
             airportNameBackgroundJLabel.setBounds(
-                    x - abs((airportImageIcon.getIconWidth()/2) - (name.length()*7/2)) - 3,
+                    x - abs((airportImageIcon.getIconWidth() / 2) - (name.length() * 7 / 2)) - 3,
                     y + airportImageIcon.getIconHeight() + 2,
                     airportNameBackground.getIconWidth(), airportNameBackground.getIconHeight());
         }
@@ -100,14 +103,15 @@ public class AirplanesGUI {
 
     /**
      * Creates airplane JLabel in specified position.
+     *
      * @param x X-axis position of airplane.
      * @param y Y-axis position of airplane.
-     * @return created JLabel of airplane.
+     * @return Created JLabel of airplane.
      */
     public JLabel drawAirplane(int x, int y) {
         JLabel airplaneJLabel = new JLabel(airplaneImageIcon);
-        airplaneJLabel.setBounds(x - airplaneImageIcon.getIconWidth()/2, y - airplaneImageIcon.getIconHeight()/2,
-                                 airplaneImageIcon.getIconWidth(), airplaneImageIcon.getIconHeight());
+        airplaneJLabel.setBounds(x - airplaneImageIcon.getIconWidth() / 2, y - airplaneImageIcon.getIconHeight() / 2,
+                airplaneImageIcon.getIconWidth(), airplaneImageIcon.getIconHeight());
         jLayeredPane.add(airplaneJLabel, JLayeredPane.MODAL_LAYER);
         airplaneJLabel.setVisible(false);
         return airplaneJLabel;
@@ -115,22 +119,24 @@ public class AirplanesGUI {
 
     /**
      * Updates position of specified airplane JLabel.
+     *
      * @param airplaneJLabel JLabel of airplane to update.
-     * @param x X-axis position in which airplane should be.
-     * @param y Y-axis position in which airplane should be.
-     * @param angle Angel at which airplane should be rotated.
+     * @param x              X-axis position in which airplane should be.
+     * @param y              Y-axis position in which airplane should be.
+     * @param angle          Angel at which airplane should be rotated.
      */
     public void updateAirplane(JLabel airplaneJLabel, int x, int y, double angle) {
         RotatedIcon airplaneRotatedIcon = new RotatedIcon(airplaneImageIcon, angle);
         airplaneJLabel.setIcon(airplaneRotatedIcon);
-        airplaneJLabel.setBounds(x - airplaneImageIcon.getIconWidth()/2, y - airplaneImageIcon.getIconHeight()/2,
+        airplaneJLabel.setBounds(x - airplaneImageIcon.getIconWidth() / 2, y - airplaneImageIcon.getIconHeight() / 2,
                 airplaneImageIcon.getIconWidth(), airplaneImageIcon.getIconHeight());
     }
 
     /**
      * Creates JLabel indicated maximum fuel of specified airplane.
+     *
      * @param airplane Airplane for which maxFuel JLabel will be created.
-     * @return created maxFuel JLabel for airplane.
+     * @return Created maxFuel JLabel for airplane.
      */
     public JLabel drawMaxFuelStatus(Airplane airplane) {
         JLabel fuelJLabel = new JLabel();
@@ -143,8 +149,9 @@ public class AirplanesGUI {
 
     /**
      * Creates JLabel indicated current fuel of specified airplane.
+     *
      * @param airplane Airplane for which currentFuel JLabel will be created.
-     * @return created currentFuel JLabel for airplane.
+     * @return Created currentFuel JLabel for airplane.
      */
     public JLabel drawCurrentFuelStatus(Airplane airplane) {
         JLabel fuelJLabel = new JLabel();
@@ -157,6 +164,7 @@ public class AirplanesGUI {
 
     /**
      * Updates position and width of maximum and current fuel JLabels of specified airplane.
+     *
      * @param airplane Airplane for which fuel JLabels will be updated.
      */
     public void updateFuelStatusAirplane(Airplane airplane) {

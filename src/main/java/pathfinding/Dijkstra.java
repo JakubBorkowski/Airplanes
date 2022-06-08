@@ -28,31 +28,32 @@ public class Dijkstra {
 
     /**
      * Starts Dijkstra's shortest path algorithm.
-     * @return path to finalAirport.
+     *
+     * @return Path to finalAirport.
      */
-    public Path startDijkstra(){
+    public Path startDijkstra() {
         ArrayList<Airport> unvisitedAirports = new ArrayList<>(world.getAirportsArrayList());
         ArrayList<DijkstraTable> dijkstraTableArrayList = new ArrayList<>();
-        for(Airport airport : world.getAirportsArrayList()){
-            if(airport.equals(initialAirport)){
+        for (Airport airport : world.getAirportsArrayList()) {
+            if (airport.equals(initialAirport)) {
                 dijkstraTableArrayList.add(new DijkstraTable(airport, (double) 0, null));
-            }
-            else {
+            } else {
                 dijkstraTableArrayList.add(new DijkstraTable(airport, Double.POSITIVE_INFINITY, null));
             }
         }
         dijkstraTableArrayList.sort(compareByDistanceDijkstraTable);
-        while (unvisitedAirports.size() > 0){
+        while (unvisitedAirports.size() > 0) {
             dijkstraTableArrayList.sort(compareByDistanceDijkstraTable);
-            for(DijkstraTable dijkstraTable : dijkstraTableArrayList){
-                if(unvisitedAirports.contains(dijkstraTable.getAirport())){
-                    for(Airport airport : dijkstraTable.getAirport().getNearAirports(fuel)){
-                        if(unvisitedAirports.contains(airport)){
+            for (DijkstraTable dijkstraTable : dijkstraTableArrayList) {
+                if (unvisitedAirports.contains(dijkstraTable.getAirport())) {
+                    for (Airport airport : dijkstraTable.getAirport().getNearAirports(fuel)) {
+                        if (unvisitedAirports.contains(airport)) {
                             DijkstraTable dijkstraTable2 = findAirportInDijkstraTable(airport, dijkstraTableArrayList);
-                            if(!(dijkstraTable2 == null)){
+                            if (!(dijkstraTable2 == null)) {
                                 double distanceBetweenAirports = world.checkDistance(dijkstraTable.getAirport(),
                                         airport);
-                                if(dijkstraTable.getDistance()+distanceBetweenAirports < dijkstraTable2.getDistance()){
+                                if (dijkstraTable.getDistance() + distanceBetweenAirports <
+                                        dijkstraTable2.getDistance()) {
                                     int dijkstraTable2Index = dijkstraTableArrayList.indexOf(dijkstraTable2);
                                     dijkstraTableArrayList.get(dijkstraTable2Index).setDistance(
                                             dijkstraTable.getDistance() + distanceBetweenAirports);
@@ -71,7 +72,7 @@ public class Dijkstra {
         int finalAirportIndex = dijkstraTableArrayList.indexOf(
                 findAirportInDijkstraTable(finalAirport, dijkstraTableArrayList)
         );
-        if(dijkstraTableArrayList.get(finalAirportIndex).getPreviousAirport() == null){
+        if (dijkstraTableArrayList.get(finalAirportIndex).getPreviousAirport() == null) {
             return null;//Airplane can't reach finalAirport
         }
         //Creating path of airports from dijkstraTableArrayList//
@@ -80,7 +81,7 @@ public class Dijkstra {
         Airport airport = dijkstraTableArrayList.get(finalAirportIndex).getPreviousAirport();
         path.add(airport);
         assert airport != null;
-        while (!airport.equals(initialAirport)){
+        while (!airport.equals(initialAirport)) {
             int airportIndex = dijkstraTableArrayList.indexOf(
                     findAirportInDijkstraTable(airport, dijkstraTableArrayList)
             );
@@ -91,9 +92,9 @@ public class Dijkstra {
         Collections.reverse(path);
         //Converting airports to nodes of airports in path//
         Path nodePath = new Path();
-        for(Airport airportFromPath : path){
-            if(path.size() > path.indexOf(airportFromPath)+1){
-                nodePath.add(new Node(airportFromPath, path.get(path.indexOf(airportFromPath)+1)));
+        for (Airport airportFromPath : path) {
+            if (path.size() > path.indexOf(airportFromPath) + 1) {
+                nodePath.add(new Node(airportFromPath, path.get(path.indexOf(airportFromPath) + 1)));
             }
         }
         return nodePath;
@@ -107,17 +108,18 @@ public class Dijkstra {
 
     /**
      * Finds DijkstraTable with specified airport in dijkstraTableArrayList.
-     * @param airport that wanted DijkstraTable should contain.
+     *
+     * @param airport                Airport that wanted DijkstraTable should contain.
      * @param dijkstraTableArrayList ArrayList with all DijkstraTable objects.
      * @return DijkstraTable with specified airport or null if DijkstraTable was not found.
      */
-    private DijkstraTable findAirportInDijkstraTable(Airport airport, ArrayList<DijkstraTable> dijkstraTableArrayList){
-        for (DijkstraTable dijkstraTable : dijkstraTableArrayList){
-            if (dijkstraTable.getAirport().equals(airport)){
-                return(dijkstraTable);
+    private DijkstraTable findAirportInDijkstraTable(Airport airport, ArrayList<DijkstraTable> dijkstraTableArrayList) {
+        for (DijkstraTable dijkstraTable : dijkstraTableArrayList) {
+            if (dijkstraTable.getAirport().equals(airport)) {
+                return (dijkstraTable);
             }
         }
-        return(null);
+        return (null);
     }
 
 }

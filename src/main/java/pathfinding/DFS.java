@@ -19,23 +19,24 @@ public class DFS extends PathFinder {
 
     /**
      * Starts Depth-first search algorithm.
-     * @return path to finalAirport.
+     *
+     * @return Path to finalAirport.
      */
-    public Path startDFS(){
+    public Path startDFS() {
         Path path = new Path();
         //If it is possible to travel directly to destination - return appropriate path//
-        if(initialAirport.getNearAirports(fuel).contains(finalAirport)){
+        if (initialAirport.getNearAirports(fuel).contains(finalAirport)) {
             path.add(new Node(initialAirport, finalAirport));
             return path;
         } else {
             LinkedList<Path> allPossiblePaths = new LinkedList<>();
             LinkedList<Node> initialAirportNodes = new LinkedList<>(initialAirport.getNodes(fuel));
-            for(Node node : initialAirportNodes){
+            for (Node node : initialAirportNodes) {
                 path.add(node);
                 allPossiblePaths = recursion(path, allPossiblePaths);
                 path.clear();
             }
-            if(allPossiblePaths.isEmpty()){
+            if (allPossiblePaths.isEmpty()) {
                 return null;
             } else {
                 allPossiblePaths.sort(comparePathByDistance);
@@ -47,19 +48,20 @@ public class DFS extends PathFinder {
 
     /**
      * Continue Depth-first search with specified unfinished path.
-     * @param path currently processed path.
-     * @param allPossiblePaths all found path leading to finalAirport.
-     * @return updated allPossiblePaths.
+     *
+     * @param path             Currently processed path.
+     * @param allPossiblePaths All found path leading to finalAirport.
+     * @return Updated allPossiblePaths.
      */
-    private LinkedList<Path> recursion(Path path, LinkedList<Path> allPossiblePaths){
-        if(!path.isEmpty()){
+    private LinkedList<Path> recursion(Path path, LinkedList<Path> allPossiblePaths) {
+        if (!path.isEmpty()) {
             LinkedList<Node> nodesToSearch = new LinkedList<>();//backup
             ArrayList<Node> possibleNextNodes = new ArrayList<>(path.getLast().getFinalAirport().getNodes(fuel));
-            for(Node nodeNeighbor : possibleNextNodes){
-                if(!path.contains(nodeNeighbor) && !path.contains(nodeNeighbor.getFinalAirport())){
-                    if(nodeNeighbor.getFinalAirport().equals(finalAirport)){
+            for (Node nodeNeighbor : possibleNextNodes) {
+                if (!path.contains(nodeNeighbor) && !path.contains(nodeNeighbor.getFinalAirport())) {
+                    if (nodeNeighbor.getFinalAirport().equals(finalAirport)) {
                         path.add(nodeNeighbor);
-                        if(!allPossiblePaths.contains(path)){
+                        if (!allPossiblePaths.contains(path)) {
                             allPossiblePaths.add(new Path(path));
                         }
                         path.remove(nodeNeighbor);
@@ -68,12 +70,12 @@ public class DFS extends PathFinder {
                     }
                 }
             }
-            for(Node nodeNeighbor : nodesToSearch){
-                if(!path.isEmpty()){
-                    if(!path.contains(nodeNeighbor) && !path.contains(nodeNeighbor.getFinalAirport())){
-                        if(nodeNeighbor.getFinalAirport().equals(finalAirport)){
+            for (Node nodeNeighbor : nodesToSearch) {
+                if (!path.isEmpty()) {
+                    if (!path.contains(nodeNeighbor) && !path.contains(nodeNeighbor.getFinalAirport())) {
+                        if (nodeNeighbor.getFinalAirport().equals(finalAirport)) {
                             path.add(nodeNeighbor);
-                            if(!allPossiblePaths.contains(path)){
+                            if (!allPossiblePaths.contains(path)) {
                                 allPossiblePaths.add(new Path(path));
                             }
                             path.remove(nodeNeighbor);

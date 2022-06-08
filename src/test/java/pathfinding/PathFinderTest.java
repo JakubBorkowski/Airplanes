@@ -17,7 +17,7 @@ class PathFinderTest {
     /**
      * @return World with all airports in Poland
      */
-    private World poland(){
+    private World poland() {
         World world = new World();
         world.addAirport(101, 319, "Zielona Góra");
         world.addAirport(81, 238, "Gorzów Wielokopolski");
@@ -42,17 +42,18 @@ class PathFinderTest {
 
     /**
      * Finds minimal fuel which will allow for flying to every airport in provided world.
+     *
      * @param world World for which minimal required fuel will be calculated.
      * @return Minimal fuel required for travel to every airport in provided world.
      */
-    private double calculateMinRequiredFuel(@NotNull World world){
+    private double calculateMinRequiredFuel(@NotNull World world) {
         PathFinder pathFinder;
         Double fuel = 0.0;
-        for(Airport airport1 : world.getAirportsArrayList()){
-            for(Airport airport2 : world.getAirportsArrayList()){
-                if(!(airport1.getName().equals(airport2.getName()))){
+        for (Airport airport1 : world.getAirportsArrayList()) {
+            for (Airport airport2 : world.getAirportsArrayList()) {
+                if (!(airport1.getName().equals(airport2.getName()))) {
                     pathFinder = new PathFinder(airport1, airport2, fuel, world);
-                    while (pathFinder.findPath("DIJKSTRA") == null){
+                    while (pathFinder.findPath("DIJKSTRA") == null) {
                         pathFinder = new PathFinder(airport1, airport2, fuel++, world);
                     }
                 }
@@ -79,14 +80,14 @@ class PathFinderTest {
         pathDijkstra = pathFinder.findPath("DIJKSTRA");
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(initialAirport, pathDFS.getFirst().getInitialAirport()),
-                () ->  assertEquals(finalAirport, pathDFS.getLast().getFinalAirport()),
+                () -> assertEquals(initialAirport, pathDFS.getFirst().getInitialAirport()),
+                () -> assertEquals(finalAirport, pathDFS.getLast().getFinalAirport()),
 
-                () ->  assertEquals(initialAirport, pathBFS.getFirst().getInitialAirport()),
-                () ->  assertEquals(finalAirport, pathBFS.getLast().getFinalAirport()),
+                () -> assertEquals(initialAirport, pathBFS.getFirst().getInitialAirport()),
+                () -> assertEquals(finalAirport, pathBFS.getLast().getFinalAirport()),
 
-                () ->  assertEquals(initialAirport, pathDijkstra.getFirst().getInitialAirport()),
-                () ->  assertEquals(finalAirport, pathDijkstra.getLast().getFinalAirport())
+                () -> assertEquals(initialAirport, pathDijkstra.getFirst().getInitialAirport()),
+                () -> assertEquals(finalAirport, pathDijkstra.getLast().getFinalAirport())
         );
     }
 }

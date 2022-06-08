@@ -8,15 +8,16 @@ public class App {
 
     /**
      * Checks if provided arguments can be applied.
+     *
      * @param args String array of provided by user arguments.
      */
-    private static void checkArguments(String[] args){
+    private static void checkArguments(String[] args) {
         String errorMessage = "Please provide exactly 4 arguments in the following order:\n" +
                               "-Number of airplanes\n" +
                               "-Minimum fuel\n" +
                               "-Maximum fuel\n" +
                               "-Name of algorithm";
-        if(!(args.length == 4)){
+        if (!(args.length == 4)) {
             System.err.println("Wrong number of arguments!");
             System.err.println("\n" + errorMessage);
             System.exit(1);
@@ -42,29 +43,29 @@ public class App {
             System.err.println("\n" + errorMessage);
             System.exit(1);
         }
-        if(Integer.parseInt(args[0]) < 0){
+        if (Integer.parseInt(args[0]) < 0) {
             System.err.println("First argument can not be a negative number!");
             System.err.println("\n" + errorMessage);
             System.exit(1);
         }
-        if(Integer.parseInt(args[1]) < 0){
+        if (Integer.parseInt(args[1]) < 0) {
             System.err.println("Second argument can not be a negative number!");
             System.err.println("\n" + errorMessage);
             System.exit(1);
         }
-        if(Integer.parseInt(args[2]) < 0){
+        if (Integer.parseInt(args[2]) < 0) {
             System.err.println("Third argument can not be a negative number!");
             System.err.println("\n" + errorMessage);
             System.exit(1);
         }
-        if(Integer.parseInt(args[1]) > Integer.parseInt(args[2])){
+        if (Integer.parseInt(args[1]) > Integer.parseInt(args[2])) {
             System.err.println("The maximum fuel level must be greater than or equal to the minimum fuel level!");
             System.err.println("\n" + errorMessage);
             System.exit(1);
         }
-        if(!args[3].toUpperCase(Locale.ROOT).equals("BFS")){
-            if(!args[3].toUpperCase(Locale.ROOT).equals("DFS")){
-                if(!args[3].toUpperCase(Locale.ROOT).equals("DIJKSTRA")){
+        if (!args[3].toUpperCase(Locale.ROOT).equals("BFS")) {
+            if (!args[3].toUpperCase(Locale.ROOT).equals("DFS")) {
+                if (!args[3].toUpperCase(Locale.ROOT).equals("DIJKSTRA")) {
                     System.err.println("The fourth argument should be \"BFS\", \"DFS\" or \"Dijkstra\"!");
                     System.err.println("\n" + errorMessage);
                     System.exit(1);
@@ -74,14 +75,14 @@ public class App {
     }
 
     /**
-     * @param args the command line arguments
+     * @param args The command line arguments
      */
     public static void main(String[] args) {
         //FlatLaf setup
-        FlatLaf.registerCustomDefaultsSource( "themes" );
+        FlatLaf.registerCustomDefaultsSource("themes");
         FlatLightLaf.setup();
         //Checking if program was run with arguments
-        if(args.length==0){
+        if (args.length == 0) {
             //Starting app GUI//
             new Setup();
         } else {

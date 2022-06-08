@@ -16,12 +16,13 @@ public class Airport {
 
     /**
      * Creates an airport.
-     * @param x X-axis position of airport.
-     * @param y Y-axis position of airport.
-     * @param name Name of airport.
+     *
+     * @param x     X-axis position of airport.
+     * @param y     Y-axis position of airport.
+     * @param name  Name of airport.
      * @param world World object with information about all airports on map.
      */
-    Airport(int x, int y, @NonNull String name, @NonNull World world){
+    Airport(int x, int y, @NonNull String name, @NonNull World world) {
         this.x = x;
         this.y = y;
         this.name = name;
@@ -31,13 +32,14 @@ public class Airport {
 
     /**
      * Finds airports in reach for airplane with specified fuel from this airport.
+     *
      * @param fuel Maximum fuel of airplane for which the flight is being searched for.
      * @return ArrayList of airports in reach from this airport.
      */
-    public ArrayList<Airport> getNearAirports(double fuel){
+    public ArrayList<Airport> getNearAirports(double fuel) {
         ArrayList<Airport> nearAirportsArrayList = new ArrayList<>();
-        for(Airport airport : world.getAirportsArrayList()){
-            if(fuel >= world.checkDistance(this, airport)){
+        for (Airport airport : world.getAirportsArrayList()) {
+            if (fuel >= world.checkDistance(this, airport)) {
                 nearAirportsArrayList.add(airport);
             }
         }
@@ -47,13 +49,14 @@ public class Airport {
 
     /**
      * Finds nodes of airports in reach from this airport by airplane with specified fuel.
+     *
      * @param fuel Maximum fuel of airplane for which the flight is being searched for.
      * @return ArrayList of nodes of airports in reach from this airport.
      */
-    public ArrayList<Node> getNodes(double fuel){
+    public ArrayList<Node> getNodes(double fuel) {
         ArrayList<Node> nearAirportsArrayList = new ArrayList<>();
-        for(Airport airport : world.getAirportsArrayList()){
-            if(!airport.equals(this) && fuel >= world.checkDistance(this, airport)){
+        for (Airport airport : world.getAirportsArrayList()) {
+            if (!airport.equals(this) && fuel >= world.checkDistance(this, airport)) {
                 nearAirportsArrayList.add(new Node(this, airport));
             }
         }
@@ -63,10 +66,11 @@ public class Airport {
     /**
      * Finds nodes of airports in reach from this airport by airplane
      * with specified fuel and sort it from nearest to farthest.
+     *
      * @param fuel Maximum fuel of airplane for which the flight is being searched for.
      * @return ArrayList of sorted nodes of airports in reach from this airport.
      */
-    public ArrayList<Node> getSortedNodes(double fuel){
+    public ArrayList<Node> getSortedNodes(double fuel) {
         ArrayList<Node> nodesToSort = getNodes(fuel);
         Comparator<Node> compareByDistance = (node1, node2) -> {
             double distance1 = world.checkDistance(node1.getInitialAirport(), node1.getFinalAirport());

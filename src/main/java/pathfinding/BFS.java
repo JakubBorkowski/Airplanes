@@ -19,31 +19,31 @@ public class BFS extends PathFinder {
 
     /**
      * Starts Breadth-first search.
-     * @return path to finalAirport.
+     *
+     * @return Path to finalAirport.
      */
-    public Path startBFS(){
+    public Path startBFS() {
         LinkedList<Path> queue = new LinkedList<>();
         Path path = new Path();
-        for(Node initialNode : initialAirport.getSortedNodes(fuel)){
+        for (Node initialNode : initialAirport.getSortedNodes(fuel)) {
             path.add(initialNode);
-            if(initialNode.getFinalAirport().equals(finalAirport)){
+            if (initialNode.getFinalAirport().equals(finalAirport)) {
                 return path;
             } else {
                 queue.add(new Path(path));
                 path.clear();
             }
         }
-        for(int i = 0; i < queue.size(); i++) {
+        for (int i = 0; i < queue.size(); i++) {
             path = queue.get(i);
             ArrayList<Node> nodesOfLastAirportInPath = path.getLast().getFinalAirport().getSortedNodes(fuel);
-            for(Node node : nodesOfLastAirportInPath){
-                if(!(node.getInitialAirport() == initialAirport) && !(node.getFinalAirport() == initialAirport) &&
-                        !(node.getFinalAirport() == path.getLast().getInitialAirport()) && !path.contains(node)){
+            for (Node node : nodesOfLastAirportInPath) {
+                if (!(node.getInitialAirport() == initialAirport) && !(node.getFinalAirport() == initialAirport) &&
+                        !(node.getFinalAirport() == path.getLast().getInitialAirport()) && !path.contains(node)) {
                     path.add(node);
-                    if(path.getLast().getFinalAirport().equals(finalAirport)){
+                    if (path.getLast().getFinalAirport().equals(finalAirport)) {
                         return path;
-                    }
-                    else {
+                    } else {
                         queue.add(new Path(path));
                     }
                     path.remove(node);

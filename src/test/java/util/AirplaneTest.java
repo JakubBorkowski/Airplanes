@@ -11,7 +11,7 @@ class AirplaneTest {
     /**
      * @return World with all airports in Poland
      */
-    private World poland(){
+    private World poland() {
         World world = new World();
         world.addAirport(101, 319, "Zielona Góra");
         world.addAirport(81, 238, "Gorzów Wielokopolski");
@@ -40,7 +40,7 @@ class AirplaneTest {
         World world = poland();
         Airport initialAirport = world.getAirportsArrayList().get(0);
         Airport finalAirport = world.getAirportsArrayList().get(1);
-        Airplane airplane = new Airplane(initialAirport, "Airplane", polandMinFuel, "DIJKSTRA", world );
+        Airplane airplane = new Airplane(initialAirport, "Airplane", polandMinFuel, "DIJKSTRA", world);
         //When//
         airplane.setTarget(finalAirport);
         //Then//
@@ -52,7 +52,7 @@ class AirplaneTest {
         //Given//
         World world = poland();
         Airport airport = world.getAirportsArrayList().get(0);
-        Airplane airplane = new Airplane(airport, "Airplane", polandMinFuel, "DIJKSTRA", world );
+        Airplane airplane = new Airplane(airport, "Airplane", polandMinFuel, "DIJKSTRA", world);
         Thread airplaneThread = new Thread(airplane);
         //When//
         airplaneThread.start();

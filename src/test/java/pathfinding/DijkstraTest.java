@@ -16,7 +16,7 @@ class DijkstraTest {
     /**
      * @return World with all airports in Poland
      */
-    private World poland(){
+    private World poland() {
         World world = new World();
         world.addAirport(101, 319, "Zielona Góra");
         world.addAirport(81, 238, "Gorzów Wielokopolski");
@@ -41,17 +41,18 @@ class DijkstraTest {
 
     /**
      * Finds minimal fuel which will allow for flying to every airport in provided world.
+     *
      * @param world World for which minimal required fuel will be calculated.
      * @return Minimal fuel required for travel to every airport in provided world.
      */
-    private double calculateMinRequiredFuel(@NotNull World world){
+    private double calculateMinRequiredFuel(@NotNull World world) {
         PathFinder pathFinder;
         Double fuel = 0.0;
-        for(Airport airport1 : world.getAirportsArrayList()){
-            for(Airport airport2 : world.getAirportsArrayList()){
-                if(!(airport1.getName().equals(airport2.getName()))){
+        for (Airport airport1 : world.getAirportsArrayList()) {
+            for (Airport airport2 : world.getAirportsArrayList()) {
+                if (!(airport1.getName().equals(airport2.getName()))) {
                     pathFinder = new PathFinder(airport1, airport2, fuel, world);
-                    while (pathFinder.findPath("DIJKSTRA") == null){
+                    while (pathFinder.findPath("DIJKSTRA") == null) {
                         pathFinder = new PathFinder(airport1, airport2, fuel++, world);
                     }
                 }
@@ -63,13 +64,15 @@ class DijkstraTest {
 
     @Test
     @DisplayName("Shouldn't find path with '1' fuel - Dijkstra")
-    void shouldNotFindPathWithOneFuelDIJKSTRA(){
+    void shouldNotFindPathWithOneFuelDIJKSTRA() {
         //Given//
         Dijkstra dijkstra;
         Path path;
         World poland = poland();
+        Airport initialAirport = poland.getAirportsArrayList().get(0);
+        Airport finalAirport = poland.getAirportsArrayList().get(1);
         //When//
-        dijkstra = new Dijkstra(poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 1.0, poland);
+        dijkstra = new Dijkstra(initialAirport, finalAirport, 1.0, poland);
         path = dijkstra.startDijkstra();
         //Then//
         assertNull(path);
@@ -77,13 +80,15 @@ class DijkstraTest {
 
     @Test
     @DisplayName("Shouldn't find path with no fuel - Dijkstra")
-    void shouldNotFindPathWithNoFuelDIJKSTRA(){
+    void shouldNotFindPathWithNoFuelDIJKSTRA() {
         //Given//
         Dijkstra dijkstra;
         Path path;
         World poland = poland();
+        Airport initialAirport = poland.getAirportsArrayList().get(0);
+        Airport finalAirport = poland.getAirportsArrayList().get(1);
         //When//
-        dijkstra = new Dijkstra(poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 0.0, poland);
+        dijkstra = new Dijkstra(initialAirport, finalAirport, 0.0, poland);
         path = dijkstra.startDijkstra();
         //Then//
         assertNull(path);
@@ -91,7 +96,7 @@ class DijkstraTest {
 
     @Test
     @DisplayName("Should find path with infinite fuel - Dijkstra")
-    void shouldFindPathWithInfiniteFuelDIJKSTRA(){
+    void shouldFindPathWithInfiniteFuelDIJKSTRA() {
         //Given//
         Dijkstra dijkstra;
         Path path;
@@ -103,14 +108,14 @@ class DijkstraTest {
         path = dijkstra.startDijkstra();
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(initialAirport, path.getFirst().getInitialAirport()),
-                () ->  assertEquals(finalAirport, path.getLast().getFinalAirport())
+                () -> assertEquals(initialAirport, path.getFirst().getInitialAirport()),
+                () -> assertEquals(finalAirport, path.getLast().getFinalAirport())
         );
     }
 
     @Test
     @DisplayName("Should find path with minimum required fuel - Dijkstra")
-    void shouldFindPathWithMinRequiredFuelDIJKSTRA(){
+    void shouldFindPathWithMinRequiredFuelDIJKSTRA() {
         //Given//
         Dijkstra dijkstra;
         Path path;
@@ -122,27 +127,27 @@ class DijkstraTest {
         path = dijkstra.startDijkstra();
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
-                () ->  assertEquals(initialAirport, path.getFirst().getInitialAirport()),
-                () ->  assertEquals(finalAirport, path.getLast().getFinalAirport())
+                () -> assertEquals(initialAirport, path.getFirst().getInitialAirport()),
+                () -> assertEquals(finalAirport, path.getLast().getFinalAirport())
         );
     }
 
     @Test
     @DisplayName("Should find path to every airport with minimum required fuel - Dijkstra")
-    void shouldFindPathToEveryAirportWithMinRequiredFuelDIJKSTRA(){
+    void shouldFindPathToEveryAirportWithMinRequiredFuelDIJKSTRA() {
         //Given//
         Dijkstra dijkstra;
         Path path;
         World world = poland();
         //When//
         boolean notFound = false;
-        for(Airport initialAirport : world.getAirportsArrayList()) {
+        for (Airport initialAirport : world.getAirportsArrayList()) {
             for (Airport finalAirport : world.getAirportsArrayList()) {
-                if(!initialAirport.equals(finalAirport)){
+                if (!initialAirport.equals(finalAirport)) {
                     dijkstra = new Dijkstra(initialAirport, finalAirport, polandMinFuel, world);
                     path = dijkstra.startDijkstra();
-                    if(path == null || !path.getFirst().getInitialAirport().equals(initialAirport) ||
-                            !path.getLast().getFinalAirport().equals(finalAirport)){
+                    if (path == null || !path.getFirst().getInitialAirport().equals(initialAirport) ||
+                            !path.getLast().getFinalAirport().equals(finalAirport)) {
                         notFound = true;
                         break;
                     }

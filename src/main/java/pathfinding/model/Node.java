@@ -15,7 +15,7 @@ public class Node {
     @Getter
     private final Airport finalAirport;
 
-    public Node(@NonNull Airport initialAirport, @NonNull  Airport finalAirport){
+    public Node(@NonNull Airport initialAirport, @NonNull Airport finalAirport) {
         this.initialAirport = initialAirport;
         this.finalAirport = finalAirport;
     }

@@ -34,14 +34,15 @@ public class Airplane implements Runnable {
 
     /**
      * Creates an airplane.
-     * @param airport Airport in which airplane currently is.
-     * @param name Name of airplane.
-     * @param fuel Maximum fuel of airplane.
-     * @param world World object with information about all airports on map.
+     *
+     * @param airport       Airport in which airplane currently is.
+     * @param name          Name of airplane.
+     * @param fuel          Maximum fuel of airplane.
+     * @param world         World object with information about all airports on map.
      * @param algorithmName Name of algorithm which should be used. Available names: "BFS", "DFS", "DIJKSTRA".
      */
     public Airplane(@NonNull Airport airport, @NonNull String name, double fuel, @NonNull String algorithmName,
-                    @NonNull World world){
+                    @NonNull World world) {
         this.airplanesGUI = world.getAirplanesGUI();
         this.targetAirport = null;
         this.airport = airport;
@@ -62,14 +63,15 @@ public class Airplane implements Runnable {
      * Check if it is possible to travel to specified destination airport.
      * If it is - flies in determined succession to airports, until destination airport is reached.
      * If it isn't - abandon the task.
-     * @param targetAirport destination airport.
+     *
+     * @param targetAirport Destination airport.
      */
-    public void setTarget(Airport targetAirport){
+    public void setTarget(Airport targetAirport) {
         assert airport != null;
         PathFinder pathFinder = new PathFinder(airport, targetAirport, fuel, world);
         path = pathFinder.findPath(algorithmName);
-        if(generateNewTargets){
-            if(path == null){
+        if (generateNewTargets) {
+            if (path == null) {
                 System.out.println(name + ": Can't reach " + targetAirport.getName());
                 this.targetAirport = null;
                 try {
@@ -79,7 +81,7 @@ public class Airplane implements Runnable {
                 }
             } else {
                 System.out.println(name + ": New track has been set up: " + airport.getName() + path.toString());
-                for (Node airports : path){
+                for (Node airports : path) {
                     fly(airports.getFinalAirport());
                 }
                 path.clear();
@@ -89,7 +91,8 @@ public class Airplane implements Runnable {
 
     /**
      * Displays airplane and updates its position until it reach targetAirport.
-     * @param targetAirport airport to which airplane will fly.
+     *
+     * @param targetAirport Airport to which airplane will fly.
      */
     private void fly(Airport targetAirport) {
         airport = null;
@@ -98,7 +101,7 @@ public class Airplane implements Runnable {
         maxFuelJLabel.setVisible(true);
         currentFuel = fuel;
         double angle = Math.toDegrees(Math.atan2((y - targetAirport.getY()), (x - targetAirport.getX()))) - 90;
-        if(angle < 0){
+        if (angle < 0) {
             angle += 360;
         }
         double distance = Math.sqrt(Math.pow((x - targetAirport.getX()), 2) + Math.pow((y - targetAirport.getY()), 2));
@@ -106,38 +109,32 @@ public class Airplane implements Runnable {
         double yMultiplier = (abs(targetAirport.getY() - y) / distance);
         double xBackup;
         double yBackup;
-        while(generateNewTargets) {
+        while (generateNewTargets) {
             xBackup = x;
             yBackup = y;
-            if ((x < targetAirport.getX())){
-                if(targetAirport.getX() < (x + abs(xMultiplier))){
+            if ((x < targetAirport.getX())) {
+                if (targetAirport.getX() < (x + abs(xMultiplier))) {
                     x = targetAirport.getX();
-                }
-                else {
+                } else {
                     x = (x + abs(xMultiplier));
                 }
-            }
-            else if ((x > targetAirport.getX())){
-                if(targetAirport.getX() > (x - abs(xMultiplier))){
+            } else if ((x > targetAirport.getX())) {
+                if (targetAirport.getX() > (x - abs(xMultiplier))) {
                     x = targetAirport.getX();
-                }
-                else {
+                } else {
                     x = (x - abs(xMultiplier));
                 }
             }
-            if (y < targetAirport.getY()){
-                if(targetAirport.getY() < (y + abs(yMultiplier))){
+            if (y < targetAirport.getY()) {
+                if (targetAirport.getY() < (y + abs(yMultiplier))) {
                     y = targetAirport.getY();
-                }
-                else {
+                } else {
                     y = (y + abs(yMultiplier));
                 }
-            }
-            else if (y > targetAirport.getY()){
-                if(targetAirport.getY() > (y - abs(yMultiplier))){
+            } else if (y > targetAirport.getY()) {
+                if (targetAirport.getY() > (y - abs(yMultiplier))) {
                     y = targetAirport.getY();
-                }
-                else {
+                } else {
                     y = (y - abs(yMultiplier));
                 }
             }
@@ -148,7 +145,7 @@ public class Airplane implements Runnable {
                 airplanesGUI.updateAirplane(airplaneJLabel, (int) x, (int) y, finalAngle);
                 airplanesGUI.updateFuelStatusAirplane(thisAirplane);
             });
-            if(x== targetAirport.getX() && y== targetAirport.getY()){
+            if (x == targetAirport.getX() && y == targetAirport.getY()) {
                 land(targetAirport);
                 break;
             }
@@ -163,6 +160,7 @@ public class Airplane implements Runnable {
     /**
      * Hides airplane image and refuels airplane. If destination airport is reached,
      * updates current airplane airport and set its targetAirport to null.
+     *
      * @param targetAirport Airport at which airplane will land.
      */
     private void land(Airport targetAirport) {
@@ -170,7 +168,7 @@ public class Airplane implements Runnable {
         currentFuelJLabel.setVisible(false);
         maxFuelJLabel.setVisible(false);
         this.airport = targetAirport;
-        if(targetAirport.equals(this.targetAirport)){
+        if (targetAirport.equals(this.targetAirport)) {
             this.targetAirport = null;
             System.out.println(name + ": Landed in: " + airport.getName());
             try {
@@ -189,9 +187,9 @@ public class Airplane implements Runnable {
     @Override
     public void run() {
         Random random = new Random();
-        while(generateNewTargets){
-            if(targetAirport==null){
-                do{
+        while (generateNewTargets) {
+            if (targetAirport == null) {
+                do {
                     targetAirport = world.getAirportsArrayList().get(
                             random.nextInt(world.getAirportsArrayList().size()));
                 }
@@ -199,7 +197,7 @@ public class Airplane implements Runnable {
                 assert airport != null;
                 System.out.println(name + ": New target: " + targetAirport.getName());
                 System.out.println(name + ": Searching flight: " + airport.getName()
-                        + " -> "  + targetAirport.getName());
+                        + " -> " + targetAirport.getName());
                 setTarget(targetAirport);
             }
         }
