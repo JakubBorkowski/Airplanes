@@ -1,28 +1,21 @@
 package pathfinding.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import util.Airport;
-import util.World;
 
 import java.util.Objects;
 
+@AllArgsConstructor
 public class Node {
 
-    @Getter
-    private final Airport initialAirport;
-
-    @Getter
-    private final Airport finalAirport;
-
-    public Node(@NonNull Airport initialAirport, @NonNull Airport finalAirport) {
-        this.initialAirport = initialAirport;
-        this.finalAirport = finalAirport;
-    }
+    @NonNull @Getter private final Airport initialAirport;
+    @NonNull @Getter private final Airport finalAirport;
 
     public double getDistance() {
-        World world = new World();
-        return world.checkDistance(initialAirport, finalAirport);
+        return Math.sqrt(Math.pow((initialAirport.getX() - finalAirport.getX()), 2) +
+                Math.pow((initialAirport.getY() - finalAirport.getY()), 2));
     }
 
     @Override

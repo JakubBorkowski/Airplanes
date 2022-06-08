@@ -70,7 +70,7 @@ class DFSTest {
         Path path;
         World poland = poland();
         //When//
-        dfs = new DFS(poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 1.0, poland);
+        dfs = new DFS(poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 1.0);
         path = dfs.startDFS();
         //Then//
         assertNull(path);
@@ -84,7 +84,7 @@ class DFSTest {
         Path path;
         World poland = poland();
         //When//
-        dfs = new DFS(poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 0.0, poland);
+        dfs = new DFS(poland.getAirportsArrayList().get(0), poland.getAirportsArrayList().get(1), 0.0);
         path = dfs.startDFS();
         //Then//
         assertNull(path);
@@ -100,7 +100,7 @@ class DFSTest {
         Airport initialAirport = world.getAirportsArrayList().get(0);
         Airport finalAirport = world.getAirportsArrayList().get(1);
         //When//
-        dfs = new DFS(initialAirport, finalAirport, Double.POSITIVE_INFINITY, world);
+        dfs = new DFS(initialAirport, finalAirport, Double.POSITIVE_INFINITY);
         path = dfs.startDFS();
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
@@ -119,7 +119,7 @@ class DFSTest {
         Airport initialAirport = world.getAirportsArrayList().get(0);
         Airport finalAirport = world.getAirportsArrayList().get(1);
         //When//
-        dfs = new DFS(initialAirport, finalAirport, polandMinFuel, world);
+        dfs = new DFS(initialAirport, finalAirport, polandMinFuel);
         path = dfs.startDFS();
         //Then//
         assertAll("Should return path from initialAirport to finalAirport",
@@ -140,7 +140,7 @@ class DFSTest {
         for (Airport initialAirport : world.getAirportsArrayList()) {
             for (Airport finalAirport : world.getAirportsArrayList()) {
                 if (!initialAirport.equals(finalAirport)) {
-                    dfs = new DFS(initialAirport, finalAirport, polandMinFuel, world);
+                    dfs = new DFS(initialAirport, finalAirport, polandMinFuel);
                     path = dfs.startDFS();
                     if (path == null || (!path.getFirst().getInitialAirport().equals(initialAirport) ||
                             !path.getLast().getFinalAirport().equals(finalAirport))) {

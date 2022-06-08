@@ -5,7 +5,6 @@ import lombok.NonNull;
 import pathfinding.model.Node;
 import pathfinding.model.Path;
 import util.Airport;
-import util.World;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,7 +18,6 @@ public class DFS {
     @NonNull private final Airport initialAirport;
     @NonNull private final Airport finalAirport;
     @NonNull private final Double fuel;
-    @NonNull private final World world;
 
     /**
      * Starts Depth-first search algorithm.
@@ -99,19 +97,6 @@ public class DFS {
     /**
      * Allows for comparing paths by overall distance that must be travel.
      */
-    private final Comparator<Path> comparePathByDistance = new Comparator<Path>() {
-        @Override
-        public int compare(Path path1, Path path2) {
-            double distance1 = 0;
-            for (Node node : path1) {
-                distance1 += world.checkDistance(node.getInitialAirport(), node.getFinalAirport());
-            }
-            double distance2 = 0;
-            for (Node node : path2) {
-                distance2 += world.checkDistance(node.getInitialAirport(), node.getFinalAirport());
-            }
-            return Double.compare(distance1, distance2);
-        }
-    };
+    private final Comparator<Path> comparePathByDistance = Comparator.comparingDouble(Path::getDistance);
 
 }

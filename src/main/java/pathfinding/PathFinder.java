@@ -34,7 +34,7 @@ public class PathFinder {
                 path = bfs.startBFS();
                 break;
             case "DFS":
-                DFS dfs = new DFS(initialAirport, finalAirport, fuel, world);
+                DFS dfs = new DFS(initialAirport, finalAirport, fuel);
                 path = dfs.startDFS();
                 break;
             case "DIJKSTRA":
