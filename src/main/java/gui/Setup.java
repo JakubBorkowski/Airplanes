@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Locale;
 
@@ -20,31 +21,52 @@ public class Setup extends JFrame {
     private JSpinner airplanesNumberSpinner;
     private JSpinner minFuelSpinner;
     private JSpinner maxFuelSpinner;
-    private JCheckBox zielonaGoraCheckBox;
-    private JCheckBox gorzowWielokopolskiCheckBox;
-    private JCheckBox szczecinCheckBox;
-    private JCheckBox gdanskCheckBox;
-    private JCheckBox olsztynCheckBox;
-    private JCheckBox bialystokCheckBox;
-    private JCheckBox warszawaCheckBox;
-    private JCheckBox bydgoszczCheckBox;
-    private JCheckBox torunCheckBox;
-    private JCheckBox poznanCheckBox;
-    private JCheckBox lodzCheckBox;
-    private JCheckBox wroclawCheckBox;
-    private JCheckBox opoleCheckBox;
-    private JCheckBox katowiceCheckBox;
-    private JCheckBox krakowCheckBox;
-    private JCheckBox rzeszowCheckBox;
-    private JCheckBox kielceCheckBox;
-    private JCheckBox lublinCheckBox;
+    private final JCheckBox zielonaGoraCheckBox;
+    private final JCheckBox gorzowWielokopolskiCheckBox;
+    private final JCheckBox szczecinCheckBox;
+    private final JCheckBox gdanskCheckBox;
+    private final JCheckBox olsztynCheckBox;
+    private final JCheckBox bialystokCheckBox;
+    private final JCheckBox warszawaCheckBox;
+    private final JCheckBox bydgoszczCheckBox;
+    private final JCheckBox torunCheckBox;
+    private final JCheckBox poznanCheckBox;
+    private final JCheckBox lodzCheckBox;
+    private final JCheckBox wroclawCheckBox;
+    private final JCheckBox opoleCheckBox;
+    private final JCheckBox katowiceCheckBox;
+    private final JCheckBox krakowCheckBox;
+    private final JCheckBox rzeszowCheckBox;
+    private final JCheckBox kielceCheckBox;
+    private final JCheckBox lublinCheckBox;
     private JCheckBox selectAllAirportsCheckBox;
+    private JComboBox mapJComboBox;
+    private JPanel airportsJPanel;
     private World world;
 
     /**
-     * LinkedList of all airports JCheckBox
+     * LinkedList of all polish airports JCheckBox
      */
-    private final LinkedList<JCheckBox> polishAirportsCheckBoxes = new LinkedList<>();
+    private final LinkedList<JCheckBox> polishAirportsCheckBoxes = new LinkedList<>(Arrays.asList(
+            zielonaGoraCheckBox = new JCheckBox("Zielona Góra"),
+            gorzowWielokopolskiCheckBox = new JCheckBox("Gorzów Wielokopolski"),
+            szczecinCheckBox = new JCheckBox("Szczecin"),
+            gdanskCheckBox = new JCheckBox("Gdańsk"),
+            olsztynCheckBox = new JCheckBox("Olsztyn"),
+            bialystokCheckBox = new JCheckBox("Białystok"),
+            warszawaCheckBox = new JCheckBox("Warszawa"),
+            bydgoszczCheckBox = new JCheckBox("Bydgoszcz"),
+            torunCheckBox = new JCheckBox("Toruń"),
+            poznanCheckBox = new JCheckBox("Poznań"),
+            lodzCheckBox = new JCheckBox("Łódź"),
+            wroclawCheckBox = new JCheckBox("Wrocław"),
+            opoleCheckBox = new JCheckBox("Opole"),
+            katowiceCheckBox = new JCheckBox("Katowice"),
+            krakowCheckBox = new JCheckBox("Kraków"),
+            rzeszowCheckBox = new JCheckBox("Rzeszów"),
+            kielceCheckBox = new JCheckBox("Kielce"),
+            lublinCheckBox = new JCheckBox("Lublin")
+    ));
 
     /**
      * Creates main JFrame of an app
@@ -74,25 +96,6 @@ public class Setup extends JFrame {
                 minFuelSpinner.setValue(maxFuelSpinner.getValue());
             }
         });
-        //Adding airports checkboxes to LinkedList
-        polishAirportsCheckBoxes.add(zielonaGoraCheckBox);
-        polishAirportsCheckBoxes.add(gorzowWielokopolskiCheckBox);
-        polishAirportsCheckBoxes.add(szczecinCheckBox);
-        polishAirportsCheckBoxes.add(gdanskCheckBox);
-        polishAirportsCheckBoxes.add(olsztynCheckBox);
-        polishAirportsCheckBoxes.add(bialystokCheckBox);
-        polishAirportsCheckBoxes.add(warszawaCheckBox);
-        polishAirportsCheckBoxes.add(bydgoszczCheckBox);
-        polishAirportsCheckBoxes.add(torunCheckBox);
-        polishAirportsCheckBoxes.add(poznanCheckBox);
-        polishAirportsCheckBoxes.add(lodzCheckBox);
-        polishAirportsCheckBoxes.add(wroclawCheckBox);
-        polishAirportsCheckBoxes.add(opoleCheckBox);
-        polishAirportsCheckBoxes.add(katowiceCheckBox);
-        polishAirportsCheckBoxes.add(krakowCheckBox);
-        polishAirportsCheckBoxes.add(rzeszowCheckBox);
-        polishAirportsCheckBoxes.add(kielceCheckBox);
-        polishAirportsCheckBoxes.add(lublinCheckBox);
         //Adding ActionListener to selectAllAirportsCheckBox//
         selectAllAirportsCheckBox.addActionListener(e -> {
             if (selectAllAirportsCheckBox.isSelected()) {
@@ -144,6 +147,15 @@ public class Setup extends JFrame {
             world.addAirplanes((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
                     (Integer) maxFuelSpinner.getValue(), algorithmName);
         });
+        //selecting all airports checkboxes
+        polishAirportsCheckBoxes.forEach((n) -> (n).setSelected(true));
+        //adding airports checkboxes to JPanel
+        if (mapJComboBox.getSelectedItem().equals("Poland")) {
+            GridLayout gridLayout = new GridLayout(5, 4);
+            gridLayout.setVgap(6);
+            airportsJPanel.setLayout(gridLayout);
+            polishAirportsCheckBoxes.forEach((n) -> airportsJPanel.add((n)));
+        }
     }
 
     /**
@@ -378,118 +390,44 @@ public class Setup extends JFrame {
         final JSeparator separator3 = new JSeparator();
         mainPanel.add(separator3, new GridConstraints(13, 0, 1, 5, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(5, 4, new Insets(0, 5, 0, 5), -1, -1, true, false));
-        mainPanel.add(panel3, new GridConstraints(7, 0, 5, 5, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        zielonaGoraCheckBox = new JCheckBox();
-        zielonaGoraCheckBox.setSelected(true);
-        zielonaGoraCheckBox.setText("Zielona Góra");
-        panel3.add(zielonaGoraCheckBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        gorzowWielokopolskiCheckBox = new JCheckBox();
-        gorzowWielokopolskiCheckBox.setSelected(true);
-        gorzowWielokopolskiCheckBox.setText("Gorzów Wielokopolski");
-        panel3.add(gorzowWielokopolskiCheckBox, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        szczecinCheckBox = new JCheckBox();
-        szczecinCheckBox.setSelected(true);
-        szczecinCheckBox.setText("Szczecin");
-        panel3.add(szczecinCheckBox, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        gdanskCheckBox = new JCheckBox();
-        gdanskCheckBox.setSelected(true);
-        gdanskCheckBox.setText("Gdańsk");
-        panel3.add(gdanskCheckBox, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        olsztynCheckBox = new JCheckBox();
-        olsztynCheckBox.setSelected(true);
-        olsztynCheckBox.setText("Olsztyn");
-        panel3.add(olsztynCheckBox, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        bialystokCheckBox = new JCheckBox();
-        bialystokCheckBox.setSelected(true);
-        bialystokCheckBox.setText("Białystok");
-        panel3.add(bialystokCheckBox, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        warszawaCheckBox = new JCheckBox();
-        warszawaCheckBox.setSelected(true);
-        warszawaCheckBox.setText("Warszawa");
-        panel3.add(warszawaCheckBox, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        bydgoszczCheckBox = new JCheckBox();
-        bydgoszczCheckBox.setSelected(true);
-        bydgoszczCheckBox.setText("Bydgoszcz");
-        panel3.add(bydgoszczCheckBox, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        torunCheckBox = new JCheckBox();
-        torunCheckBox.setSelected(true);
-        torunCheckBox.setText("Toruń");
-        panel3.add(torunCheckBox, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        poznanCheckBox = new JCheckBox();
-        poznanCheckBox.setSelected(true);
-        poznanCheckBox.setText("Poznań");
-        panel3.add(poznanCheckBox, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        lodzCheckBox = new JCheckBox();
-        lodzCheckBox.setSelected(true);
-        lodzCheckBox.setText("Łódź");
-        panel3.add(lodzCheckBox, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        wroclawCheckBox = new JCheckBox();
-        wroclawCheckBox.setSelected(true);
-        wroclawCheckBox.setText("Wrocław");
-        panel3.add(wroclawCheckBox, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        opoleCheckBox = new JCheckBox();
-        opoleCheckBox.setSelected(true);
-        opoleCheckBox.setText("Opole");
-        panel3.add(opoleCheckBox, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        katowiceCheckBox = new JCheckBox();
-        katowiceCheckBox.setSelected(true);
-        katowiceCheckBox.setText("Katowice");
-        panel3.add(katowiceCheckBox, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        krakowCheckBox = new JCheckBox();
-        krakowCheckBox.setSelected(true);
-        krakowCheckBox.setText("Kraków");
-        panel3.add(krakowCheckBox, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        rzeszowCheckBox = new JCheckBox();
-        rzeszowCheckBox.setSelected(true);
-        rzeszowCheckBox.setText("Rzeszów");
-        panel3.add(rzeszowCheckBox, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        kielceCheckBox = new JCheckBox();
-        kielceCheckBox.setSelected(true);
-        kielceCheckBox.setText("Kielce");
-        panel3.add(kielceCheckBox, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        lublinCheckBox = new JCheckBox();
-        lublinCheckBox.setSelected(true);
-        lublinCheckBox.setText("Lublin");
-        panel3.add(lublinCheckBox, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel4 = new JPanel();
-        panel4.setLayout(new GridLayoutManager(1, 8, new Insets(5, 0, 5, 0), 8, -1));
-        mainPanel.add(panel4, new GridConstraints(4, 0, 1, 5, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel3.setLayout(new GridLayoutManager(1, 8, new Insets(5, 0, 5, 0), 8, -1));
+        mainPanel.add(panel3, new GridConstraints(4, 0, 1, 5, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         airplanesNumberSpinner = new JSpinner();
         airplanesNumberSpinner.setToolTipText("Number of airplanes to create, that will be distributed equally across airports.");
-        panel4.add(airplanesNumberSpinner, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(35, 24), new Dimension(55, -1), 0, false));
+        panel3.add(airplanesNumberSpinner, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(35, 24), new Dimension(55, -1), 0, false));
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$(null, Font.BOLD, -1, label1.getFont());
         if (label1Font != null) label1.setFont(label1Font);
         label1.setText("Number of airplanes:");
-        panel4.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         Font label2Font = this.$$$getFont$$$(null, Font.BOLD, -1, label2.getFont());
         if (label2Font != null) label2.setFont(label2Font);
         label2.setText("Minimal fuel:");
-        panel4.add(label2, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(label2, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         minFuelSpinner = new JSpinner();
         minFuelSpinner.setToolTipText("Minimal fuel that created airplanes can have.");
-        panel4.add(minFuelSpinner, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(35, 24), new Dimension(55, -1), 0, false));
+        panel3.add(minFuelSpinner, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(35, 24), new Dimension(55, -1), 0, false));
         final JLabel label3 = new JLabel();
         Font label3Font = this.$$$getFont$$$(null, Font.BOLD, -1, label3.getFont());
         if (label3Font != null) label3.setFont(label3Font);
         label3.setText("Maximal fuel:");
-        panel4.add(label3, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(label3, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         maxFuelSpinner = new JSpinner();
         maxFuelSpinner.setToolTipText("Maximal fuel that created airplanes can have.");
-        panel4.add(maxFuelSpinner, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(35, 24), new Dimension(55, -1), 0, false));
+        panel3.add(maxFuelSpinner, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(35, 24), new Dimension(55, -1), 0, false));
         final JLabel label4 = new JLabel();
         Font label4Font = this.$$$getFont$$$(null, Font.BOLD, -1, label4.getFont());
         if (label4Font != null) label4.setFont(label4Font);
         label4.setText("Map:");
-        panel4.add(label4, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JComboBox comboBox1 = new JComboBox();
+        panel3.add(label4, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mapJComboBox = new JComboBox();
+        mapJComboBox.setEditable(false);
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("Poland");
-        comboBox1.setModel(defaultComboBoxModel1);
-        comboBox1.setToolTipText("Feature not yet implemented.");
-        panel4.add(comboBox1, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mapJComboBox.setModel(defaultComboBoxModel1);
+        mapJComboBox.setToolTipText("Feature not yet implemented.");
+        panel3.add(mapJComboBox, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label5 = new JLabel();
         Font label5Font = this.$$$getFont$$$(null, Font.BOLD, -1, label5.getFont());
         if (label5Font != null) label5.setFont(label5Font);
@@ -500,6 +438,13 @@ public class Setup extends JFrame {
         if (label6Font != null) label6.setFont(label6Font);
         label6.setText("Available algorithms:");
         mainPanel.add(label6, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel4 = new JPanel();
+        panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 5, 0, 5), -1, -1));
+        mainPanel.add(panel4, new GridConstraints(7, 0, 5, 5, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        airportsJPanel = new JPanel();
+        airportsJPanel.setLayout(new GridBagLayout());
+        airportsJPanel.setEnabled(true);
+        panel4.add(airportsJPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
         buttonGroup.add(depthFirstSearchRadioButton);
