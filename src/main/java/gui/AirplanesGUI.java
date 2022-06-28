@@ -14,7 +14,7 @@ import static java.lang.Math.abs;
  * Graphic interface on which airplanes and airports will be displayed.
  */
 public class AirplanesGUI {
-    @Getter private final static JLayeredPane jLayeredPane = new JLayeredPane();//Main Layer
+    @Getter private final JLayeredPane jLayeredPane = new JLayeredPane();//Main Layer
     private final ImageIcon airportImageIcon = new ImageIcon(Objects.requireNonNull(
             AirplanesGUI.class.getResource("/images/Airport.png")));
     @Getter private final static ImageIcon airplaneImageIcon = new ImageIcon(Objects.requireNonNull(

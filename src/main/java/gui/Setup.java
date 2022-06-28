@@ -2,6 +2,7 @@ package gui;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import util.Airport;
 import util.World;
 
 import javax.swing.*;
@@ -21,51 +22,38 @@ public class Setup extends JFrame {
     private JSpinner airplanesNumberSpinner;
     private JSpinner minFuelSpinner;
     private JSpinner maxFuelSpinner;
-    private final JCheckBox zielonaGoraCheckBox;
-    private final JCheckBox gorzowWielokopolskiCheckBox;
-    private final JCheckBox szczecinCheckBox;
-    private final JCheckBox gdanskCheckBox;
-    private final JCheckBox olsztynCheckBox;
-    private final JCheckBox bialystokCheckBox;
-    private final JCheckBox warszawaCheckBox;
-    private final JCheckBox bydgoszczCheckBox;
-    private final JCheckBox torunCheckBox;
-    private final JCheckBox poznanCheckBox;
-    private final JCheckBox lodzCheckBox;
-    private final JCheckBox wroclawCheckBox;
-    private final JCheckBox opoleCheckBox;
-    private final JCheckBox katowiceCheckBox;
-    private final JCheckBox krakowCheckBox;
-    private final JCheckBox rzeszowCheckBox;
-    private final JCheckBox kielceCheckBox;
-    private final JCheckBox lublinCheckBox;
     private JCheckBox selectAllAirportsCheckBox;
     private JComboBox mapJComboBox;
     private JPanel airportsJPanel;
-    private World world;
+    private World world = new World();
+
+    /**
+     * LinkedList of all displayed airports JCheckBox
+     */
+    private final LinkedList<JCheckBox> airportsCheckBoxes = new LinkedList<>();
 
     /**
      * LinkedList of all polish airports JCheckBox
      */
-    private final LinkedList<JCheckBox> polishAirportsCheckBoxes = new LinkedList<>(Arrays.asList(
-            zielonaGoraCheckBox = new JCheckBox("Zielona Góra"),
-            gorzowWielokopolskiCheckBox = new JCheckBox("Gorzów Wielokopolski"),
-            szczecinCheckBox = new JCheckBox("Szczecin"),
-            gdanskCheckBox = new JCheckBox("Gdańsk"),
-            olsztynCheckBox = new JCheckBox("Olsztyn"),
-            bialystokCheckBox = new JCheckBox("Białystok"),
-            warszawaCheckBox = new JCheckBox("Warszawa"),
-            bydgoszczCheckBox = new JCheckBox("Bydgoszcz"),
-            torunCheckBox = new JCheckBox("Toruń"),
-            poznanCheckBox = new JCheckBox("Poznań"),
-            lodzCheckBox = new JCheckBox("Łódź"),
-            wroclawCheckBox = new JCheckBox("Wrocław"),
-            opoleCheckBox = new JCheckBox("Opole"),
-            katowiceCheckBox = new JCheckBox("Katowice"),
-            krakowCheckBox = new JCheckBox("Kraków"),
-            rzeszowCheckBox = new JCheckBox("Rzeszów"),
-            kielceCheckBox = new JCheckBox("Kielce"),
-            lublinCheckBox = new JCheckBox("Lublin")
+    private final LinkedList<Airport> polishAirports = new LinkedList<>(Arrays.asList(
+            new Airport(101, 319, "Zielona Góra", world),
+            new Airport(81, 238, "Gorzów Wielokopolski", world),
+            new Airport(44, 163, "Szczecin", world),
+            new Airport(301, 71, "Gdańsk", world),
+            new Airport(413, 138, "Olsztyn", world),
+            new Airport(578, 203, "Białystok", world),
+            new Airport(443, 286, "Warszawa", world),
+            new Airport(253, 196, "Bydgoszcz", world),
+            new Airport(299, 209, "Toruń", world),
+            new Airport(189, 272, "Poznań", world),
+            new Airport(348, 346, "Łódź", world),
+            new Airport(200, 399, "Wrocław", world),
+            new Airport(252, 455, "Opole", world),
+            new Airport(319, 498, "Katowice", world),
+            new Airport(376, 501, "Kraków", world),
+            new Airport(516, 517, "Rzeszów", world),
+            new Airport(422, 385, "Kielce", world),
+            new Airport(545, 393, "Lublin", world)
     ));
 
     /**
@@ -78,6 +66,14 @@ public class Setup extends JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(screenSize.width / 2 - this.getSize().width / 2, screenSize.height / 2 - this.getSize().height / 2);
         //Setting up JFrame components//
+        //Adding airports checkboxes to JPanel
+        mapJComboBox.setSelectedItem("Poland");
+        GridLayout gridLayout = new GridLayout(5, 4);
+        gridLayout.setVgap(6);
+        airportsJPanel.setLayout(gridLayout);
+        polishAirports.forEach((airport) -> airportsCheckBoxes.add(new JCheckBox(airport.getName())));//Creating checkboxes
+        airportsCheckBoxes.forEach((checkBox) -> checkBox.setSelected(true));//Selecting all airports checkboxes
+        airportsCheckBoxes.forEach((checkBox) -> airportsJPanel.add((checkBox)));
         //Setting up minFuelSpinner and maxFuelSpinner//
         SpinnerModel value = new SpinnerNumberModel(1, 1, 99, 1);
         airplanesNumberSpinner.setModel(value);
@@ -99,24 +95,22 @@ public class Setup extends JFrame {
         //Adding ActionListener to selectAllAirportsCheckBox//
         selectAllAirportsCheckBox.addActionListener(e -> {
             if (selectAllAirportsCheckBox.isSelected()) {
-                for (JCheckBox airportCheckBox : polishAirportsCheckBoxes) {
+                for (JCheckBox airportCheckBox : airportsCheckBoxes) {
                     airportCheckBox.setSelected(true);
                 }
             } else {
-                for (JCheckBox airportCheckBox : polishAirportsCheckBoxes) {
+                for (JCheckBox airportCheckBox : airportsCheckBoxes) {
                     airportCheckBox.setSelected(false);
                 }
             }
         });
         //Adding ActionListeners to airports checkboxes//
-        for (JCheckBox airportCheckBox : polishAirportsCheckBoxes) {
+        for (JCheckBox airportCheckBox : airportsCheckBoxes) {
             airportCheckBox.addActionListener(e -> {
                 if (!airportCheckBox.isSelected()) {
                     selectAllAirportsCheckBox.setSelected(false);
-                } else {
-                    if (areAllAirportsCheckBoxesSelected()) {
-                        selectAllAirportsCheckBox.setSelected(true);
-                    }
+                } else if (areAllAirportsCheckBoxesSelected()) {
+                    selectAllAirportsCheckBox.setSelected(true);
                 }
             });
         }
@@ -139,7 +133,7 @@ public class Setup extends JFrame {
             //Adding back button//
             world.getAirplanesGUI().addBackButton(backButton());
             //Changing JFrame settings//
-            setContentPane(AirplanesGUI.getJLayeredPane());
+            setContentPane(world.getAirplanesGUI().getJLayeredPane());
             setSize(AirplanesGUI.getWorldImageIcon().getIconWidth(), AirplanesGUI.getWorldImageIcon().getIconHeight());
             setLocation(this.getX(), Math.max(this.getY() - (this.getHeight() / 4) + 25, 0));
             //Adding airports and airplanes
@@ -147,15 +141,6 @@ public class Setup extends JFrame {
             world.addAirplanes((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
                     (Integer) maxFuelSpinner.getValue(), algorithmName);
         });
-        //selecting all airports checkboxes
-        polishAirportsCheckBoxes.forEach((n) -> (n).setSelected(true));
-        //adding airports checkboxes to JPanel
-        if (mapJComboBox.getSelectedItem().equals("Poland")) {
-            GridLayout gridLayout = new GridLayout(5, 4);
-            gridLayout.setVgap(6);
-            airportsJPanel.setLayout(gridLayout);
-            polishAirportsCheckBoxes.forEach((n) -> airportsJPanel.add((n)));
-        }
     }
 
     /**
@@ -178,7 +163,7 @@ public class Setup extends JFrame {
         setLocation(screenSize.width / 2 - this.getSize().width / 2, screenSize.height / 2 - this.getSize().height / 2);
         //Displaying world map//
         world = new World();
-        setContentPane(AirplanesGUI.getJLayeredPane());
+        setContentPane(world.getAirplanesGUI().getJLayeredPane());
         //Adding airports and airplanes//
         addAirports();
         world.addAirplanes(numberOfAirplanes, minFuel, maxFuel, algorithmName);
@@ -219,60 +204,12 @@ public class Setup extends JFrame {
      * Adds selected airports to the world
      */
     private void addAirports() {
-        if (zielonaGoraCheckBox.isSelected()) {
-            world.addAirport(101, 319, "Zielona Góra");
-        }
-        if (gorzowWielokopolskiCheckBox.isSelected()) {
-            world.addAirport(81, 238, "Gorzów Wielokopolski");
-        }
-        if (szczecinCheckBox.isSelected()) {
-            world.addAirport(44, 163, "Szczecin");
-        }
-        if (gdanskCheckBox.isSelected()) {
-            world.addAirport(301, 71, "Gdańsk");
-        }
-        if (olsztynCheckBox.isSelected()) {
-            world.addAirport(413, 138, "Olsztyn");
-        }
-        if (bialystokCheckBox.isSelected()) {
-            world.addAirport(578, 203, "Białystok");
-        }
-        if (warszawaCheckBox.isSelected()) {
-            world.addAirport(443, 286, "Warszawa");
-        }
-        if (bydgoszczCheckBox.isSelected()) {
-            world.addAirport(253, 196, "Bydgoszcz");
-        }
-        if (torunCheckBox.isSelected()) {
-            world.addAirport(299, 209, "Toruń");
-        }
-        if (poznanCheckBox.isSelected()) {
-            world.addAirport(189, 272, "Poznań");
-        }
-        if (lodzCheckBox.isSelected()) {
-            world.addAirport(348, 346, "Łódź");
-        }
-        if (wroclawCheckBox.isSelected()) {
-            world.addAirport(200, 399, "Wrocław");
-        }
-        if (opoleCheckBox.isSelected()) {
-            world.addAirport(252, 455, "Opole");
-        }
-        if (katowiceCheckBox.isSelected()) {
-            world.addAirport(319, 498, "Katowice");
-        }
-        if (krakowCheckBox.isSelected()) {
-            world.addAirport(376, 501, "Kraków");
-        }
-        if (rzeszowCheckBox.isSelected()) {
-            world.addAirport(516, 517, "Rzeszów");
-        }
-        if (kielceCheckBox.isSelected()) {
-            world.addAirport(422, 385, "Kielce");
-        }
-        if (lublinCheckBox.isSelected()) {
-            world.addAirport(545, 393, "Lublin");
-        }
+        airportsCheckBoxes.forEach((checkBox) -> {
+            if (checkBox.isSelected()) {
+                Airport airport = polishAirports.get(airportsCheckBoxes.indexOf(checkBox));
+                world.addAirport(airport.getX(), airport.getY(), airport.getName());
+            }
+        });
     }
 
     /**
@@ -283,7 +220,7 @@ public class Setup extends JFrame {
      */
     private boolean areAllAirportsCheckBoxesSelected() {
         boolean areAllAirportsCheckBoxesSelected = true;
-        for (JCheckBox airportCheckBox : polishAirportsCheckBoxes) {
+        for (JCheckBox airportCheckBox : airportsCheckBoxes) {
             if (!airportCheckBox.isSelected()) {
                 areAllAirportsCheckBoxesSelected = false;
                 break;

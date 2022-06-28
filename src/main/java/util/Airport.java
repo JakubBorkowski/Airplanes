@@ -22,7 +22,7 @@ public class Airport {
      * @param name  Name of airport.
      * @param world World object with information about all airports on map.
      */
-    Airport(int x, int y, @NonNull String name, @NonNull World world) {
+    public Airport(int x, int y, @NonNull String name, @NonNull World world) {
         this.x = x;
         this.y = y;
         this.name = name;
