@@ -19,10 +19,21 @@ public class AirplanesGUI {
             AirplanesGUI.class.getResource("/images/Airport.png")));
     @Getter private final static ImageIcon airplaneImageIcon = new ImageIcon(Objects.requireNonNull(
             AirplanesGUI.class.getResource("/images/Airplane.png")));
-    @Getter private final static ImageIcon worldImageIcon = new ImageIcon(Objects.requireNonNull(
-            AirplanesGUI.class.getResource("/images/World.png")));
+    @Getter private final static ImageIcon polandImageIcon = new ImageIcon(Objects.requireNonNull(
+            AirplanesGUI.class.getResource("/images/Poland.png")));
+    @Getter private final static ImageIcon germanyImageIcon = new ImageIcon(Objects.requireNonNull(
+            AirplanesGUI.class.getResource("/images/Germany.png")));
+    @Getter private static ImageIcon worldImageIcon;
 
-    public AirplanesGUI() {
+    public AirplanesGUI(String map) {
+        switch (map) {
+            case "Germany": worldImageIcon = germanyImageIcon;
+                break;
+            case "Poland": worldImageIcon = polandImageIcon;
+                break;
+            default: worldImageIcon = new ImageIcon();
+                break;
+        }
         //Setting up main JLayerPane//
         jLayeredPane.setBounds(0, 0, worldImageIcon.getIconWidth(), worldImageIcon.getIconHeight());
         //Adding World map//

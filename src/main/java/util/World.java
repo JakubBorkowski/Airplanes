@@ -11,7 +11,11 @@ import java.util.Random;
 public class World {
     @Getter private final ArrayList<Airport> airportsArrayList = new ArrayList<>();
     @Getter private final ArrayList<Airplane> airplanesArrayList = new ArrayList<>();
-    @Getter private final AirplanesGUI airplanesGUI = new AirplanesGUI();
+    @Getter private AirplanesGUI airplanesGUI = new AirplanesGUI("");
+
+    public World(String map) {
+        airplanesGUI = new AirplanesGUI(map);
+    }
 
     /**
      * Creates specified number of airplanes. All airplanes will be distributed equally between all airports.
@@ -43,7 +47,7 @@ public class World {
     }
 
     /**
-     * Creates an airport.
+     * Adds an airport to world map.
      *
      * @param x    X-axis position of airport.
      * @param y    Y-axis position of airport.

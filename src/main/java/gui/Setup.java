@@ -12,6 +12,7 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Setup extends JFrame {
     private JPanel mainPanel;
@@ -28,9 +29,36 @@ public class Setup extends JFrame {
     private World world = new World();
 
     /**
+     * LinkedList of all airports from currently selected map
+     */
+    private LinkedList<Airport> airports;
+
+    /**
      * LinkedList of all displayed airports JCheckBox
      */
     private final LinkedList<JCheckBox> airportsCheckBoxes = new LinkedList<>();
+
+    /**
+     * LinkedList of all german airports JCheckBox
+     */
+    private final LinkedList<Airport> germanAirports = new LinkedList<>(Arrays.asList(
+            new Airport(221, 529, "Stuttgart", world),//
+            new Airport(349, 580, "München", world),//
+            new Airport(444, 215, "Berlin", world),//
+            new Airport(427, 227, "Potsdam", world),///
+            new Airport(413, 138, "Bremerhaven", world),
+            new Airport(250, 228, "Hannover", world),//
+            new Airport(265, 124, "Hamburg", world),//
+            new Airport(170, 424, "Wiesbaden", world),///
+            new Airport(340, 115, "Schwerin", world),///~
+            new Airport(93, 327, "Düsseldorf", world),//
+            new Airport(174, 432, "Mainz", world),///~
+            new Airport(104, 493, "Saarbrücken", world),//
+            new Airport(460, 341, "Dresden", world),//
+            new Airport(351, 250, "Magdeburg", world),
+            new Airport(271, 54, "Kiel", world),//
+            new Airport(319, 349, "Erfurt", world)//
+    ));
 
     /**
      * LinkedList of all polish airports JCheckBox
@@ -72,6 +100,7 @@ public class Setup extends JFrame {
         gridLayout.setVgap(6);
         airportsJPanel.setLayout(gridLayout);
         polishAirports.forEach((airport) -> airportsCheckBoxes.add(new JCheckBox(airport.getName())));//Creating checkboxes
+        airports = polishAirports;
         airportsCheckBoxes.forEach((checkBox) -> checkBox.setSelected(true));//Selecting all airports checkboxes
         airportsCheckBoxes.forEach((checkBox) -> airportsJPanel.add((checkBox)));
         //Setting up minFuelSpinner and maxFuelSpinner//
@@ -114,6 +143,28 @@ public class Setup extends JFrame {
                 }
             });
         }
+        //Adding ActionListener to mapJComboBox
+        mapJComboBox.addActionListener(e -> {
+            String item = (String) mapJComboBox.getSelectedItem();
+            switch (Objects.requireNonNull(item)) {
+                case "Germany":
+                    airports = germanAirports;
+                    break;
+                case "Poland":
+                    airports = polishAirports;
+                    break;
+                default:
+                    break;
+            }
+            airportsJPanel.removeAll();
+            airportsJPanel.setLayout(gridLayout);
+            airportsCheckBoxes.clear();
+            airports.forEach((airport) -> airportsCheckBoxes.add(new JCheckBox(airport.getName())));//Creating checkboxes
+            airportsCheckBoxes.forEach((checkBox) -> checkBox.setSelected(true));//Selecting all airports checkboxes
+            airportsCheckBoxes.forEach((checkBox) -> airportsJPanel.add((checkBox)));
+            airportsJPanel.revalidate();
+            airportsJPanel.repaint();
+        });
         //Adding ActionListener to submitButton//
         submitButton.addActionListener(e -> {
             //Determining algorithm name//
@@ -129,7 +180,7 @@ public class Setup extends JFrame {
             displayValues((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
                     (Integer) maxFuelSpinner.getValue(), algorithmName);
             //Creating new world//
-            world = new World();
+            world = new World((String) mapJComboBox.getSelectedItem());
             //Adding back button//
             world.getAirplanesGUI().addBackButton(backButton());
             //Changing JFrame settings//
@@ -157,14 +208,17 @@ public class Setup extends JFrame {
         displayValues(numberOfAirplanes, minFuel, maxFuel, algorithmName);
         //Setting up JFrame//
         initializeJFrame();
+        //Displaying world map//
+        world = new World("Poland");
+        setContentPane(world.getAirplanesGUI().getJLayeredPane());
         setSize(AirplanesGUI.getWorldImageIcon().getIconWidth(), AirplanesGUI.getWorldImageIcon().getIconHeight());
         //Centering window on screen//
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(screenSize.width / 2 - this.getSize().width / 2, screenSize.height / 2 - this.getSize().height / 2);
-        //Displaying world map//
-        world = new World();
-        setContentPane(world.getAirplanesGUI().getJLayeredPane());
         //Adding airports and airplanes//
+        airports = polishAirports;
+        airports.forEach((airport) -> airportsCheckBoxes.add(new JCheckBox(airport.getName())));
+        airportsCheckBoxes.forEach((checkBox) -> checkBox.setSelected(true));
         addAirports();
         world.addAirplanes(numberOfAirplanes, minFuel, maxFuel, algorithmName);
     }
@@ -206,7 +260,7 @@ public class Setup extends JFrame {
     private void addAirports() {
         airportsCheckBoxes.forEach((checkBox) -> {
             if (checkBox.isSelected()) {
-                Airport airport = polishAirports.get(airportsCheckBoxes.indexOf(checkBox));
+                Airport airport = airports.get(airportsCheckBoxes.indexOf(checkBox));
                 world.addAirport(airport.getX(), airport.getY(), airport.getName());
             }
         });
@@ -362,8 +416,9 @@ public class Setup extends JFrame {
         mapJComboBox.setEditable(false);
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("Poland");
+        defaultComboBoxModel1.addElement("Germany");
         mapJComboBox.setModel(defaultComboBoxModel1);
-        mapJComboBox.setToolTipText("Feature not yet implemented.");
+        mapJComboBox.setToolTipText("Map with predefined set of airports.");
         panel3.add(mapJComboBox, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label5 = new JLabel();
         Font label5Font = this.$$$getFont$$$(null, Font.BOLD, -1, label5.getFont());

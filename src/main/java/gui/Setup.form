@@ -183,8 +183,9 @@
               <editable value="false"/>
               <model>
                 <item value="Poland"/>
+                <item value="Germany"/>
               </model>
-              <toolTipText value="Feature not yet implemented."/>
+              <toolTipText value="Map with predefined set of airports."/>
             </properties>
           </component>
         </children>
