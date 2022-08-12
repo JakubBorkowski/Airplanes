@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Locale;
@@ -42,22 +43,22 @@ public class Setup extends JFrame {
      * LinkedList of all german airports JCheckBox
      */
     private final LinkedList<Airport> germanAirports = new LinkedList<>(Arrays.asList(
-            new Airport(221, 529, "Stuttgart", world),//
-            new Airport(349, 580, "München", world),//
-            new Airport(444, 215, "Berlin", world),//
-            new Airport(427, 227, "Potsdam", world),///
+            new Airport(221, 529, "Stuttgart", world),
+            new Airport(349, 580, "München", world),
+            new Airport(444, 215, "Berlin", world),
+            new Airport(427, 227, "Potsdam", world),
             new Airport(413, 138, "Bremerhaven", world),
-            new Airport(250, 228, "Hannover", world),//
-            new Airport(265, 124, "Hamburg", world),//
-            new Airport(170, 424, "Wiesbaden", world),///
-            new Airport(340, 115, "Schwerin", world),///~
-            new Airport(93, 327, "Düsseldorf", world),//
-            new Airport(174, 432, "Mainz", world),///~
-            new Airport(104, 493, "Saarbrücken", world),//
-            new Airport(460, 341, "Dresden", world),//
+            new Airport(250, 228, "Hannover", world),
+            new Airport(265, 124, "Hamburg", world),
+            new Airport(170, 424, "Wiesbaden", world),
+            new Airport(340, 115, "Schwerin", world),
+            new Airport(93, 327, "Düsseldorf", world),
+            new Airport(174, 432, "Mainz", world),
+            new Airport(104, 493, "Saarbrücken", world),
+            new Airport(460, 341, "Dresden", world),
             new Airport(351, 250, "Magdeburg", world),
-            new Airport(271, 54, "Kiel", world),//
-            new Airport(319, 349, "Erfurt", world)//
+            new Airport(271, 54, "Kiel", world),
+            new Airport(319, 349, "Erfurt", world)
     ));
 
     /**
@@ -96,13 +97,7 @@ public class Setup extends JFrame {
         //Setting up JFrame components//
         //Adding airports checkboxes to JPanel
         mapJComboBox.setSelectedItem("Poland");
-        GridLayout gridLayout = new GridLayout(5, 4);
-        gridLayout.setVgap(6);
-        airportsJPanel.setLayout(gridLayout);
-        polishAirports.forEach((airport) -> airportsCheckBoxes.add(new JCheckBox(airport.getName())));//Creating checkboxes
-        airports = polishAirports;
-        airportsCheckBoxes.forEach((checkBox) -> checkBox.setSelected(true));//Selecting all airports checkboxes
-        airportsCheckBoxes.forEach((checkBox) -> airportsJPanel.add((checkBox)));
+        mapJComboBoxAction(new ActionEvent(mapJComboBox, 1001, "comboBoxChanged"));
         //Setting up minFuelSpinner and maxFuelSpinner//
         SpinnerModel value = new SpinnerNumberModel(1, 1, 99, 1);
         airplanesNumberSpinner.setModel(value);
@@ -110,6 +105,13 @@ public class Setup extends JFrame {
         minFuelSpinner.setModel(value2);
         SpinnerModel value3 = new SpinnerNumberModel(200, 1, 999, 1);
         maxFuelSpinner.setModel(value3);
+        addListeners();
+    }
+
+    /**
+     * Adds ActionListeners/ChangeListeners to main JFrame components.
+     */
+    private void addListeners() {
         //Adding ChangeListeners to Spinners//
         minFuelSpinner.addChangeListener(e -> {
             if ((Integer) maxFuelSpinner.getValue() < (Integer) minFuelSpinner.getValue()) {
@@ -123,19 +125,48 @@ public class Setup extends JFrame {
         });
         //Adding ActionListener to selectAllAirportsCheckBox//
         selectAllAirportsCheckBox.addActionListener(e -> {
-            if (selectAllAirportsCheckBox.isSelected()) {
-                for (JCheckBox airportCheckBox : airportsCheckBoxes) {
-                    airportCheckBox.setSelected(true);
-                }
-            } else {
-                for (JCheckBox airportCheckBox : airportsCheckBoxes) {
-                    airportCheckBox.setSelected(false);
-                }
+            for (JCheckBox airportCheckBox : airportsCheckBoxes) {
+                airportCheckBox.setSelected(selectAllAirportsCheckBox.isSelected());
             }
         });
+        //Adding ActionListener to mapJComboBox
+        mapJComboBox.addActionListener(this::mapJComboBoxAction);
+        //Adding ActionListener to submitButton//
+        submitButton.addActionListener(this::submitButtonAction);
+    }
+
+    /**
+     * Defines behavior of mapJComboBox.
+     * Sets up airportsJPanel with appropriator airports from currently selected map.
+     *
+     * @param e ActionEvent of JComboBox.
+     */
+    private void mapJComboBoxAction(ActionEvent e) {
+        String item = (String) mapJComboBox.getSelectedItem();
+        switch (Objects.requireNonNull(item)) {
+            case "Germany":
+                airports = germanAirports;
+                break;
+            case "Poland":
+                airports = polishAirports;
+                break;
+            default:
+                return;
+        }
+        airportsJPanel.removeAll();
+        airportsCheckBoxes.clear();
+
+        GridLayout gridLayout = new GridLayout(5, 4);
+        gridLayout.setVgap(6);
+        airportsJPanel.setLayout(gridLayout);
+
+        airports.forEach((airport) -> airportsCheckBoxes.add(new JCheckBox(airport.getName())));//Creating checkboxes
+        airportsCheckBoxes.forEach((checkBox) -> checkBox.setSelected(true));//Selecting all airports checkboxes
+        airportsCheckBoxes.forEach((checkBox) -> airportsJPanel.add((checkBox)));
+
         //Adding ActionListeners to airports checkboxes//
         for (JCheckBox airportCheckBox : airportsCheckBoxes) {
-            airportCheckBox.addActionListener(e -> {
+            airportCheckBox.addActionListener(event -> {
                 if (!airportCheckBox.isSelected()) {
                     selectAllAirportsCheckBox.setSelected(false);
                 } else if (areAllAirportsCheckBoxesSelected()) {
@@ -143,55 +174,42 @@ public class Setup extends JFrame {
                 }
             });
         }
-        //Adding ActionListener to mapJComboBox
-        mapJComboBox.addActionListener(e -> {
-            String item = (String) mapJComboBox.getSelectedItem();
-            switch (Objects.requireNonNull(item)) {
-                case "Germany":
-                    airports = germanAirports;
-                    break;
-                case "Poland":
-                    airports = polishAirports;
-                    break;
-                default:
-                    break;
-            }
-            airportsJPanel.removeAll();
-            airportsJPanel.setLayout(gridLayout);
-            airportsCheckBoxes.clear();
-            airports.forEach((airport) -> airportsCheckBoxes.add(new JCheckBox(airport.getName())));//Creating checkboxes
-            airportsCheckBoxes.forEach((checkBox) -> checkBox.setSelected(true));//Selecting all airports checkboxes
-            airportsCheckBoxes.forEach((checkBox) -> airportsJPanel.add((checkBox)));
-            airportsJPanel.revalidate();
-            airportsJPanel.repaint();
-        });
-        //Adding ActionListener to submitButton//
-        submitButton.addActionListener(e -> {
-            //Determining algorithm name//
-            String algorithmName = "DIJKSTRA";
-            if (depthFirstSearchRadioButton.isSelected()) {
-                algorithmName = "DFS";
-            } else if (breadthFirstSearchRadioButton.isSelected()) {
-                algorithmName = "BFS";
-            } else if (dijkstraShortestPathRadioButton.isSelected()) {
-                algorithmName = "DIJKSTRA";
-            }
-            //Displaying provided values//
-            displayValues((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
-                    (Integer) maxFuelSpinner.getValue(), algorithmName);
-            //Creating new world//
-            world = new World((String) mapJComboBox.getSelectedItem());
-            //Adding back button//
-            world.getAirplanesGUI().addBackButton(backButton());
-            //Changing JFrame settings//
-            setContentPane(world.getAirplanesGUI().getJLayeredPane());
-            setSize(AirplanesGUI.getWorldImageIcon().getIconWidth(), AirplanesGUI.getWorldImageIcon().getIconHeight());
-            setLocation(this.getX(), Math.max(this.getY() - (this.getHeight() / 4) + 25, 0));
-            //Adding airports and airplanes
-            addAirports();
-            world.addAirplanes((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
-                    (Integer) maxFuelSpinner.getValue(), algorithmName);
-        });
+
+        airportsJPanel.revalidate();
+        airportsJPanel.repaint();
+    }
+
+    /**
+     * Defines action of submitButton.
+     * Loads all selected settings and starts the main application.
+     *
+     * @param e ActionEvent of Button.
+     */
+    private void submitButtonAction(ActionEvent e) {
+        //Determining algorithm name//
+        String algorithmName = "DIJKSTRA";
+        if (depthFirstSearchRadioButton.isSelected()) {
+            algorithmName = "DFS";
+        } else if (breadthFirstSearchRadioButton.isSelected()) {
+            algorithmName = "BFS";
+        } else if (dijkstraShortestPathRadioButton.isSelected()) {
+            algorithmName = "DIJKSTRA";
+        }
+        //Displaying provided values//
+        displayValues((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
+                (Integer) maxFuelSpinner.getValue(), algorithmName);
+        //Creating new world//
+        world = new World((String) mapJComboBox.getSelectedItem());
+        //Adding back button//
+        world.getAirplanesGUI().addBackButton(backButton());
+        //Changing JFrame settings//
+        setContentPane(world.getAirplanesGUI().getJLayeredPane());
+        setSize(AirplanesGUI.getWorldImageIcon().getIconWidth(), AirplanesGUI.getWorldImageIcon().getIconHeight());
+        setLocation(this.getX(), Math.max(this.getY() - (this.getHeight() / 4) + 25, 0));
+        //Adding airports and airplanes
+        addAirports();
+        world.addAirplanes((Integer) airplanesNumberSpinner.getValue(), (Integer) minFuelSpinner.getValue(),
+                (Integer) maxFuelSpinner.getValue(), algorithmName);
     }
 
     /**
