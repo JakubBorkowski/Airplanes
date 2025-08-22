@@ -5,7 +5,7 @@ immediately it will search for the shortest path to this airport. Currently, the
 available in the app. User can select which one should be used.
 
 <p align="center">
-<img align="center" alt="Airplanes world map" src="https://dl.dropbox.com/s/wiydt6p6yrexm0k/screenshot621.gif" width="450">
+<img align="center" alt="Airplanes world map" src="docs/screenshot621.gif" width="450">
 </p>
 
 ## Available algorithms
@@ -51,7 +51,7 @@ Algorithm guarantee to find the shortest path relatively quick.
 
 ### Graphical user interface
 <p align="center">
-<img align="center" alt="Airplanes setup screen" src="https://dl.dropbox.com/s/taipn2tjh58hteh/airplanesSetup.png">
+<img align="center" alt="Airplanes setup screen" src="docs/airplanesSetup.png">
 </p>
 
 ### Command line interface
